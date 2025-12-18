@@ -1,56 +1,102 @@
-/* EDX Partials Loader — Production build (CSP-safe, auto-boot)
- * Responsibilities:
- *  - Inject header/footer/sidebar fragments on every page (no inline JS)
- *  - Hydrate header user chip from localStorage.edx:user (set by signin)
- *  - Restore Dark Mode toggle + persist theme
- *  - Restore Global Catalog Search (if #globalSearchForm/#globalSearchInput exist)
- *  - Enforce auth on protected pages (redirect to signin.html if role/session missing)
- *  - Auto-boot on load (works for all roles/pages under /pages/*) — no page code changes required
+/* EDX Partials Loader — GitHub Pages + root deploy safe (CSP-safe, auto-boot)
+ *
+ * FIXES vs your current file:
+ * 1) Correct “base” for GitHub Pages *project* sites:
+ *    - https://<user>.github.io/EDX/  => base "/EDX" (not "")
+ *    - so partials load from /EDX/partials/... (not /partials/...)
+ * 2) All navigation/search URLs are base-aware (won’t break on /EDX/).
+ * 3) Sign-in redirect is base-aware.
  *
  * Partials expected:
  *   <base>/partials/header.html
  *   <base>/partials/footer.html
  *   <base>/partials/sidebar-<role>.html
  *
- * Notes:
- *  - “base” is computed from location.pathname by stripping the /pages/... tail.
- *    Example: /EDX/pages/consumer/catalog-browse.html  -> base = /EDX
- *  - Role is sourced from <body data-edx-sidebar="..."> or localStorage.edx:user.role (fallback "consumer")
+ * Optional:
+ *   <body data-edx-sidebar="consumer|steward|engineer|admin">
  */
 
 (function () {
-  const $  = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  "use strict";
 
-  /* ---------- compute base (prefix before /pages/) ---------- */
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  /* ---------- path helpers ---------- */
+  function stripTrailingSlash(p) {
+    return (p || "").replace(/\/+$/, "");
+  }
+
+  function ensureLeadingSlash(p) {
+    const s = String(p || "");
+    return s.startsWith("/") ? s : `/${s}`;
+  }
+
+  function join(base, rel) {
+    const b = stripTrailingSlash(base || "");
+    const r = String(rel || "").replace(/^\/+/, "");
+    if (!b) return `/${r}`.replace(/^\/+/, "/");
+    return `${b}/${r}`;
+  }
+
+  // Applies computed base to an app-relative path (e.g., "/pages/...").
+  function withBase(base, appPath) {
+    const p = String(appPath || "");
+    if (/^https?:\/\//i.test(p)) return p;
+    const normalized = ensureLeadingSlash(p);
+    const b = stripTrailingSlash(base || "");
+    return b ? `${b}${normalized}` : normalized;
+  }
+
+  /* ---------- compute base (supports GitHub Pages project sites) ---------- */
   function computeBaseFromPathname() {
-    const p = location.pathname;
-    const idx = p.indexOf('/pages/');
-    if (idx === -1) return ''; // served at root; partials live at /partials/*
-    const base = p.slice(0, idx) || '';
-    return base.endsWith('/') ? base.slice(0, -1) : base;
+    const p = location.pathname || "/";
+
+    // Case 1: any path containing "/pages/" → base is everything before it
+    const idxPages = p.indexOf("/pages/");
+    if (idxPages !== -1) return stripTrailingSlash(p.slice(0, idxPages));
+
+    // Case 2: any path containing "/auth/" → base is everything before it
+    const idxAuth = p.indexOf("/auth/");
+    if (idxAuth !== -1) return stripTrailingSlash(p.slice(0, idxAuth));
+
+    // Case 3: GitHub Pages project site home like "/EDX/" or "/EDX/index.html"
+    // Heuristic: if there is a first segment, treat it as base "/<segment>"
+    const parts = p.split("/").filter(Boolean);
+    if (parts.length >= 1) return `/${parts[0]}`;
+
+    // Case 4: user/org pages root "/"
+    return "";
   }
 
   const PARTIALS = {
-    header: (base)         => `${base}/partials/header.html`,
-    footer: (base)         => `${base}/partials/footer.html`,
-    sidebar: (base, role)  => `${base}/partials/sidebar-${role||'consumer'}.html`,
+    header: (base)        => join(base, "partials/header.html"),
+    footer: (base)        => join(base, "partials/footer.html"),
+    sidebar: (base, role) => join(base, `partials/sidebar-${role || "consumer"}.html`)
   };
 
-  const PROTECTED_ROLE_SEGMENTS = ["/pages/consumer/", "/pages/steward/", "/pages/engineer/", "/pages/admin/"];
+  const PROTECTED_ROLE_SEGMENTS = [
+    "/pages/consumer/",
+    "/pages/steward/",
+    "/pages/engineer/",
+    "/pages/admin/"
+  ];
 
-  /* ---------- utils ---------- */
-  function sanitizeNoScripts(html){
+  /* ---------- fetch + inject ---------- */
+  function sanitizeNoScripts(html) {
     return String(html).replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
   }
-  async function fetchText(url){
+
+  async function fetchText(url) {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error(`HTTP ${res.status} ${url}`);
     return sanitizeNoScripts(await res.text());
   }
-  async function inject(sel, url){
+
+  async function inject(sel, url) {
     const host = $(sel);
     if (!host) return null;
+
     try {
       host.innerHTML = await fetchText(url);
       return host;
@@ -62,30 +108,56 @@
   }
 
   /* ---------- session / auth ---------- */
-  function readUser(){
-    try { return JSON.parse(localStorage.getItem("edx:user") || "null") || null; }
-    catch { return null; }
-  }
-  function requireAuthIfProtected(){
-    const path = location.pathname;
-    const isProtected = PROTECTED_ROLE_SEGMENTS.some(seg => path.includes(seg));
-    if (!isProtected) return;
-
-    const u = readUser();
-    const validRole = !!(u && typeof u.role === "string" && u.role.trim().length > 0);
-    if (!validRole) {
-      // robust relative redirect to signin.html without changing any of your paths
-      const candidates = ["signin.html", "../signin.html", "../../signin.html", "/signin.html"];
-      for (const c of candidates) { location.href = c; return; }
+  function readUser() {
+    try {
+      return JSON.parse(localStorage.getItem("edx:user") || "null") || null;
+    } catch {
+      return null;
     }
   }
 
+  function isProtectedPath(pathname) {
+    const p = pathname || "";
+    return PROTECTED_ROLE_SEGMENTS.some((seg) => p.includes(seg));
+  }
+
+  function redirectToSignin(base) {
+    // Prefer auth/signin under the same base if present in your repo
+    const candidates = [
+      withBase(base, "/auth/signin.html"),
+      withBase(base, "/signin.html"),
+      // relative fallbacks (useful in nested folders)
+      "signin.html",
+      "../signin.html",
+      "../../signin.html",
+      "../auth/signin.html",
+      "../../auth/signin.html"
+    ];
+
+    for (const c of candidates) {
+      try {
+        location.assign(c);
+        return;
+      } catch {}
+    }
+  }
+
+  function requireAuthIfProtected(base) {
+    const path = location.pathname || "";
+    if (!isProtectedPath(path)) return;
+
+    const u = readUser();
+    const validRole = !!(u && typeof u.role === "string" && u.role.trim().length > 0);
+    if (!validRole) redirectToSignin(base);
+  }
+
   /* ---------- header hydration ---------- */
-  function applyUserToHeader(scope=document){
+  function applyUserToHeader(scope = document) {
     const u = readUser();
     const name  = u?.name || (u?.email ? u.email.split("@")[0] : "user");
     const email = u?.email || "user@example.edu";
-    const role  = (u?.role || "consumer").replace(/_/g," ");
+    const role  = (u?.role || "consumer").replace(/_/g, " ");
+
     $("#currentUserName", scope)?.replaceChildren(document.createTextNode(name));
     $("#currentUserRole", scope)?.replaceChildren(document.createTextNode(role));
     $("#menuUserName", scope)?.replaceChildren(document.createTextNode(name));
@@ -94,20 +166,25 @@
 
   /* ---------- dark mode ---------- */
   const THEME_KEY = "edx:theme";
-  function getTheme(){
+
+  function getTheme() {
     const t = localStorage.getItem(THEME_KEY);
     if (t === "light" || t === "dark") return t;
     return document.documentElement.getAttribute("data-bs-theme") || "light";
   }
-  function setTheme(t){
+
+  function setTheme(t) {
     document.documentElement.setAttribute("data-bs-theme", t);
     localStorage.setItem(THEME_KEY, t);
   }
-  function wireThemeToggle(scope=document){
+
+  function wireThemeToggle(scope = document) {
     const btn = $("#themeToggle", scope);
     if (!btn) return;
-    btn.classList.remove("d-none");                              /* header has the control (CSP-safe) */
+
+    btn.classList.remove("d-none");
     const icon = btn.querySelector("i");
+
     const refreshIcon = () => {
       if (!icon) return;
       const cur = getTheme();
@@ -115,8 +192,10 @@
       icon.classList.add(cur === "dark" ? "bi-sun" : "bi-moon");
       btn.setAttribute("aria-label", cur === "dark" ? "Switch to light mode" : "Switch to dark mode");
     };
+
     setTheme(getTheme());
     refreshIcon();
+
     btn.addEventListener("click", () => {
       const next = getTheme() === "dark" ? "light" : "dark";
       setTheme(next);
@@ -125,51 +204,58 @@
   }
 
   /* ---------- global catalog search (header) ---------- */
-  function wireGlobalSearch(scope=document){
+  function wireGlobalSearch(base, scope = document) {
     const form  = $("#globalSearchForm", scope);
     const input = $("#globalSearchInput", scope);
     if (!form || !input) return;
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const q = input.value.trim();
-      if (q.length) {
-        location.href = `/pages/consumer/catalog-browse.html?q=${encodeURIComponent(q)}`; // stays within consumer browse page
-      } else {
-        location.href = `/pages/consumer/catalog-browse.html`;
-      }
+      const target = q.length
+        ? withBase(base, `/pages/consumer/catalog-browse.html?q=${encodeURIComponent(q)}`)
+        : withBase(base, "/pages/consumer/catalog-browse.html");
+      location.href = target;
     });
   }
 
   /* ---------- sidebar helpers ---------- */
-  function markActiveLinks(scope=document){
-    const here = location.pathname.replace(/\/+$/, "");
-    $$("a[href]", scope).forEach(a => {
+  function markActiveLinks(scope = document) {
+    const here = stripTrailingSlash(location.pathname || "/") || "/";
+    $$("a[href]", scope).forEach((a) => {
       const href = a.getAttribute("href") || "";
-      const target = new URL(href, location.origin).pathname.replace(/\/+$/, "");
-      if (target === here) a.classList.add("active");
+      try {
+        const target = stripTrailingSlash(new URL(href, location.origin).pathname) || "/";
+        if (target === here) a.classList.add("active");
+      } catch {}
     });
   }
-  function syncRoleInStorage(role){
+
+  function syncRoleInStorage(role) {
     if (!role) return;
     const u = readUser() || {};
-    if (u.role !== role) localStorage.setItem("edx:user", JSON.stringify({ ...u, role }));
+    if (u.role !== role) {
+      try {
+        localStorage.setItem("edx:user", JSON.stringify({ ...u, role }));
+      } catch {}
+    }
   }
 
   /* ---------- public API ---------- */
-  async function loadPartials({ base, role } = {}){
-    // auth check
-    requireAuthIfProtected();
-
-    // compute defaults
+  async function loadPartials({ base, role } = {}) {
     const resolvedBase = base ?? computeBaseFromPathname();
+
+    // auth check (needs base-aware redirect on GitHub Pages)
+    requireAuthIfProtected(resolvedBase);
+
     const pageRoleAttr = document.body?.getAttribute("data-edx-sidebar");
     const resolvedRole = (role || pageRoleAttr || readUser()?.role || "consumer").toLowerCase();
 
     // header
     await inject("#app-header", PARTIALS.header(resolvedBase));
-    applyUserToHeader();
+    applyUserToHeader(document);
     wireThemeToggle(document);
-    wireGlobalSearch(document);
+    wireGlobalSearch(resolvedBase, document);
 
     // sidebar
     syncRoleInStorage(resolvedRole);
@@ -182,15 +268,19 @@
     // live updates (multi-tab)
     window.addEventListener("storage", (e) => {
       if (e.key === "edx:user") applyUserToHeader();
-      if (e.key === THEME_KEY)  setTheme(getTheme());
+      if (e.key === THEME_KEY) setTheme(getTheme());
     });
   }
 
   // expose + AUTO-BOOT
   window.EDXPartials = { loadPartials, applyUserToHeader };
-  // Auto-run after DOM is ready; no page-specific edits required
+
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => loadPartials().catch(console.error));
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => loadPartials().catch(console.error),
+      { once: true }
+    );
   } else {
     loadPartials().catch(console.error);
   }
