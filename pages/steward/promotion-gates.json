@@ -1,0 +1,106 @@
+{
+  "meta": { "title": "Promotion Gates", "version": "1.0.0" },
+  "defaults": {
+    "pageSize": 10,
+    "routes": [
+      { "from": "staging", "to": "canonical" },
+      { "from": "canonical", "to": "publish" }
+    ],
+    "types": ["DQ_THRESHOLD", "MASKING", "RLS", "SCHEMA_DRIFT", "LINEAGE", "FRESHNESS", "DEPENDENCY"],
+    "severities": ["BLOCK", "WARN", "INFO"],
+    "classifications": ["PII_STRICT", "PII_DIRECTORY", "DEIDENTIFIED", "FINANCIAL", "DISCIPLINE", "HEALTH"],
+    "dq_thresholds": { "staging": 90.0, "canonical": 95.0, "publish": 95.0 },
+    "waiver_policy": {
+      "allowed_roles": ["Data Steward"],
+      "max_days": 14,
+      "reason_template": "Provide business justification, risk assessment, and mitigation steps."
+    }
+  },
+
+  "gates": [
+    {
+      "id": "gate_dq_publish",
+      "name": "DQ minimum for publish",
+      "type": "DQ_THRESHOLD",
+      "severity": "BLOCK",
+      "applies_to": {
+        "routes": [{ "from": "canonical", "to": "publish" }],
+        "dataset_patterns": ["pub_*"],
+        "classifications": []
+      },
+      "waiver_allowed": false,
+      "waiver_max_days": 0,
+      "params": { "min_score": 95.0 }
+    },
+    {
+      "id": "gate_masking",
+      "name": "PII masking required",
+      "type": "MASKING",
+      "severity": "BLOCK",
+      "applies_to": {
+        "routes": [{ "from": "staging", "to": "canonical" }, { "from": "canonical", "to": "publish" }],
+        "dataset_patterns": ["*"],
+        "classifications": ["PII_STRICT", "PII_DIRECTORY"]
+      },
+      "waiver_allowed": false,
+      "waiver_max_days": 0,
+      "params": { "mode": "DYNAMIC_MASKING" }
+    },
+    {
+      "id": "gate_rls",
+      "name": "Row-level security enforced",
+      "type": "RLS",
+      "severity": "BLOCK",
+      "applies_to": {
+        "routes": [{ "from": "canonical", "to": "publish" }],
+        "dataset_patterns": ["pub_*"],
+        "classifications": ["PII_STRICT", "DISCIPLINE", "HEALTH"]
+      },
+      "waiver_allowed": false,
+      "waiver_max_days": 0,
+      "params": { "policy": "ABAC_ORG_SCOPE" }
+    },
+    {
+      "id": "gate_schema",
+      "name": "Schema drift approval",
+      "type": "SCHEMA_DRIFT",
+      "severity": "WARN",
+      "applies_to": {
+        "routes": [{ "from": "staging", "to": "canonical" }],
+        "dataset_patterns": ["canonical.*"],
+        "classifications": []
+      },
+      "waiver_allowed": true,
+      "waiver_max_days": 7,
+      "params": { "allowed_kinds": ["ADD_COLUMN", "ADD_NULLABLE"], "block_on": ["DROP_COLUMN", "TYPE_CHANGE"] }
+    },
+    {
+      "id": "gate_fresh",
+      "name": "Freshness (hours)",
+      "type": "FRESHNESS",
+      "severity": "WARN",
+      "applies_to": {
+        "routes": [{ "from": "canonical", "to": "publish" }],
+        "dataset_patterns": ["pub_*"],
+        "classifications": []
+      },
+      "waiver_allowed": true,
+      "waiver_max_days": 3,
+      "params": { "max_age_hours": 24 }
+    }
+  ],
+
+  "versions": [
+    {
+      "id": "v1",
+      "name": "Initial defaults",
+      "created_at": "2025-10-10T12:00:00Z",
+      "author": "steward@district.edu",
+      "notes": "Bootstrap set of promotion gates."
+    }
+  ],
+
+  "audit": [
+    { "at": "2025-10-15T08:02:11Z", "actor": "steward@district.edu", "event": "gates.edit", "payload": { "id": "gate_schema" } }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "meta": { "title": "Data Quality Rules", "version": "1.1.0" },
+  "categories": ["Completeness", "Validity", "Uniqueness", "Consistency", "Referential", "Freshness"],
+  "owners": ["Data Steward", "Data Engineer", "Registrar", "Program Office"],
+  "defaults": { "pageSize": 10, "gates": ["staging", "publish", "canonical"] },
+
+  "rules": [
+    { "name": "not_null(last_name)",              "target": "canonical.oneroster.users.last_name",          "category": "Completeness", "threshold": ">= 99.5%", "owner": "Data Engineer",  "gate": "publish",   "updated": "2025-10-11 16:00Z" },
+    { "name": "grade_in_range(0..100)",           "target": "staging.canvas.grades_raw.score",              "category": "Validity",     "threshold": "100%",      "owner": "Program Office", "gate": "staging",   "updated": "2025-10-10 08:20Z" },
+    { "name": "foreign_key(user_id→users)",       "target": "canonical.oneroster.enrollments.user_id",      "category": "Referential",  "threshold": "100%",      "owner": "Data Steward",   "gate": "canonical", "updated": "2025-10-09 12:30Z" },
+    { "name": "unique(student_id, term)",         "target": "pub_k12_enrollment_snapshot@1.(student_id,term)", "category": "Uniqueness", "threshold": "100%",      "owner": "Registrar",      "gate": "publish",   "updated": "2025-10-12 09:10Z" },
+    { "name": "no_future_dates(absence_date)",    "target": "pub_k12_attendance_daily@1.absence_date",      "category": "Validity",     "threshold": "100%",      "owner": "Program Office", "gate": "publish",   "updated": "2025-10-14 18:00Z" },
+    { "name": "freshness(<=24h)",                 "target": "pub_he_academic_record@2",                     "category": "Freshness",    "threshold": "<= 24h",    "owner": "Registrar",      "gate": "publish",   "updated": "2025-10-16 07:30Z" }
+  ]
+}

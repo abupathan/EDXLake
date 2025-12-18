@@ -1,0 +1,23 @@
+/* Steward Landing (production) */
+
+/* Cards */
+.card-link:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+
+/* KPI strip */
+.kpi-grid { display: grid; gap: .75rem; grid-template-columns: repeat(1, minmax(0,1fr)); }
+@media (min-width: 576px) { .kpi-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (min-width: 992px) { .kpi-grid { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+.kpi { padding: .75rem 1rem; border: 1px solid var(--bs-border-color); border-radius: .75rem; background: var(--bs-body-bg); }
+.kpi .label { font-size: .8rem; color: var(--bs-secondary-color); }
+.kpi .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Tasks table + pagination */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.pagination { margin-bottom: 0; }
+.page-size { width: auto; }
+
+/* Empty states */
+.empty { border: 1px dashed var(--bs-border-color); border-radius: .75rem; padding: 1rem; color: var(--bs-secondary-color); }
+
+/* Dark mode tweaks */
+[data-bs-theme="dark"] .kpi { border-color: rgba(255,255,255,.15); }

@@ -1,0 +1,29 @@
+/* Validation & Drift (Steward) — production */
+
+/* Action bar */
+.actions { gap: .5rem; }
+
+/* Filters */
+.filters .form-select, .filters .form-control { max-width: 16rem; }
+
+/* Tables */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.badge-mini {
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  white-space: nowrap;
+}
+.status-badge { white-space: nowrap; }
+
+/* Footer controls */
+.page-size { width: auto; }
+.pagination { margin-bottom: 0; }
+
+/* Empty state */
+.empty { border: 1px dashed var(--bs-border-color); border-radius: .75rem; padding: 1rem; color: var(--bs-secondary-color); }
+
+/* Cards */
+.card-subtle { border-color: var(--bs-border-color); }
+
+/* Dark mode tweaks */
+[data-bs-theme="dark"] .badge-mini { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.05); }

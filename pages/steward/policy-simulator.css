@@ -1,0 +1,21 @@
+/* Policy Simulator — production */
+
+/* Status texts */
+.result-allowed { color: var(--bs-success-text-emphasis, #0a3622); }
+.result-denied  { color: var(--bs-danger-text-emphasis,  #58151c); }
+
+/* Headings & cards */
+.section-title { font-size: 1rem; font-weight: 600; }
+.card-subtle { border-color: var(--bs-border-color); }
+
+/* Small badges for tags / reasons */
+.badge-tag { border: 1px solid var(--bs-border-color); background: var(--bs-body-bg); }
+[data-bs-theme="dark"] .badge-tag { border-color: rgba(255,255,255,.2); background: rgba(255,255,255,.05); }
+
+/* Table + pagination */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.page-size { width: auto; }
+.pagination { margin-bottom: 0; }
+
+/* Explanation list */
+.reason { border-left: 3px solid var(--bs-border-color); padding-left: .75rem; }

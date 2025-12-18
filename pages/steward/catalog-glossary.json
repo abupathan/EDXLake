@@ -1,0 +1,340 @@
+{
+  "meta": { "title": "Catalog & Glossary", "version": "1.3.0" },
+  "defaults": {
+    "pageSize": 10,
+    "owners": [
+      "District Data Governance",
+      "Institutional Research",
+      "Student Information Systems",
+      "Assessment & Accountability",
+      "Financial Aid",
+      "State Reporting",
+      "Research Partnerships"
+    ],
+    "term_status": ["Proposed", "Approved", "Deprecated"]
+  },
+
+  "datasets": [
+    {
+      "name": "pub_k12_roster@3",
+      "schema_version": "3.1.0",
+      "owner": "Student Information Systems",
+      "freshness": "Daily 02:00 UTC",
+      "dq_status": "Pass",
+      "desc": "Published K-12 roster flattened for analytics: students, enrollments, sections, staff.",
+      "terms": ["Roster", "Enrollment", "Section", "Student", "Staff"],
+      "readiness": {
+        "score": 92,
+        "last_evaluated": "2025-10-17T23:20:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-18T02:05:11Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "pub_k12_attendance_daily@1",
+      "schema_version": "1.4.2",
+      "owner": "Assessment & Accountability",
+      "freshness": "Hourly",
+      "dq_status": "Warn",
+      "desc": "Daily attendance facts at student, course, section grain.",
+      "terms": ["Attendance", "Student", "Day"],
+      "readiness": {
+        "score": 78,
+        "last_evaluated": "2025-10-18T05:10:00Z",
+        "issues": [
+          "3% null absence_reason",
+          "2 schools missing bell schedule join"
+        ]
+      },
+      "last_validation_ts": "2025-10-18T05:12:31Z",
+      "gates": {
+        "dq": "Warn",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "pub_k12_assessment_results@3",
+      "schema_version": "3.0.1",
+      "owner": "Assessment & Accountability",
+      "freshness": "Weekly",
+      "dq_status": "Pass",
+      "desc": "Summative/interim assessment results with scaled scores and performance levels.",
+      "terms": ["Assessment", "Score", "Performance Level", "Cohort"],
+      "readiness": {
+        "score": 88,
+        "last_evaluated": "2025-10-16T18:00:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-17T00:40:09Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "pub_k12_discipline_events@2",
+      "schema_version": "2.3.0",
+      "owner": "District Data Governance",
+      "freshness": "Daily 03:00 UTC",
+      "dq_status": "Warn",
+      "desc": "Student discipline incidents and dispositions with Ed-Fi aligned codes.",
+      "terms": ["Discipline", "Incident", "Disposition"],
+      "readiness": {
+        "score": 71,
+        "last_evaluated": "2025-10-17T22:10:00Z",
+        "issues": ["7% incidents missing action_end_date"]
+      },
+      "last_validation_ts": "2025-10-18T03:01:12Z",
+      "gates": {
+        "dq": "Warn",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "canonical.oneroster.users",
+      "schema_version": "1.0.5",
+      "owner": "Student Information Systems",
+      "freshness": "Near-real time",
+      "dq_status": "Pass",
+      "desc": "Canonical OneRoster users (students, teachers, guardians) as ingested from SIS.",
+      "terms": ["OneRoster", "User", "Directory"],
+      "readiness": {
+        "score": 95,
+        "last_evaluated": "2025-10-18T06:30:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-18T06:30:31Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "pub_he_financial_aid_awards@1",
+      "schema_version": "1.2.0",
+      "owner": "Financial Aid",
+      "freshness": "Weekly",
+      "dq_status": "Pass",
+      "desc": "Higher-ed financial aid awards with disbursement schedules and Pell indicators.",
+      "terms": ["Financial Aid", "Award", "Disbursement"],
+      "readiness": {
+        "score": 84,
+        "last_evaluated": "2025-10-15T11:00:00Z",
+        "issues": ["1% awards missing packaging_status"]
+      },
+      "last_validation_ts": "2025-10-16T11:05:02Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "pub_he_credentials_awarded@2",
+      "schema_version": "2.1.0",
+      "owner": "Institutional Research",
+      "freshness": "Monthly",
+      "dq_status": "Pass",
+      "desc": "Awards and credentials granted by program, level, and term (IPEDS-aligned).",
+      "terms": ["Credential", "Award", "Program", "Term"],
+      "readiness": {
+        "score": 90,
+        "last_evaluated": "2025-10-10T09:00:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-10T09:10:22Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "edfi_student",
+      "schema_version": "5.0.0",
+      "owner": "Student Information Systems",
+      "freshness": "Near-real time",
+      "dq_status": "Pass",
+      "desc": "Ed-Fi core Student entity (limited columns) for cross-domain joins.",
+      "terms": ["Student", "Core", "Ed-Fi"],
+      "readiness": {
+        "score": 97,
+        "last_evaluated": "2025-10-18T06:45:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-18T06:47:00Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "edfi_discipline_incident",
+      "schema_version": "5.0.0",
+      "owner": "District Data Governance",
+      "freshness": "Daily 03:00 UTC",
+      "dq_status": "Warn",
+      "desc": "Ed-Fi DisciplineIncident reference with minimal denormalization.",
+      "terms": ["Discipline", "Incident", "Ed-Fi"],
+      "readiness": {
+        "score": 66,
+        "last_evaluated": "2025-10-17T22:00:00Z",
+        "issues": ["Missing optional subcategories mapping for 4% rows"]
+      },
+      "last_validation_ts": "2025-10-18T03:00:11Z",
+      "gates": {
+        "dq": "Warn",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Warn"
+      }
+    },
+    {
+      "name": "ceds_financial_aid_award",
+      "schema_version": "1.0.0",
+      "owner": "Financial Aid",
+      "freshness": "Monthly",
+      "dq_status": "Pass",
+      "desc": "CEDS-aligned financial aid award snapshot with categorization and packaging.",
+      "terms": ["Financial Aid", "CEDS", "Award"],
+      "readiness": {
+        "score": 86,
+        "last_evaluated": "2025-10-09T10:00:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-09T10:05:44Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    },
+    {
+      "name": "oneroster_enrollments",
+      "schema_version": "1.3.0",
+      "owner": "Student Information Systems",
+      "freshness": "Daily 01:30 UTC",
+      "dq_status": "Pass",
+      "desc": "OneRoster enrollments canonical form for downstream exports.",
+      "terms": ["OneRoster", "Enrollment"],
+      "readiness": {
+        "score": 91,
+        "last_evaluated": "2025-10-18T01:35:00Z",
+        "issues": []
+      },
+      "last_validation_ts": "2025-10-18T01:36:12Z",
+      "gates": {
+        "dq": "Pass",
+        "consent": "Pass",
+        "lineage": "Pass",
+        "promotion": "Pass"
+      }
+    }
+  ],
+
+  "glossary": [
+    {
+      "term": "Roster",
+      "definition": "List of students, staff, and class sections for a given term and school.",
+      "steward": "Student Information Systems",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_roster@3", "oneroster_enrollments"]
+    },
+    {
+      "term": "Enrollment",
+      "definition": "Association of a student to a section or course within a term.",
+      "steward": "Student Information Systems",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_roster@3", "oneroster_enrollments"]
+    },
+    {
+      "term": "Attendance",
+      "definition": "Presence or absence of a student for an instructional day or period.",
+      "steward": "Assessment & Accountability",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_attendance_daily@1"]
+    },
+    {
+      "term": "Assessment",
+      "definition": "Instrument or test designed to evaluate student knowledge and skills.",
+      "steward": "Assessment & Accountability",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_assessment_results@3"]
+    },
+    {
+      "term": "Performance Level",
+      "definition": "Categorical performance descriptor derived from scaled score thresholds.",
+      "steward": "Assessment & Accountability",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_assessment_results@3"]
+    },
+    {
+      "term": "Discipline",
+      "definition": "Events involving violations of conduct policies and the resulting actions.",
+      "steward": "District Data Governance",
+      "status": "Approved",
+      "related_datasets": ["pub_k12_discipline_events@2", "edfi_discipline_incident"]
+    },
+    {
+      "term": "Credential",
+      "definition": "Formal recognition awarded upon completion of a program of study.",
+      "steward": "Institutional Research",
+      "status": "Approved",
+      "related_datasets": ["pub_he_credentials_awarded@2"]
+    },
+    {
+      "term": "Financial Aid",
+      "definition": "Student financial assistance including grants, loans, and scholarships.",
+      "steward": "Financial Aid",
+      "status": "Approved",
+      "related_datasets": ["pub_he_financial_aid_awards@1", "ceds_financial_aid_award"]
+    },
+    {
+      "term": "OneRoster",
+      "definition": "IMS Global specification for rostering and provisioning data.",
+      "steward": "Student Information Systems",
+      "status": "Approved",
+      "related_datasets": ["canonical.oneroster.users", "oneroster_enrollments"]
+    },
+    {
+      "term": "Ed-Fi",
+      "definition": "Data standard and model widely used to integrate K-12 operational systems.",
+      "steward": "District Data Governance",
+      "status": "Approved",
+      "related_datasets": ["edfi_student", "edfi_discipline_incident"]
+    },
+    {
+      "term": "CEDS",
+      "definition": "Common Education Data Standards for P-20W interoperability.",
+      "steward": "Institutional Research",
+      "status": "Approved",
+      "related_datasets": ["ceds_financial_aid_award"]
+    },
+    {
+      "term": "Program",
+      "definition": "A structured set of courses or services leading to a defined outcome.",
+      "steward": "Institutional Research",
+      "status": "Proposed",
+      "related_datasets": ["pub_he_credentials_awarded@2"]
+    }
+  ]
+}

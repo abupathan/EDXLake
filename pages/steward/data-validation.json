@@ -1,0 +1,39 @@
+{
+  "meta": { "title": "Validation & Drift", "version": "1.1.0" },
+
+  "defaults": {
+    "pageSize": 10,
+    "severities": ["Info", "Warn", "Fail"],
+    "owners": ["Data Steward", "Data Engineer", "Registrar", "Program Office"]
+  },
+
+  "rules": [
+    { "id": "R-001", "name": "not_null(last_name)", "dataset": "canonical.oneroster.users", "severity": "Fail", "owner": "Data Engineer", "gate": "publish" },
+    { "id": "R-002", "name": "grade_in_range(0..100)", "dataset": "staging.canvas.grades_raw", "severity": "Warn", "owner": "Program Office", "gate": "staging" },
+    { "id": "R-003", "name": "unique(student_id, term)", "dataset": "pub_k12_enrollment_snapshot@1", "severity": "Fail", "owner": "Registrar", "gate": "publish" },
+    { "id": "R-004", "name": "no_future_dates(absence_date)", "dataset": "pub_k12_attendance_daily@1", "severity": "Warn", "owner": "Program Office", "gate": "publish" },
+    { "id": "R-005", "name": "tokenized(ssn)", "dataset": "canonical.health_services", "severity": "Fail", "owner": "Data Steward", "gate": "canonical" }
+  ],
+
+  "violations": [
+    { "when": "2025-10-18 06:12Z", "rule": "not_null(last_name)", "dataset": "canonical.oneroster.users", "count": 3, "sample_ids": ["user:98271","user:99311","user:10007"], "run_id": "run-2025-10-18-0612", "severity": "Fail", "owner": "Data Engineer" },
+    { "when": "2025-10-17 22:03Z", "rule": "unique(student_id, term)", "dataset": "pub_k12_enrollment_snapshot@1", "count": 6, "sample_ids": ["stu:1001","stu:1077"], "run_id": "run-2025-10-17-2203", "severity": "Fail", "owner": "Registrar" },
+    { "when": "2025-10-15 02:03Z", "rule": "grade_in_range(0..100)", "dataset": "staging.canvas.grades_raw", "count": 41, "sample_ids": ["rec:84421","rec:84422"], "run_id": "run-2025-10-15-0203", "severity": "Warn", "owner": "Program Office" },
+    { "when": "2025-10-14 18:14Z", "rule": "no_future_dates(absence_date)", "dataset": "pub_k12_attendance_daily@1", "count": 9, "sample_ids": ["att:5521","att:5599"], "run_id": "run-2025-10-14-1814", "severity": "Warn", "owner": "Program Office" },
+    { "when": "2025-10-10 09:41Z", "rule": "tokenized(ssn)", "dataset": "canonical.health_services", "count": 2, "sample_ids": ["svc:77","svc:81"], "run_id": "run-2025-10-10-0941", "severity": "Fail", "owner": "Data Steward" }
+  ],
+
+  "drift": [
+    { "field": "grade_distribution.A", "from": "41%", "to": "27%", "delta": "-14pp", "window": "2025-09 → 2025-10", "dataset": "pub_k12_grades_term@1", "severity": "Warn" },
+    { "field": "enrollments_per_course", "from": "28.1", "to": "25.6", "delta": "-2.5", "window": "2025-09 → 2025-10", "dataset": "pub_k12_enrollment_snapshot@1", "severity": "Info" },
+    { "field": "attendance_present_rate", "from": "92.4%", "to": "88.9%", "delta": "-3.5pp", "window": "2025-09 → 2025-10", "dataset": "pub_k12_attendance_daily@1", "severity": "Warn" }
+  ],
+
+  "runs": [
+    { "run_id": "run-2025-10-18-0612", "started": "2025-10-18T06:12:00Z", "ended": "2025-10-18T06:13:12Z", "inputs": ["canonical.oneroster.users"], "status": "Completed" },
+    { "run_id": "run-2025-10-17-2203", "started": "2025-10-17T22:03:00Z", "ended": "2025-10-17T22:04:30Z", "inputs": ["pub_k12_enrollment_snapshot@1"], "status": "Completed" },
+    { "run_id": "run-2025-10-15-0203", "started": "2025-10-15T02:03:00Z", "ended": "2025-10-15T02:05:45Z", "inputs": ["staging.canvas.grades_raw"], "status": "Completed" },
+    { "run_id": "run-2025-10-14-1814", "started": "2025-10-14T18:14:00Z", "ended": "2025-10-14T18:16:21Z", "inputs": ["pub_k12_attendance_daily@1"], "status": "Completed" },
+    { "run_id": "run-2025-10-10-0941", "started": "2025-10-10T09:41:00Z", "ended": "2025-10-10T09:42:38Z", "inputs": ["canonical.health_services"], "status": "Completed" }
+  ]
+}

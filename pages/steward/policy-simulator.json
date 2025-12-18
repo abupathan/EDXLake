@@ -1,0 +1,74 @@
+{
+  "meta": { "title": "Policy Simulator", "version": "1.1.0" },
+
+  "roles": ["Platform Admin", "Data Engineer", "Data Steward", "Data Consumer", "Share Recipient"],
+  "purposes": ["Operational", "Research", "Compliance", "Testing"],
+
+  "abac_dimensions": {
+    "organization": ["District (LEA-1001)", "College of Science", "State HE System"],
+    "campus": ["Central HS", "North Campus", "—"],
+    "program": ["SPED", "Title I", "General", "—"],
+    "term": ["2025-Fall", "2025-Spring", "—"]
+  },
+
+  "datasets": [
+    {
+      "name": "canonical.oneroster.users",
+      "display": "OneRoster Users (canonical)",
+      "consent_required": false,
+      "default_row_scope": { "organization": ["District (LEA-1001)"] },
+      "columns": [
+        { "name": "user_id", "classifications": [] },
+        { "name": "person_name", "classifications": ["PII_DIRECTORY"] },
+        { "name": "email", "classifications": ["PII_DIRECTORY"] },
+        { "name": "phone", "classifications": ["PII_DIRECTORY"] },
+        { "name": "ssn", "classifications": ["PII_STRICT"] },
+        { "name": "grade_level", "classifications": [] },
+        { "name": "school", "classifications": [] }
+      ]
+    },
+    {
+      "name": "pub_k12_attendance_daily",
+      "display": "K-12 Attendance Daily (publish)",
+      "consent_required": false,
+      "default_row_scope": { "organization": ["District (LEA-1001)"], "term": ["2025-Fall"] },
+      "columns": [
+        { "name": "date", "classifications": [] },
+        { "name": "student_id", "classifications": ["PII_STRICT"] },
+        { "name": "student_name", "classifications": ["PII_DIRECTORY"] },
+        { "name": "absence_code", "classifications": ["DISCIPLINE"] },
+        { "name": "school", "classifications": [] }
+      ]
+    },
+    {
+      "name": "canonical.health_services",
+      "display": "Health Services (canonical)",
+      "consent_required": true,
+      "default_row_scope": { "organization": ["District (LEA-1001)"] },
+      "columns": [
+        { "name": "student_id", "classifications": ["PII_STRICT", "HEALTH"] },
+        { "name": "student_name", "classifications": ["PII_DIRECTORY"] },
+        { "name": "service_type", "classifications": ["HEALTH"] },
+        { "name": "service_date", "classifications": ["HEALTH"] },
+        { "name": "provider", "classifications": ["HEALTH"] }
+      ]
+    }
+  ],
+
+  "mask_policies": {
+    "PII_STRICT":   { "Operational": "FULL_MASK", "Research": "HASH", "Compliance": "TOKENIZE", "Testing": "FULL_MASK" },
+    "PII_DIRECTORY":{ "Operational": "PARTIAL_MASK", "Research": "HASH", "Compliance": "PARTIAL_MASK", "Testing": "FULL_MASK" },
+    "FINANCIAL":    { "Operational": "PARTIAL_MASK", "Research": "HASH", "Compliance": "TOKENIZE", "Testing": "FULL_MASK" },
+    "DISCIPLINE":   { "Operational": "REDact", "Research": "HASH", "Compliance": "TOKENIZE", "Testing": "FULL_MASK" },
+    "HEALTH":       { "Operational": "REDact", "Research": "HASH", "Compliance": "TOKENIZE", "Testing": "FULL_MASK" },
+    "DEIDENTIFIED": { "Operational": "NONE", "Research": "NONE", "Compliance": "NONE", "Testing": "NONE" }
+  },
+
+  "row_policies": {
+    "rules": [
+      { "dimension": "organization", "type": "IN", "values": ["District (LEA-1001)"], "reason": "Org scope" },
+      { "dimension": "term",         "type": "IN", "values": ["2025-Fall","—"],       "reason": "Term scope" },
+      { "dimension": "program",      "type": "IN", "values": ["General","Title I","—"], "reason": "Program scope" }
+    ]
+  }
+}

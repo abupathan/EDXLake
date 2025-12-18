@@ -1,0 +1,50 @@
+/* Approvals Queue (Steward) — production */
+
+.actions { gap: .5rem; }
+.filters .form-select, .filters .form-control { max-width: 16rem; }
+
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.text-trunc { max-width: 520px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.badge-type, .badge-status, .badge-priority, .badge-env, .badge-step, .badge-waiver {
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  white-space: nowrap;
+}
+
+.badge-status[data-status="Pending"]   { color: var(--bs-secondary-color); }
+.badge-status[data-status="Approved"]  { color: var(--bs-success-text-emphasis); }
+.badge-status[data-status="Rejected"]  { color: var(--bs-danger-text-emphasis); }
+
+.badge-priority[data-level="High"]   { color: var(--bs-danger-text-emphasis); }
+.badge-priority[data-level="Medium"] { color: var(--bs-warning-text-emphasis); }
+.badge-priority[data-level="Low"]    { color: var(--bs-secondary-color); }
+
+.badge-step[data-state="pending"]   { color: var(--bs-secondary-color); }
+.badge-step[data-state="approved"]  { color: var(--bs-success-text-emphasis); }
+.badge-step[data-state="rejected"]  { color: var(--bs-danger-text-emphasis); }
+.badge-waiver { color: var(--bs-warning-text-emphasis); }
+
+.page-size { width: auto; }
+.pagination { margin-bottom: 0; }
+
+.empty {
+  border: 1px dashed var(--bs-border-color);
+  border-radius: .75rem;
+  padding: 1rem;
+  color: var(--bs-secondary-color);
+}
+
+.card-subtle { border-color: var(--bs-border-color); }
+pre.small { max-height: 40vh; overflow: auto; }
+
+/* Dark mode tweaks */
+[data-bs-theme="dark"] .badge-type,
+[data-bs-theme="dark"] .badge-status,
+[data-bs-theme="dark"] .badge-priority,
+[data-bs-theme="dark"] .badge-env,
+[data-bs-theme="dark"] .badge-step,
+[data-bs-theme="dark"] .badge-waiver {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.05);
+}

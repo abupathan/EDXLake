@@ -1,0 +1,35 @@
+/* Catalog & Glossary (Steward) — production */
+
+.actions { gap: .5rem; }
+.filters .form-select, .filters .form-control { max-width: 16rem; }
+
+.nav-tabs .nav-link { font-weight: 500; }
+
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.schema-col { width: 320px; }
+.text-trunc-md { max-width: 520px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.badge-term, .badge-status, .badge-gate {
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  white-space: nowrap;
+}
+.badge-status[data-status="Approved"] { color: var(--bs-success-text-emphasis); }
+.badge-status[data-status="Proposed"] { color: var(--bs-secondary-color); }
+.badge-status[data-status="Deprecated"] { color: var(--bs-danger-text-emphasis); }
+
+.page-size { width: auto; }
+.pagination { margin-bottom: 0; }
+
+.empty { border: 1px dashed var(--bs-border-color); border-radius: .75rem; padding: 1rem; color: var(--bs-secondary-color); }
+
+[data-bs-theme="dark"] .badge-term,
+[data-bs-theme="dark"] .badge-status,
+[data-bs-theme="dark"] .badge-gate {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.05);
+}
+
+/* Drawer details layout */
+.ds-kv dt { width: 40%; min-width: 10rem; color: var(--bs-secondary-color); }
+.ds-kv dd { margin-left: 0; }

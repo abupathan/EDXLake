@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Dataset Tagging</title>
+
+  <!-- Strict CSP (no inline JS/CSS). NOTE: frame-ancestors is header-only, so omitted here. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src  'self' https://cdn.jsdelivr.net;
+                 img-src    'self' data:;
+                 font-src   'self' https://cdn.jsdelivr.net;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Correct relative paths from /pages/steward/ -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="dataset-tagging.css" rel="stylesheet">
+</head>
+
+<body data-edx-sidebar="steward">
+  <a class="edx-skiplink" href="#app-main">Skip to main content</a>
+
+  <!-- Shared partial anchors -->
+  <div id="app-header" role="banner"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2" aria-label="Primary">
+        <div id="app-sidebar" role="navigation"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" role="main" aria-live="polite">
+        <!-- dataset-tagging.js renders content here -->
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4" role="contentinfo"></div>
+
+  <!-- Toast container (for non-blocking user feedback) -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+    <div id="edxToaster" class="toast align-items-center text-bg-dark border-0" role="status" aria-live="polite" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toastBody">Ready.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS (external only; defer) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+  <script src="../../assets/js/partials-loader.js" defer></script>
+  <script src="dataset-tagging.js" defer></script>
+</body>
+</html>

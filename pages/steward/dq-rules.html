@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Data Quality Rules</title>
+
+  <!-- Strict CSP: external assets only -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src  'self' https://cdn.jsdelivr.net;
+                 img-src    'self' data:;
+                 font-src   'self' https://cdn.jsdelivr.net;
+                 connect-src 'self';
+                 frame-ancestors 'none';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="dq-rules.css" rel="stylesheet">
+</head>
+
+<body data-edx-sidebar="steward">
+  <a class="edx-skiplink" href="#app-main">Skip to main content</a>
+
+  <!-- Shared partial anchors -->
+  <div id="app-header" role="banner"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2" aria-label="Primary">
+        <div id="app-sidebar" role="navigation"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" role="main" aria-live="polite">
+        <!-- dq-rules.js renders content here -->
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4" role="contentinfo"></div>
+
+  <!-- JS (no inline) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+  <script src="../../assets/js/partials-loader.js" defer></script>
+  <script src="dq-rules.js" defer></script>
+</body>
+</html>

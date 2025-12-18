@@ -1,0 +1,115 @@
+{
+  "meta": { "title": "Promotion Approvals", "version": "2.0.0" },
+
+  "defaults": {
+    "pageSize": 10,
+    "envs": ["staging", "canonical", "publish"],
+    "statuses": ["Pending", "Approved", "Rejected"],
+    "dq_thresholds": { "staging": 90.0, "canonical": 95.0, "publish": 95.0 },
+    "flows": [
+      {
+        "from": "staging",
+        "to": "canonical",
+        "steps": [
+          { "role": "Data Steward", "name": "Steward approval" }
+        ]
+      },
+      {
+        "from": "canonical",
+        "to": "publish",
+        "steps": [
+          { "role": "Data Steward", "name": "Steward approval" },
+          { "role": "Platform Admin", "name": "Platform approval" }
+        ]
+      }
+    ]
+  },
+
+  "requests": [
+    {
+      "id": "prom_2025_10_18_004",
+      "from": "staging",
+      "to": "canonical",
+      "dataset": "canonical.ceds_course_section",
+      "requested_by": "Ivy Engineer",
+      "requested_at": "2025-10-18T09:11:00Z",
+      "status": "Pending",
+      "dq_score": 99.6,
+      "summary": "Sync CEDS section changes from LMS ingest.",
+      "changes": { "schema_diff": "ADD column meeting_days TEXT", "row_delta": "+12,441 / -0" },
+      "gates": [
+        { "name": "DQ >= 95", "status": "PASS" },
+        { "name": "Schema", "status": "PASS" },
+        { "name": "Lineage", "status": "PASS" }
+      ],
+      "waiver": null,
+      "approvals": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval", "state": "Pending", "actor": null, "at": null, "reason": null }
+      ]
+    },
+    {
+      "id": "prom_2025_10_15_001",
+      "from": "canonical",
+      "to": "publish",
+      "dataset": "pub_k12_attendance_daily",
+      "requested_by": "Ivy Engineer",
+      "requested_at": "2025-10-15T12:02:00Z",
+      "status": "Pending",
+      "dq_score": 97.8,
+      "summary": "Promote attendance window 2025-10-08..2025-10-14.",
+      "changes": { "schema_diff": "NO_OP", "row_delta": "+54,990 / -0" },
+      "gates": [
+        { "name": "DQ >= 95", "status": "PASS" },
+        { "name": "Masking", "status": "PASS" },
+        { "name": "RLS", "status": "PASS" }
+      ],
+      "waiver": null,
+      "approvals": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval",  "state": "Approved", "actor": "steward@district.edu", "at": "2025-10-15T13:00:00Z", "reason": "Quality verified." },
+        { "step": 2, "role": "Platform Admin", "name": "Platform approval", "state": "Pending",  "actor": null, "at": null, "reason": null }
+      ]
+    },
+    {
+      "id": "prom_2025_10_14_003",
+      "from": "staging",
+      "to": "canonical",
+      "dataset": "canonical.oneroster.users",
+      "requested_by": "Ivy Engineer",
+      "requested_at": "2025-10-14T07:33:00Z",
+      "status": "Approved",
+      "dq_score": 99.1,
+      "summary": "Refresh users from SIS roster feed.",
+      "changes": { "schema_diff": "ADD column phone TEXT", "row_delta": "+3,112 / -28" },
+      "gates": [
+        { "name": "DQ >= 95", "status": "PASS" },
+        { "name": "Schema", "status": "PASS" },
+        { "name": "Lineage", "status": "PASS" }
+      ],
+      "waiver": null,
+      "approvals": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval", "state": "Approved", "actor": "steward@district.edu", "at": "2025-10-14T08:00:00Z", "reason": "OK to advance." }
+      ]
+    },
+    {
+      "id": "prom_2025_10_12_002",
+      "from": "staging",
+      "to": "canonical",
+      "dataset": "canonical.health_services",
+      "requested_by": "Service Account",
+      "requested_at": "2025-10-12T18:47:00Z",
+      "status": "Rejected",
+      "dq_score": 92.2,
+      "summary": "Weekly health services rollup.",
+      "changes": { "schema_diff": "NO_OP", "row_delta": "+1,001 / -0" },
+      "gates": [
+        { "name": "DQ >= 95", "status": "FAIL" },
+        { "name": "Masking", "status": "PASS" },
+        { "name": "RLS", "status": "PASS" }
+      ],
+      "waiver": { "reason": "Temporary exception for pilot cohort.", "actor": "steward@district.edu", "at": "2025-10-12T19:00:00Z" },
+      "approvals": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval", "state": "Rejected", "actor": "steward@district.edu", "at": "2025-10-12T19:05:00Z", "reason": "DQ below threshold; defer." }
+      ]
+    }
+  ]
+}

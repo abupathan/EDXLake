@@ -1,0 +1,48 @@
+{
+  "meta": { "title": "Steward Landing", "version": "1.1.0" },
+
+  "kpis": [
+    { "label": "Pending approvals", "value": 7,  "hint": "Awaiting Steward action", "id": "kpi_approvals" },
+    { "label": "DQ pass rate (7d)", "value": "96.4%", "hint": "Weighted across publish datasets", "id": "kpi_dq" },
+    { "label": "Drift alerts (24h)", "value": 3, "hint": "Schema/value drift open", "id": "kpi_drift" },
+    { "label": "Active shares", "value": 12, "hint": "External partners with access", "id": "kpi_shares" }
+  ],
+
+  "sections": [
+    { "title": "Data Quality Rules",   "area": "Quality",     "desc": "Create and manage rule library.", "link": "dq-rules.html" },
+    { "title": "Validation & Drift",   "area": "Quality",     "desc": "Review violations and drift signals.", "link": "data-validation.html" },
+    { "title": "Promotion Approvals",  "area": "Governance",  "desc": "Gate promotions across zones.", "link": "promotion-approvals.html" },
+    { "title": "Catalog & Glossary",   "area": "Catalog",     "desc": "Edit descriptions and business terms.", "link": "catalog-glossary.html" },
+    { "title": "Dataset Tagging",      "area": "Policy",      "desc": "Apply PII/health/finance tags.", "link": "dataset-tagging.html" },
+    { "title": "Policy Simulator",     "area": "Policy",      "desc": "Preview effective access and masking.", "link": "policy-simulator.html" },
+    { "title": "Data Shares",          "area": "Sharing",     "desc": "Manage scoped, revocable external shares.", "link": "data-shares.html" },
+    { "title": "Export Requests",      "area": "Governance",  "desc": "Approve or reject consumer export requests.", "link": "export-requests.html", "alt": "export-history.html" }
+  ],
+
+  "tasks": {
+    "pageSize": 10,
+    "items": [
+      { "id": "AP-1027", "type": "Promotion", "dataset": "pub_k12_attendance_daily@1", "submitted_by": "eng.alex@district.edu", "submitted_ts": "2025-10-18T14:23:00Z", "status": "Waiting review" },
+      { "id": "AP-1026", "type": "Promotion", "dataset": "pub_he_academic_record@2", "submitted_by": "eng.sam@univ.edu", "submitted_ts": "2025-10-18T13:55:00Z", "status": "Waiting review" },
+      { "id": "DQ-4312", "type": "DQ Violation", "dataset": "oneroster_enrollments", "submitted_by": "pipeline@edx", "submitted_ts": "2025-10-18T12:10:00Z", "status": "Threshold failed" },
+      { "id": "DV-2208", "type": "Drift Alert", "dataset": "edfi_student", "submitted_by": "monitor@edx", "submitted_ts": "2025-10-18T11:50:00Z", "status": "Schema drift" },
+      { "id": "EX-9011", "type": "Export", "dataset": "pub_he_credentials_awarded", "submitted_by": "ops.lisa@college.edu", "submitted_ts": "2025-10-18T10:02:00Z", "status": "Awaiting approval" },
+      { "id": "AP-1025", "type": "Promotion", "dataset": "pub_k12_assessment_results@3", "submitted_by": "eng.raj@district.edu", "submitted_ts": "2025-10-18T09:40:00Z", "status": "Waiting review" },
+      { "id": "PS-1180", "type": "Policy Change", "dataset": "pub_p20_student_identity", "submitted_by": "steward.jo@state.edu", "submitted_ts": "2025-10-18T08:35:00Z", "status": "Approval required" },
+      { "id": "DQ-4311", "type": "DQ Violation", "dataset": "ceds_financial_aid_award", "submitted_by": "pipeline@edx", "submitted_ts": "2025-10-18T07:45:00Z", "status": "Investigate" },
+      { "id": "DV-2207", "type": "Drift Alert", "dataset": "edfi_attendance", "submitted_by": "monitor@edx", "submitted_ts": "2025-10-18T07:10:00Z", "status": "Value drift" },
+      { "id": "EX-9010", "type": "Export", "dataset": "pub_k12_roster", "submitted_by": "ops.maria@district.edu", "submitted_ts": "2025-10-18T06:30:00Z", "status": "Awaiting approval" },
+
+      { "id": "AP-1024", "type": "Promotion", "dataset": "pub_he_financial_aid_awards@1", "submitted_by": "eng.pat@univ.edu", "submitted_ts": "2025-10-18T05:55:00Z", "status": "Waiting review" },
+      { "id": "DQ-4310", "type": "DQ Violation", "dataset": "edfi_discipline_incident", "submitted_by": "pipeline@edx", "submitted_ts": "2025-10-18T05:40:00Z", "status": "Threshold failed" },
+      { "id": "DV-2206", "type": "Drift Alert", "dataset": "oneroster_users", "submitted_by": "monitor@edx", "submitted_ts": "2025-10-18T05:10:00Z", "status": "Schema drift" },
+      { "id": "EX-9009", "type": "Export", "dataset": "pub_he_enrollment_term", "submitted_by": "ops.kei@univ.edu", "submitted_ts": "2025-10-18T04:45:00Z", "status": "Awaiting approval" },
+      { "id": "AP-1023", "type": "Promotion", "dataset": "pub_k12_discipline_events@2", "submitted_by": "eng.nia@district.edu", "submitted_ts": "2025-10-18T04:20:00Z", "status": "Waiting review" },
+      { "id": "PS-1179", "type": "Policy Change", "dataset": "pub_k12_enrollment_snapshot", "submitted_by": "steward.lee@district.edu", "submitted_ts": "2025-10-18T03:58:00Z", "status": "Approval required" },
+      { "id": "DQ-4309", "type": "DQ Violation", "dataset": "ceds_course_section", "submitted_by": "pipeline@edx", "submitted_ts": "2025-10-18T03:40:00Z", "status": "Investigate" },
+      { "id": "DV-2205", "type": "Drift Alert", "dataset": "oneroster_classes", "submitted_by": "monitor@edx", "submitted_ts": "2025-10-18T03:10:00Z", "status": "Value drift" },
+      { "id": "EX-9008", "type": "Export", "dataset": "pub_p20_course_equivalency", "submitted_by": "ops.ana@state.edu", "submitted_ts": "2025-10-18T02:45:00Z", "status": "Awaiting approval" },
+      { "id": "AP-1022", "type": "Promotion", "dataset": "pub_he_credentials_awarded@1", "submitted_by": "eng.ted@univ.edu", "submitted_ts": "2025-10-18T02:30:00Z", "status": "Waiting review" }
+    ]
+  }
+}

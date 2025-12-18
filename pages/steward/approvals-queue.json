@@ -1,0 +1,92 @@
+{
+  "meta": { "title": "Approvals Queue", "version": "1.0.0" },
+  "defaults": {
+    "pageSize": 10,
+    "types": ["Promotion", "DQ Waiver", "Export", "Policy"],
+    "statuses": ["Pending", "Approved", "Rejected"],
+    "priorities": ["High", "Medium", "Low"],
+    "envs": ["staging", "canonical", "publish"],
+    "dq_thresholds": { "staging": 90.0, "canonical": 95.0, "publish": 95.0 }
+  },
+
+  "items": [
+    {
+      "id": "prom_2025_10_18_004",
+      "type": "Promotion",
+      "title": "Promote CEDS Course Section",
+      "dataset": "canonical.ceds_course_section",
+      "from": "staging",
+      "to": "canonical",
+      "summary": "Sync CEDS section changes from LMS ingest.",
+      "created_at": "2025-10-18T09:11:00Z",
+      "requester": "Ivy Engineer",
+      "priority": "High",
+      "status": "Pending",
+      "dq_score": 99.6,
+      "gates": [{ "name": "DQ >= 95", "status": "PASS" }, { "name": "Schema", "status": "PASS" }, { "name": "Lineage", "status": "PASS" }],
+      "waiver": null,
+      "flow": { "current_step": 1, "steps": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval", "state": "Pending" }
+      ]}
+    },
+    {
+      "id": "waiver_2025_10_17_002",
+      "type": "DQ Waiver",
+      "title": "Waive uniqueness window",
+      "dataset": "pub_k12_enrollment_snapshot@1",
+      "summary": "Temporary duplicate enrollments during SIS cutover.",
+      "created_at": "2025-10-17T19:40:00Z",
+      "requester": "Registrar",
+      "priority": "Medium",
+      "status": "Pending",
+      "rule": "unique(student_id, term)",
+      "window": "2025-10-15..2025-10-22",
+      "justification": "Known migration; downstream impact negligible."
+    },
+    {
+      "id": "export_2025_10_16_009",
+      "type": "Export",
+      "title": "Monthly Discipline Export (De-Identified)",
+      "dataset": "pub_k12_discipline_events@2",
+      "summary": "State reporting export for October (de-identified slice).",
+      "created_at": "2025-10-16T08:10:00Z",
+      "requester": "Compliance Bot",
+      "priority": "Low",
+      "status": "Pending",
+      "slice": "2025-10-01..2025-10-15",
+      "policy_checks": [{ "name": "Masking", "status": "PASS" }, { "name": "RLS", "status": "PASS" }]
+    },
+    {
+      "id": "policy_2025_10_15_003",
+      "type": "Policy",
+      "title": "Update term mapping for Enrollment",
+      "dataset": "pub_he_enrollment_term",
+      "summary": "Adjust mapping for CEDS Term code: Fall→FA.",
+      "created_at": "2025-10-15T11:25:00Z",
+      "requester": "Data Engineer",
+      "priority": "Medium",
+      "status": "Pending",
+      "change": { "category": "Mapping", "before": "Fall", "after": "FA" }
+    },
+    {
+      "id": "prom_2025_10_15_001",
+      "type": "Promotion",
+      "title": "Publish Attendance Window",
+      "dataset": "pub_k12_attendance_daily",
+      "from": "canonical",
+      "to": "publish",
+      "summary": "Promote 2025-10-08..2025-10-14 attendance.",
+      "created_at": "2025-10-15T12:02:00Z",
+      "requester": "Ivy Engineer",
+      "priority": "High",
+      "status": "Pending",
+      "dq_score": 97.8,
+      "gates": [{ "name": "DQ >= 95", "status": "PASS" }, { "name": "Masking", "status": "PASS" }, { "name": "RLS", "status": "PASS" }],
+      "waiver": null,
+      "flow": { "current_step": 2, "steps": [
+        { "step": 1, "role": "Data Steward", "name": "Steward approval", "state": "Approved", "actor": "steward@district.edu", "at": "2025-10-15T13:00:00Z" },
+        { "step": 2, "role": "Platform Admin", "name": "Platform approval", "state": "Pending" }
+      ]}
+    }
+  ]
+}

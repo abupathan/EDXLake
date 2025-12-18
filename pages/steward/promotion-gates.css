@@ -1,0 +1,42 @@
+/* Promotion Gates — production */
+
+.actions { gap: .5rem; }
+.filters .form-select, .filters .form-control { max-width: 16rem; }
+
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.text-trunc { max-width: 520px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.badge-type, .badge-sev, .badge-scope, .badge-class, .badge-route {
+  border: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  white-space: nowrap;
+}
+
+.badge-sev[data-sev="BLOCK"] { color: var(--bs-danger-text-emphasis); }
+.badge-sev[data-sev="WARN"]  { color: var(--bs-warning-text-emphasis); }
+.badge-sev[data-sev="INFO"]  { color: var(--bs-secondary-color); }
+
+.page-size { width: auto; }
+.pagination { margin-bottom: 0; }
+
+.empty {
+  border: 1px dashed var(--bs-border-color);
+  border-radius: .75rem;
+  padding: 1rem;
+  color: var(--bs-secondary-color);
+}
+
+.card-subtle { border-color: var(--bs-border-color); }
+pre.small { max-height: 40vh; overflow: auto; }
+code.kv { white-space: pre-wrap; }
+
+.tab-help { color: var(--bs-secondary-color); }
+
+[data-bs-theme="dark"] .badge-type,
+[data-bs-theme="dark"] .badge-sev,
+[data-bs-theme="dark"] .badge-scope,
+[data-bs-theme="dark"] .badge-class,
+[data-bs-theme="dark"] .badge-route {
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.05);
+}
