@@ -1,7 +1,11 @@
 /* assets/js/partials-loader.js
  * GitHub Pages project-site safe loader:
  * - Loads partials from <base>/partials/...
- * - Rewrites injected links so "/support/.." becomes "<base>/support/.."
+ * - Rewrites injected links so they always stay under <base>
+ *
+ * Fixes:
+ *  - "/support/docs.html"            -> "/EDXLake/support/docs.html"
+ *  - "../../support/docs.html"       -> "/EDXLake/support/docs.html"   (works on home + nested pages)
  */
 
 (function () {
@@ -91,9 +95,10 @@
   }
 
   function redirectToSignin(base) {
+    const b = stripTrailingSlash(base);
     const candidates = [
-      `${stripTrailingSlash(base)}/auth/signin.html`,
-      `${stripTrailingSlash(base)}/signin.html`,
+      `${b}/auth/signin.html`,
+      `${b}/signin.html`,
       "signin.html",
       "../signin.html",
       "../../signin.html"
@@ -108,26 +113,39 @@
     if (!validRole) redirectToSignin(base);
   }
 
-  // Critical: rewrite injected links that start with "/"
-  // Example: "/support/docs.html" -> "/EDXLake/support/docs.html"
+  // Robust rewrite:
+  // - handles "/support/..." AND "../../support/..." consistently
   function rewriteInjectedLinks(base, scope) {
     const b = stripTrailingSlash(base || "");
     if (!scope || !b) return;
 
     $$("a[href]", scope).forEach((a) => {
-      const href = (a.getAttribute("href") || "").trim();
-      if (!href) return;
+      const raw = (a.getAttribute("href") || "").trim();
+      if (!raw) return;
 
       // ignore anchors and external/schemes
-      if (href.startsWith("#")) return;
-      if (/^(https?:)?\/\//i.test(href)) return;
-      if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
+      if (raw.startsWith("#")) return;
+      if (/^(https?:)?\/\//i.test(raw)) return;
+      if (/^(mailto:|tel:|javascript:)/i.test(raw)) return;
 
-      // only rewrite site-root links
-      if (href.startsWith("/")) {
-        // already has base?
-        if (href === b || href.startsWith(b + "/")) return;
-        a.setAttribute("href", b + href);
+      // Resolve how the browser would interpret it from the current page
+      let u;
+      try {
+        u = new URL(raw, location.href);
+      } catch {
+        return;
+      }
+
+      const path = u.pathname || "/";
+      const search = u.search || "";
+      const hash = u.hash || "";
+
+      // If already under base, keep it.
+      if (path === b || path.startsWith(b + "/")) return;
+
+      // Only rewrite same-origin absolute paths
+      if (path.startsWith("/")) {
+        a.setAttribute("href", b + path + search + hash);
       }
     });
   }
