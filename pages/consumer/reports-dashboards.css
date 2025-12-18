@@ -1,0 +1,42 @@
+/* External BI & Tools — production styles (built on your existing) */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+.badge-tag { border:1px solid var(--bs-border-color); background:#fff; }
+[data-bs-theme="dark"] .badge-tag { background: rgba(255,255,255,.06); }
+
+.card-report:hover { box-shadow: 0 .75rem 1.5rem rgba(0,0,0,.10); transform: translateY(-1px); transition: box-shadow .2s, transform .2s; }
+
+.toolbar .form-control,
+.toolbar .form-select { max-width: 260px; }
+.toolbar .form-select.select-sm-narrow { max-width: 200px; }
+
+.kpi .card-body { padding: .75rem 1rem; }
+.kpi .value { font-size: clamp(1.25rem, 2.3vw, 1.75rem); font-weight: 700; }
+
+.grid { display: grid; grid-template-columns: repeat(1,minmax(0,1fr)); gap: .75rem; }
+@media (min-width: 576px){ .grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (min-width: 1200px){ .grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+
+.pagination-wrap{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+.page-input{ width:4.5rem; }
+
+.btn-fav[aria-pressed="true"] { color: var(--bs-warning-text); }
+.btn-fav[aria-pressed="true"] .bi { fill: currentColor; }
+
+/* Skeleton (loading shimmer) */
+.skeleton {
+  position: relative; overflow: hidden; background: var(--bs-secondary-bg);
+  border-radius: var(--bs-border-radius);
+  min-height: 120px;
+}
+.skeleton::after {
+  content: ""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
+
+/* New: instruction list + connection block */
+.conn-steps li + li { margin-top: .25rem; }
+.conn-block { border:1px solid var(--bs-border-color); border-radius:.5rem; padding:.75rem; background: var(--bs-body-bg); }
+.conn-block code { word-break: break-all; }

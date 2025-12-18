@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — New Export Request</title>
+  <meta name="description" content="Create governed, policy-aware export jobs with pre-flight checks and resumable chunks." />
+  <meta name="color-scheme" content="light dark" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src  'self' https://cdn.jsdelivr.net;
+                 font-src   'self' https://cdn.jsdelivr.net data:;
+                 img-src    'self' data:;
+                 connect-src 'self';
+                 base-uri   'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="../../assets/css/edx-global.css">
+  <link rel="stylesheet" href="./export-requests-new.css">
+</head>
+
+<body data-edx-sidebar="consumer">
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2">
+        <div id="app-sidebar"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="main" tabindex="-1" role="main" aria-label="Create a new export request">
+        <!-- Breadcrumb + actions -->
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="./catalog-browse.html">Catalog</a></li>
+              <li class="breadcrumb-item"><a href="./export-requests.html">Exports</a></li>
+              <li class="breadcrumb-item active" aria-current="page">New Export Request</li>
+            </ol>
+          </nav>
+          <div class="btn-group">
+            <a class="btn btn-outline-secondary btn-sm" href="./export-requests.html">
+              <i class="bi bi-arrow-left"></i> Back to Exports
+            </a>
+          </div>
+        </div>
+
+        <!-- Effective policy banner -->
+        <section id="policyBanner" class="alert alert-info d-flex align-items-start gap-2" role="note" aria-live="polite">
+          <i class="bi bi-shield-check mt-1" aria-hidden="true"></i>
+          <div>
+            <div class="fw-semibold">Effective policy</div>
+            <div class="small text-body-secondary" id="policyLine">Resolving…</div>
+          </div>
+          <div class="ms-auto small">
+            <span class="badge rounded-pill text-bg-light border" id="policySnapshot">policy_snapshot_id=—</span>
+          </div>
+        </section>
+
+        <!-- Request builder -->
+        <section class="card shadow-sm mb-3" aria-label="Export builder">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-12 col-xl-8">
+                <div class="row g-3">
+                  <div class="col-12 col-md-6">
+                    <label for="dataset" class="form-label">Dataset (publish views only)</label>
+                    <select id="dataset" class="form-select" aria-describedby="datasetHelp"></select>
+                    <div id="datasetHelp" class="form-text">Only governed publish views are exportable.</div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="purpose" class="form-label">Purpose <span class="text-danger">*</span></label>
+                    <select id="purpose" class="form-select" required></select>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="fields" class="form-label">Fields (optional subset)</label>
+                    <div class="input-group">
+                      <input id="fields" class="form-control" placeholder="Comma-separated list; blank = all fields" />
+                      <button class="btn btn-outline-secondary" id="btnSuggestFields" type="button">Suggest</button>
+                    </div>
+                    <div class="form-text">Sensitive fields remain masked per policy, even if included.</div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label for="filenameTpl" class="form-label">Filename template</label>
+                    <input id="filenameTpl" class="form-control" />
+                    <div class="form-text">Tokens: <code>{dataset}</code>, <code>{date}</code>, <code>{purpose}</code>, <code>{chunk}</code>.</div>
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <label for="format" class="form-label">Format</label>
+                    <select id="format" class="form-select">
+                      <option value="csv">CSV</option>
+                      <option value="parquet">Parquet</option>
+                      <option value="jsonl">JSON Lines</option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-md-3">
+                    <label for="chunkSize" class="form-label">Chunk size (rows)</label>
+                    <select id="chunkSize" class="form-select">
+                      <option value="50000">50,000</option>
+                      <option value="100000" selected>100,000</option>
+                      <option value="250000">250,000</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-xl-4">
+                <div class="border rounded p-3 bg-body-tertiary" aria-label="Pre-flight checks">
+                  <h2 class="h6 mb-3">Pre-flight checks</h2>
+                  <ul class="list-unstyled mb-3" id="preflightList" aria-live="polite">
+                    <!-- dynamic -->
+                  </ul>
+                  <button class="btn btn-primary w-100" id="btnStart" disabled>
+                    <i class="bi bi-cloud-arrow-up"></i> Start Export
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Manifest & progress -->
+        <section class="card shadow-sm mb-3" aria-label="Export manifest and progress">
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-12 col-xl-4">
+                <h2 class="h6">Manifest</h2>
+                <dl class="row mb-0 small" id="manifest">
+                  <!-- dynamic -->
+                </dl>
+              </div>
+              <div class="col-12 col-xl-8">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                  <h2 class="h6 mb-0">Job progress</h2>
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-secondary" id="btnPause" disabled>Pause</button>
+                    <button class="btn btn-outline-secondary" id="btnResume" disabled>Resume</button>
+                    <button class="btn btn-outline-danger" id="btnCancel" disabled>Cancel</button>
+                  </div>
+                </div>
+
+                <div class="progress my-3" role="progressbar" aria-label="Export progress" aria-valuemin="0" aria-valuemax="100">
+                  <div id="progressBar" class="progress-bar" style="width: 0%;">0%</div>
+                </div>
+
+                <div id="throttleAlert" class="alert alert-warning d-none" role="alert">
+                  <i class="bi bi-hourglass-split"></i> Throttled by server (429). Backing off <span id="backoffSec">—</span>s…
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Chunk</th>
+                        <th>Status</th>
+                        <th>Rows</th>
+                        <th>Time</th>
+                        <th>File</th>
+                      </tr>
+                    </thead>
+                    <tbody id="chunksBody">
+                      <!-- dynamic -->
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- History -->
+        <section class="card shadow-sm" aria-label="Recent export jobs">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <h2 class="h6 mb-0">Recent jobs</h2>
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-danger" id="bulkCancel" disabled>Cancel selected</button>
+                <button class="btn btn-outline-secondary" id="refreshHistory">Refresh</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width:36px;"><input class="form-check-input" id="checkAllHistory" type="checkbox" aria-label="Select page"></th>
+                    <th>Job ID</th>
+                    <th>Dataset</th>
+                    <th>Purpose</th>
+                    <th>Started</th>
+                    <th>Status</th>
+                    <th>Chunks</th>
+                    <th>Est. rows</th>
+                  </tr>
+                </thead>
+                <tbody id="historyBody"></tbody>
+              </table>
+            </div>
+
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="historyMeta"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-history>
+                <button class="btn btn-outline-secondary btn-sm" data-first disabled>«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev disabled>‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm page-input" id="historyPage" type="number" min="1" value="1" aria-label="History page">
+                <span class="small">of <span id="historyPages">1</span></span>
+                <button class="btn btn-outline-secondary btn-sm" data-next disabled>›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last disabled>»</button>
+                <label class="small ms-2" for="historySize">Rows</label>
+                <select id="historySize" class="form-select form-select-sm">
+                  <option>10</option>
+                  <option selected>20</option>
+                  <option>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="../../assets/js/partials-loader.js"></script>
+  <script type="module" src="./export-requests-new.js"></script>
+</body>
+</html>

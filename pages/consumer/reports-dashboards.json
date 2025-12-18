@@ -1,0 +1,109 @@
+{
+  "meta": { "title": "External BI & Tools", "version": "2.0.0" },
+  "tags": ["Attendance", "Roster", "Finance", "HE", "K12", "Security", "State", "ETL"],
+  "owners": ["BI Team", "Ops Insights", "State Reporting", "Data Engineering"],
+  "tools": [
+    {
+      "title": "Power BI Service (District)",
+      "category": "BI Portal",
+      "desc": "District-wide Power BI workspace with governed semantic models connected to EDX publish views.",
+      "tags": ["K12", "Attendance", "Roster"],
+      "updated": "2025-10-15T08:45:00Z",
+      "owner": "BI Team",
+      "sso_link": "https://app.powerbi.com/groups/me?ctid=example-tenant",
+      "connection": {
+        "warehouse": "snowflake://EDX_PROD/EDX_PUBLISH/ANALYTICS",
+        "auth": "Azure AD SSO; service principal for refresh",
+        "policy": "Row filters by org/term; PII masked per Effective Policy",
+        "notes": "Use the certified datasets in the 'EDX – Certified' workspace for production use.",
+        "steps": [
+          "Click the SSO link and sign in with district credentials.",
+          "Open 'Datasets' → select a certified model.",
+          "Verify your role is applied (masking visible on PII).",
+          "Pin reports to your personal or team workspace."
+        ]
+      }
+    },
+    {
+      "title": "Tableau Cloud (Institution)",
+      "category": "BI Portal",
+      "desc": "Curated dashboards for enrollment, grades, and attendance with data sourced from EDX publish views.",
+      "tags": ["K12", "Grades", "Attendance"],
+      "updated": "2025-10-14T20:05:00Z",
+      "owner": "BI Team",
+      "sso_link": "https://sso.online.tableau.com/#/site/edx",
+      "connection": {
+        "warehouse": "snowflake://EDX_PROD/EDX_PUBLISH/VIEWS",
+        "auth": "SAML SSO; PAT for extract refresh if required",
+        "policy": "ABAC scopes enforced on server; masking applied to restricted columns",
+        "notes": "Prefer live connections with row-level security; extracts need Steward approval.",
+        "steps": [
+          "SSO into Tableau Cloud.",
+          "From 'Explore', choose 'EDX – Certified'.",
+          "Use 'New → Workbook' and connect to Snowflake (OAuth).",
+          "Verify row-level filters by campus/term."
+        ]
+      }
+    },
+    {
+      "title": "State Longitudinal System",
+      "category": "State System",
+      "desc": "State accountability and compliance portal.",
+      "tags": ["State", "Compliance"],
+      "updated": "2025-10-13T17:10:00Z",
+      "owner": "State Reporting",
+      "sso_link": "https://state.example.gov/portal/sso",
+      "connection": {
+        "warehouse": "N/A",
+        "auth": "SAML federation via district IdP",
+        "policy": "De-identified where required; FERPA-aligned exports",
+        "notes": "Access is read-only; exports require additional approval.",
+        "steps": [
+          "Use the SSO link with district credentials.",
+          "Navigate to 'District Reports'.",
+          "Select reporting year and confirm district scope."
+        ]
+      }
+    },
+    {
+      "title": "Looker (HE Analytics)",
+      "category": "BI Portal",
+      "desc": "Higher-Ed semantic models for enrollment and outcomes.",
+      "tags": ["HE"],
+      "updated": "2025-10-12T22:02:00Z",
+      "owner": "Ops Insights",
+      "sso_link": "https://looker.example.edu/login/sso",
+      "connection": {
+        "warehouse": "bigquery://projects/edx-prod/datasets/publish",
+        "auth": "Google IdP SSO; service account for PDTs",
+        "policy": "Purpose-based masking; org/college scope",
+        "notes": "Use approved Explores only; PDT builds run under governed SA.",
+        "steps": [
+          "SSO using institution Google account.",
+          "Open 'EDX – Certified' LookML models.",
+          "Create Looks with governed Explores; save to Shared folder."
+        ]
+      }
+    },
+    {
+      "title": "dbt Cloud (Read-Only Jobs)",
+      "category": "External Tool",
+      "desc": "Operational transformations and lineage browsing.",
+      "tags": ["ETL", "Security"],
+      "updated": "2025-10-11T09:31:00Z",
+      "owner": "Data Engineering",
+      "sso_link": "https://cloud.getdbt.com/sso/edx",
+      "connection": {
+        "warehouse": "snowflake://EDX_PROD/EDX_PUBLISH",
+        "auth": "SAML SSO; API token for CI",
+        "policy": "Read-only in publish; no write access",
+        "notes": "Use Explorer for lineage; job runs restricted by environment.",
+        "steps": [
+          "SSO to dbt Cloud.",
+          "Open 'EDX – Publish' project.",
+          "Use 'Explore' to view lineage from dataset to report."
+        ]
+      }
+    }
+  ]
+}

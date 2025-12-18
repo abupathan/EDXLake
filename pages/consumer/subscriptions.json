@@ -1,0 +1,70 @@
+{
+  "meta": { "title": "Subscriptions", "version": "1.3.0" },
+  "cadences": ["Hourly", "Daily 07:00", "Weekly Mon 07:00", "Monthly 1st 08:00"],
+  "destinations": ["Email", "In-App", "Webhook"],
+  "events": ["dataset.published", "dq.failed"],
+  "datasets": [
+    { "key": "pub_k12_roster", "display_name": "K12 — Roster" },
+    { "key": "pub_k12_attendance_daily", "display_name": "K12 — Attendance Daily" },
+    { "key": "pub_he_enrollment_term", "display_name": "HE — Enrollment by Term" }
+  ],
+  "subscriptions": [
+    {
+      "name": "Attendance Daily Digest",
+      "type": "Report",
+      "cadence": "Daily 07:00",
+      "delivery": ["Email", "In-App"],
+      "status": "Active",
+      "last_sent": "2025-10-15 07:00:00Z"
+    },
+    {
+      "name": "Saved Query: Roster by Course",
+      "type": "Saved Query",
+      "cadence": "Weekly Mon 07:00",
+      "delivery": ["Email"],
+      "status": "Active",
+      "last_sent": "2025-10-13 07:00:00Z"
+    },
+    {
+      "name": "HE Enrollment Dashboard",
+      "type": "Dashboard",
+      "cadence": "Monthly 1st 08:00",
+      "delivery": ["Email", "Webhook"],
+      "status": "Paused",
+      "last_sent": "2025-10-01 08:00:00Z"
+    },
+    {
+      "name": "Chronic Absenteeism Watch",
+      "type": "Dashboard",
+      "cadence": "Hourly",
+      "delivery": ["In-App"],
+      "status": "Active",
+      "last_sent": "2025-10-15T05:00:00Z"
+    },
+
+    {
+      "name": "Roster — On Publish (Auto Export)",
+      "type": "Event",
+      "event": "dataset.published",
+      "dataset": "pub_k12_roster",
+      "auto_export": true,
+      "purpose": "Operational",
+      "cadence": "Hourly",
+      "delivery": ["Webhook"],
+      "status": "Active",
+      "last_sent": "2025-10-15T04:00:00Z"
+    },
+    {
+      "name": "Attendance DQ Fail Alert",
+      "type": "Event",
+      "event": "dq.failed",
+      "dataset": "pub_k12_attendance_daily",
+      "auto_export": false,
+      "purpose": "",
+      "cadence": "Hourly",
+      "delivery": ["Email", "In-App"],
+      "status": "Active",
+      "last_sent": "2025-10-14T18:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+/* Request Broader Access (Consumer)
+   WCAG-friendly, CSP-safe, no inline styles. */
+
+.summary-card .card-header { background: var(--bs-tertiary-bg); }
+.kv dt { width: 10rem; }
+.kv dd { margin-left: 10rem; }
+@media (max-width: 576px){
+  .kv dt, .kv dd { width: auto; margin-left: 0; }
+}
+
+.badge-chip { border:1px solid var(--bs-border-color); background:#fff; }
+[data-bs-theme="dark"] .badge-chip { background: rgba(255,255,255,.06); }
+
+fieldset { border:1px solid var(--bs-border-color); border-radius:.5rem; padding: .75rem; }
+legend { float:none; width:auto; font-size:1rem; margin-bottom:.5rem; padding:0 .25rem; }
+
+.help-muted { color: var(--bs-secondary-color); }
+.required::after { content:" *"; color: var(--bs-danger); }
+
+.form-section + .form-section { margin-top: 1rem; }
+
+.toast-container { z-index: 1080; }
+
+.validation-error { border-color: var(--bs-danger) !important; }

@@ -1,0 +1,19 @@
+/* Dataset Details */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.pill { border:1px solid var(--bs-border-color); border-radius:999px; padding:.125rem .5rem; }
+.pill-info { background: var(--bs-body-bg); }
+.badge-mini{ border:1px solid var(--bs-border-color); background:#fff; }
+[data-bs-theme="dark"] .badge-mini{ background: rgba(255,255,255,.06); }
+
+/* pagination inputs */
+.page-input{ width:4.5rem; }
+
+/* Readiness panel */
+.readiness .meta { color: var(--bs-secondary-color); }
+
+/* Lineage path */
+#lineagePath .step { display:inline-flex; align-items:center; gap:.5rem; padding:.25rem .5rem; border:1px solid var(--bs-border-color); border-radius:.5rem; }
+#lineagePath .sep  { color: var(--bs-secondary-color); }
+
+/* Contract JSON */
+#contractJson { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }

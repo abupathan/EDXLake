@@ -1,0 +1,63 @@
+{
+  "meta": { "title": "Query Workbench", "version": "1.1.0" },
+
+  "purposes": ["Operational", "Research", "Compliance"],
+
+  "applied_policy": {
+    "masking": "PII masked",
+    "org": "Org=District-12",
+    "term": "Term=2024-25",
+    "role": "consumer",
+    "policy_snapshot_id": "psnap-93b8f4c2"
+  },
+
+  "allowlist": [
+    { "key": "pub_k12_roster",               "display_name": "K12 — Roster (OneRoster bridge)",     "schema_version": "1.1.0" },
+    { "key": "pub_k12_attendance_daily",     "display_name": "K12 — Attendance Daily",              "schema_version": "1.2.1" },
+    { "key": "pub_he_enrollment_term",       "display_name": "HE — Enrollment by Term",             "schema_version": "2.0.0" }
+  ],
+
+  "default_sql": "SELECT *\nFROM pub_k12_roster\nWHERE enroll_status = 'active'\nORDER BY student_id\nLIMIT 100;",
+
+  "datasets": {
+    "pub_k12_roster": {
+      "schema_version": "1.1.0",
+      "masked_columns": ["student_id"],
+      "result": {
+        "headers": ["student_id", "school_id", "section_id", "enroll_status", "start_date", "end_date"],
+        "rows": [
+          ["S1001","SCH-01","SEC-ENG-7A","active","2025-08-21",null],
+          ["S1002","SCH-01","SEC-MTH-7B","active","2025-08-21",null],
+          ["S1003","SCH-02","SEC-SCI-7C","withdrawn","2025-08-21","2025-09-30"],
+          ["S1004","SCH-01","SEC-SCI-7A","active","2025-08-21",null],
+          ["S1010","SCH-03","SEC-HIS-7A","completed","2025-08-21","2025-10-01"]
+        ]
+      }
+    },
+    "pub_k12_attendance_daily": {
+      "schema_version": "1.2.1",
+      "masked_columns": ["student_key"],
+      "result": {
+        "headers": ["event_date", "campus_id", "student_key", "event_type"],
+        "rows": [
+          ["2025-10-14", "D12-201", "hash_39f1a", "Present"],
+          ["2025-10-14", "D12-201", "hash_77ab3", "Absent"],
+          ["2025-10-13", "D12-204", "hash_8821f", "Present"],
+          ["2025-10-13", "D12-205", "hash_18fd2", "Present"]
+        ]
+      }
+    },
+    "pub_he_enrollment_term": {
+      "schema_version": "2.0.0",
+      "masked_columns": ["student_id"],
+      "result": {
+        "headers": ["term_id","student_id","program_code","enrollment_status"],
+        "rows": [
+          ["2025FA","H10001","BS-CS","active"],
+          ["2025FA","H10002","BA-ENG","active"],
+          ["2025FA","H10003","BS-BIO","withdrawn"]
+        ]
+      }
+    }
+  }
+}

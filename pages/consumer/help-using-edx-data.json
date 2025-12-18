@@ -1,0 +1,64 @@
+{
+  "title": "Help: Using EDX Data",
+  "subtitle": "Practical guardrails for day-to-day data use — fast to read, hard to misuse.",
+  "footer_note": "All access is immutably logged. Policies (masking, ABAC) apply consistently across SQL, APIs, exports, and shares.",
+  "sections": [
+    {
+      "id": "masking",
+      "title": "Masking rules (what you’ll see)",
+      "icon": "bi-eye-slash",
+      "intro": "Sensitive columns are dynamically masked based on classification and your effective policy.",
+      "points": [
+        "PII_STRICT → fully masked (e.g., names, SSNs).",
+        "PII_DIRECTORY → partially masked (e.g., last-4, initials) where allowed.",
+        "HEALTH / DISCIPLINE → de-identified unless purpose is approved.",
+        "Derived fields may be masked if they can re-identify individuals."
+      ],
+      "examples": [
+        "student_ssn → ****-**-1234",
+        "student_name → J**** D***"
+      ],
+      "note": "Masking applies equally in the UI, SQL workbench, exports, and external BI tools."
+    },
+    {
+      "id": "purpose",
+      "title": "Purpose limits (why you’re using data)",
+      "icon": "bi-flag",
+      "intro": "Choose the closest matching purpose before running queries or exports.",
+      "points": [
+        "Operational: daily district/institution tasks; least data necessary.",
+        "Compliance: reporting to state/federal agencies; approved extracts only.",
+        "Research: de-identified datasets; IRB may be required.",
+        "Accountability / Reporting: public or board reporting with strict aggregation."
+      ],
+      "note": "A mismatch between purpose and data scope triggers policy denial or de-identification."
+    },
+    {
+      "id": "exports",
+      "title": "Exports etiquette (do this, not that)",
+      "icon": "bi-box-arrow-down",
+      "points": [
+        "Prefer publish views; avoid raw source exports.",
+        "Use filters (org, term, program) to keep extracts narrowly scoped.",
+        "Set a retention period that matches business need (e.g., 90 days).",
+        "Store exports in approved locations; never email PII as attachments.",
+        "Re-use previous request via “Reproduce export” to maintain consistency."
+      ],
+      "examples": [
+        "term=2024-25 AND org IN ('District-12', 'Campus-05')",
+        "sensitivity='Deidentified' for research use"
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Who to contact",
+      "icon": "bi-people",
+      "text": "If you’re unsure about policy, scope, or approvals, contact the appropriate team below."
+    }
+  ],
+  "contacts": [
+    { "role": "Data Steward (K-12)", "name": "Alex Rivera", "email": "data.steward@district.edu", "sla": "Mon–Fri 8am–5pm — typical response within 1 business day" },
+    { "role": "Data Governance / Approvals", "name": "Taylor Morgan", "email": "governance@district.edu", "sla": "Approvals reviewed daily at 2pm" },
+    { "role": "Security / Privacy", "name": "Jordan Lee", "email": "security@district.edu", "sla": "Report incidents immediately — hotline in staff handbook" }
+  ]
+}

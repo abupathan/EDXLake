@@ -1,0 +1,45 @@
+/* Export Requests — History (Consumer)
+ * Adds: status-stream timeline, manifest viewer layout, sticky controls.
+ */
+
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+.badge-status { border: 1px solid var(--bs-border-color); background: #fff; }
+[data-bs-theme="dark"] .badge-status { background: rgba(255,255,255,.06); }
+
+.badge-job { border:1px solid var(--bs-border-color); background:#fff; }
+[data-bs-theme="dark"] .badge-job { background: rgba(255,255,255,.06); }
+.badge-job.q { border-color: var(--bs-info-border-subtle);    background: var(--bs-info-bg-subtle);    color: var(--bs-info-text); }
+.badge-job.r { border-color: var(--bs-primary-border-subtle); background: var(--bs-primary-bg-subtle); color: var(--bs-primary-text); }
+.badge-job.s { border-color: var(--bs-success-border-subtle); background: var(--bs-success-bg-subtle); color: var(--bs-success-text); }
+.badge-job.f { border-color: var(--bs-danger-border-subtle);  background: var(--bs-danger-bg-subtle);  color: var(--bs-danger-text); }
+
+.toolbar .form-control,
+.toolbar .form-select { max-width: 240px; }
+
+.pagination-wrap{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+.pagination-wrap .btn{ min-width: 4rem; }
+.page-input{ width: 4.5rem; }
+
+/* Sort indicators */
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable .sort-ind { opacity: .4; }
+th.sortable[aria-sort="ascending"] .sort-ind{ opacity: 1; transform: rotate(180deg); }
+th.sortable[aria-sort="descending"] .sort-ind{ opacity: 1; }
+
+/* Status Stream (timeline) */
+.stream { display:flex; align-items:flex-start; gap:.5rem; flex-wrap:wrap; }
+.stream .stage { display:flex; align-items:center; gap:.35rem; padding:.25rem .5rem; border-radius:999px; border:1px solid var(--bs-border-color); background: var(--bs-body-bg); }
+.stream .stage .dot{ width:.5rem; height:.5rem; border-radius:50%; background: var(--bs-secondary-color); display:inline-block; }
+.stream .stage.q .dot{ background: var(--bs-info); }
+.stream .stage.r .dot{ background: var(--bs-primary); }
+.stream .stage.s .dot{ background: var(--bs-success); }
+.stream .stage.f .dot{ background: var(--bs-danger); }
+.stream .meta{ font-size:.8rem; color: var(--bs-secondary-color); }
+
+/* Manifest modal */
+.manifest-kv dt{ width: 10rem; }
+.manifest-kv dd{ margin-left: 10rem; }
+@media (max-width: 576px){
+  .manifest-kv dt, .manifest-kv dd{ width:auto; margin-left:0; }
+}

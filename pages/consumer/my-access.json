@@ -1,0 +1,67 @@
+{
+  "meta": { "title": "My Access", "version": "1.1.0" },
+  "roles": ["Data Consumer"],
+  "purposes_enabled": ["Operational", "Compliance", "Research"],
+  "scopes": {
+    "org": "District-12",
+    "campus": "All",
+    "program": "All",
+    "term": "2024-25"
+  },
+  "sensitivity_outcome": "PII masked",
+  "datasets": [
+    {
+      "name": "pub_k12_attendance_daily",
+      "purposes": ["Operational", "Compliance"],
+      "masked_columns": ["student_key"],
+      "notes": "Deidentified key displayed for permitted purposes.",
+      "scope_overrides": null
+    },
+    {
+      "name": "pub_k12_roster",
+      "purposes": ["Operational", "Research"],
+      "masked_columns": ["personal_email", "phone"],
+      "notes": "Directory-level PII masking applied.",
+      "scope_overrides": { "program": "General Education" }
+    },
+    {
+      "name": "pub_he_enrollment_term",
+      "purposes": ["Operational"],
+      "masked_columns": [],
+      "notes": "No masking for this purpose.",
+      "scope_overrides": { "org": "District-12", "term": "2024-FA" }
+    }
+  ],
+  "decisions": [
+    {
+      "dataset": "pub_k12_attendance_daily",
+      "purpose": "Operational",
+      "who": "Data Consumer",
+      "why": "Purpose permitted & ABAC scopes satisfied",
+      "outcome": "allow",
+      "sensitivity": "PII masked",
+      "masked_columns": ["student_key"],
+      "scope": { "org": "District-12", "campus": "All", "program": "All", "term": "2024-25" }
+    },
+    {
+      "dataset": "pub_k12_roster",
+      "purpose": "Compliance",
+      "who": "Data Consumer",
+      "why": "Purpose not permitted for this dataset",
+      "outcome": "deny",
+      "sensitivity": "PII masked",
+      "masked_columns": [],
+      "scope": { "org": "District-12", "campus": "All", "program": "All", "term": "2024-25" }
+    },
+    {
+      "dataset": "pub_he_enrollment_term",
+      "purpose": "Operational",
+      "who": "Data Consumer",
+      "why": "Purpose permitted; dataset has no masked columns for this purpose",
+      "outcome": "allow",
+      "sensitivity": "Unmasked (no sensitive fields selected)",
+      "masked_columns": [],
+      "scope": { "org": "District-12", "campus": "All", "program": "All", "term": "2024-FA" }
+    }
+  ]
+}

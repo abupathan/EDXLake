@@ -1,0 +1,98 @@
+{
+  "purposes": [
+    "Operational",
+    "Research",
+    "Compliance",
+    "Accountability / Reporting"
+  ],
+  "applied_policy": {
+    "masking": "PII masked",
+    "org": "Org=District-12",
+    "term": "Term=2024-25",
+    "role": "consumer",
+    "policy_snapshot_id": "psnap-7f39a4d2"
+  },
+  "dq": { "min_threshold": 85 },
+  "allowlist": [
+    {
+      "key": "pub_k12_roster",
+      "display_name": "K12 — Roster (OneRoster bridge)",
+      "schema_version": "1.1.0",
+      "estimated_rows": 245312,
+      "dq": 95,
+      "abac": "Org=District-12; Term=2024-25",
+      "fields": ["student_id","school_id","section_id","enroll_status","start_date","end_date","grade_level","program_code"],
+      "masked_columns": ["student_id"]
+    },
+    {
+      "key": "pub_k12_attendance_daily",
+      "display_name": "K12 — Attendance Daily",
+      "schema_version": "1.2.1",
+      "estimated_rows": 734000,
+      "dq": 91,
+      "abac": "Org=District-12; Term=2024-25",
+      "fields": ["event_date","campus_id","student_key","event_type","period","excused_flag","minutes_absent"],
+      "masked_columns": ["student_key"]
+    },
+    {
+      "key": "pub_k12_grades_term",
+      "display_name": "K12 — Grades by Term",
+      "schema_version": "2.0.0",
+      "estimated_rows": 385120,
+      "dq": 88,
+      "abac": "Org=District-12; Term=2024-25",
+      "fields": ["term_code","course_id","section_id","student_key","numeric_grade","final_mark","credit_attempted","credit_earned"],
+      "masked_columns": ["student_key"]
+    },
+    {
+      "key": "pub_k12_behavior_incidents",
+      "display_name": "K12 — Behavior Incidents (deidentified)",
+      "schema_version": "1.0.3",
+      "estimated_rows": 112430,
+      "dq": 93,
+      "abac": "Org=District-12; Term=2024-25; Sensitivity=Deidentified",
+      "fields": ["incident_id","incident_date","incident_type","campus_id","action_code","days_assigned","days_served"],
+      "masked_columns": []
+    },
+    {
+      "key": "pub_k12_assessment_summary",
+      "display_name": "K12 — Assessment Summary (ELA/Math/Science)",
+      "schema_version": "1.4.2",
+      "estimated_rows": 501876,
+      "dq": 89,
+      "abac": "Org=District-12; Term=2024-25",
+      "fields": ["student_key","subject","assessment_window","scale_score","performance_level","percentile","school_id"],
+      "masked_columns": ["student_key"]
+    },
+    {
+      "key": "pub_he_enrollment_term",
+      "display_name": "HE — Enrollment by Term",
+      "schema_version": "2.0.0",
+      "estimated_rows": 120450,
+      "dq": 88,
+      "abac": "College=All; Term=2024-FA",
+      "fields": ["term_code","college","student_id","enrollment_status","credit_load","career","program"],
+      "masked_columns": ["student_id"]
+    },
+    {
+      "key": "pub_he_course_outcomes",
+      "display_name": "HE — Course Outcomes",
+      "schema_version": "1.3.0",
+      "estimated_rows": 278940,
+      "dq": 86,
+      "abac": "College=All; Term=2024-FA",
+      "fields": ["term_code","course_id","instructor_id","student_id","final_grade","gpa_points","attempt_status"],
+      "masked_columns": ["student_id","instructor_id"]
+    },
+    {
+      "key": "pub_he_fin_aid_disbursements",
+      "display_name": "HE — Financial Aid Disbursements",
+      "schema_version": "1.2.0",
+      "estimated_rows": 84210,
+      "dq": 92,
+      "abac": "College=All; AidYear=2024-25; Sensitivity=Financial",
+      "fields": ["aid_year","student_id","fund_code","fund_type","amount_disbursed","disbursement_date","coa_component"],
+      "masked_columns": ["student_id"]
+    }
+  ]
+}

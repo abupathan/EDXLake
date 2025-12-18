@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Subscriptions</title>
+  <meta name="description" content="Manage scheduled and event-driven subscriptions for reports, dashboards, saved queries, and dataset events." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- In production, set CSP via response headers (meta here is for local dev only) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 img-src 'self' data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./subscriptions.css" rel="stylesheet">
+</head>
+
+<body data-edx-sidebar="consumer">
+  <!-- Partials mount points (JS will inject content) -->
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2"><div id="app-sidebar"></div></aside>
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" tabindex="-1" role="main"
+            aria-label="Subscriptions manager"></main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS (CSP-safe: external modules only) -->
+  <script type="module" src="./subscriptions.js"></script>
+</body>
+</html>

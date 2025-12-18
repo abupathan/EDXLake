@@ -1,0 +1,10 @@
+/* Workbench layout */
+.workbench-aside{ width: 280px; }
+@media (max-width: 991.98px){ .workbench-aside{ width: 100%; } }
+.table thead th { position: sticky; top: 0; z-index: 1; }
+.page-input{ width:4.5rem; }
+
+/* Policy + compatibility UI */
+#policyBanner .badge { font-family: ui-monospace, Menlo, Consolas, monospace; }
+#appliedPolicies .pill { border:1px solid var(--bs-border-color); border-radius:999px; padding:.125rem .5rem; display:inline-flex; gap:.375rem; margin:0 .25rem .25rem 0; }
+#compatWarning code { font-family: ui-monospace, Menlo, Consolas, monospace; }

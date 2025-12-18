@@ -1,0 +1,55 @@
+{
+  "datasets": {
+    "pub_k12_roster": {
+      "meta": {
+        "name": "pub_k12_roster",
+        "display_name": "K12 — Roster (OneRoster bridge)",
+        "desc": "Users, orgs, courses, classes, enrollments with term/session refs.",
+        "domain": "K-12",
+        "standard": "OneRoster",
+        "schema_version": "1.1.0",
+        "canonical_pack_version": "2025.09.2",
+        "freshness_ts": "2025-10-18T04:05:00Z",
+        "dq": 95,
+        "records": 245312,
+        "purposes": ["Operational", "Compliance"],
+        "policy_snapshot_id": "psnap-7f29ab11",
+        "effective_masking": "PII masked",
+        "last_used_schema": "1.0.0",
+        "lineage": {
+          "source":    { "label": "SIS Connector (OneRoster)", "icon": "bi-plugin" },
+          "canonical": { "label": "Canonical: OneRoster→EDX",  "icon": "bi-diagram-3" },
+          "publish":   { "label": "Publish: pub_k12_roster",    "icon": "bi-table" }
+        }
+      },
+      "schema": [
+        { "name":"student_id",  "type":"string","nullable":false,"desc":"Stable student identifier","classifications":["PII_STRICT"] },
+        { "name":"school_id",   "type":"string","nullable":false,"desc":"School identifier","classifications":["PII_DIRECTORY"] },
+        { "name":"section_id",  "type":"string","nullable":false,"desc":"Class section identifier" },
+        { "name":"enroll_status","type":"string","nullable":false,"desc":"active|withdrawn|completed" },
+        { "name":"start_date",  "type":"date",  "nullable":true, "desc":"Enrollment start date" },
+        { "name":"end_date",    "type":"date",  "nullable":true, "desc":"Enrollment end date" }
+      ],
+      "preview": [
+        { "student_id":"S1001","school_id":"SCH-01","section_id":"SEC-ENG-7A","enroll_status":"active","start_date":"2025-08-21","end_date":null },
+        { "student_id":"S1002","school_id":"SCH-01","section_id":"SEC-MTH-7B","enroll_status":"active","start_date":"2025-08-21","end_date":null },
+        { "student_id":"S1003","school_id":"SCH-02","section_id":"SEC-SCI-7C","enroll_status":"withdrawn","start_date":"2025-08-21","end_date":"2025-09-30" },
+        { "student_id":"S1004","school_id":"SCH-01","section_id":"SEC-SCI-7A","enroll_status":"active","start_date":"2025-08-21","end_date":null }
+      ],
+      "contract": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "pub_k12_roster",
+        "type": "object",
+        "properties": {
+          "student_id":  { "type": "string", "description": "Stable student identifier" },
+          "school_id":   { "type": "string", "description": "School identifier" },
+          "section_id":  { "type": "string", "description": "Class section identifier" },
+          "enroll_status": { "type": "string", "enum": ["active","withdrawn","completed"] },
+          "start_date":  { "type": ["string","null"], "format":"date" },
+          "end_date":    { "type": ["string","null"], "format":"date" }
+        },
+        "required": ["student_id","school_id","section_id","enroll_status"]
+      }
+    }
+  }
+}

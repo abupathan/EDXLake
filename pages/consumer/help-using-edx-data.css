@@ -1,0 +1,30 @@
+/* Help — Using EDX Data (Consumer)
+   WCAG-friendly layout, no inline styles. */
+
+.page-header { margin-bottom: .5rem; }
+.lead-muted { color: var(--bs-secondary-color); }
+
+.kv dt { width: 12rem; }
+.kv dd { margin-left: 12rem; }
+@media (max-width: 576px){
+  .kv dt, .kv dd { width: auto; margin-left: 0; }
+}
+
+.card-help { border: 1px solid var(--bs-border-color); }
+.card-help .card-header { background: var(--bs-tertiary-bg); }
+
+.callout {
+  border-left: .25rem solid var(--bs-primary);
+  background: var(--bs-tertiary-bg);
+  padding: .75rem .9rem;
+  border-radius: .5rem;
+}
+
+.list-tight li + li { margin-top: .25rem; }
+
+/* anchor list */
+.nav-anchors .nav-link { padding: .25rem .5rem; }
+.nav-anchors .nav-link.active { font-weight: 600; }
+
+/* small print */
+.smallprint { color: var(--bs-secondary-color); }

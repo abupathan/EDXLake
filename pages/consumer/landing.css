@@ -1,0 +1,61 @@
+/* Landing — production styles */
+
+/* Accessibility: skip link visible on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: .5rem .75rem;
+  background: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: .375rem;
+  z-index: 1050;
+}
+.skip-link:focus {
+  left: .5rem;
+  top: .5rem;
+}
+
+/* Ops status ribbon */
+#ops-status .ops-banner {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .5rem .75rem;
+}
+#ops-status .ops-banner.success   { background: var(--bs-success-bg-subtle);   color: var(--bs-success-text-emphasis); }
+#ops-status .ops-banner.warning   { background: var(--bs-warning-bg-subtle);   color: var(--bs-warning-text-emphasis); }
+#ops-status .ops-banner.danger    { background: var(--bs-danger-bg-subtle);    color: var(--bs-danger-text-emphasis); }
+#ops-status .ops-banner.info      { background: var(--bs-info-bg-subtle);      color: var(--bs-info-text-emphasis); }
+#ops-status .ops-banner .bi       { font-size: 1rem; }
+
+/* Least-privilege hint chip (toolbar) */
+.lp-hint {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .125rem .5rem; border-radius: 999px;
+  border: 1px solid var(--bs-border-color);
+  color: var(--bs-secondary-color); background: var(--bs-secondary-bg);
+  font-size: .8rem; line-height: 1.2;
+}
+
+/* Keep your existing hover cue for tiles */
+.card-link:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+
+/* Toolbar sizing */
+.toolbar .form-control,
+.toolbar .form-select { max-width: 260px; }
+.toolbar .form-select.narrow { max-width: 200px; }
+
+/* Skeleton loader (CSP-safe, no inline styles) */
+.skeleton { position:relative; overflow:hidden; background: var(--bs-secondary-bg); min-height: 48px; border-radius: var(--bs-border-radius); }
+.skeleton::after {
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+/* Utility sizes to avoid inline style attrs */
+.w-260{ width:260px; } .w-200{ width:200px; } .h-38{ height:38px; }
+
+/* Pagination */
+.pagination-wrap{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+.page-input{ width:4.5rem; }

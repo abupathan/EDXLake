@@ -1,0 +1,170 @@
+{
+  "items": [
+    {
+      "dataset_key": "pub_k12_enrollment_snapshot",
+      "name": "K12 — Enrollment Snapshot",
+      "description": "Student enrollment as-of date with grade, program flags, entry/exit.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-17T13:10:00Z",
+      "dq_score": 96,
+      "schema_version": "1.3.0",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_k12_attendance_daily",
+      "name": "K12 — Attendance Daily",
+      "description": "Daily attendance episodes and minutes present/absent by student/school/date.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-18T02:35:00Z",
+      "dq_score": 92,
+      "schema_version": "1.2.1",
+      "sensitivity_tags": ["PII_STRICT", "DISCIPLINE"]
+    },
+    {
+      "dataset_key": "pub_k12_assessment_results",
+      "name": "K12 — Assessment Results",
+      "description": "Assessment administrations and scaled/proficiency results.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-10T09:00:00Z",
+      "dq_score": 88,
+      "schema_version": "1.1.0",
+      "sensitivity_tags": ["PII_STRICT"]
+    },
+    {
+      "dataset_key": "pub_k12_discipline_events",
+      "name": "K12 — Discipline Events",
+      "description": "Incidents and actions; de-identified by default for external shares.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-09-30T12:00:00Z",
+      "dq_score": 90,
+      "schema_version": "1.0.3",
+      "sensitivity_tags": ["DISCIPLINE", "DEIDENTIFIED"]
+    },
+    {
+      "dataset_key": "pub_he_enrollment_term",
+      "name": "HE — Enrollment by Term",
+      "description": "Student, program/plan, course section enrollments by term.",
+      "domain": "HE",
+      "standard": "CEDS",
+      "freshness_ts": "2025-10-16T16:40:00Z",
+      "dq_score": 93,
+      "schema_version": "2.0.0",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_he_financial_aid_awards",
+      "name": "HE — Financial Aid Awards",
+      "description": "Aid offers and disbursements; sensitive fields masked by policy.",
+      "domain": "HE",
+      "standard": "CEDS",
+      "freshness_ts": "2025-10-15T05:20:00Z",
+      "dq_score": 85,
+      "schema_version": "1.4.2",
+      "sensitivity_tags": ["FINANCIAL", "PII_STRICT"]
+    },
+    {
+      "dataset_key": "pub_p20_student_identity",
+      "name": "P20 — Student Identity Bridge",
+      "description": "Harmonized person identity and crosswalks (Ed-Fi ↔ OneRoster ↔ CEDS).",
+      "domain": "K-12",
+      "standard": "OneRoster",
+      "freshness_ts": "2025-10-14T11:59:00Z",
+      "dq_score": 97,
+      "schema_version": "1.0.1",
+      "sensitivity_tags": ["PII_STRICT"]
+    },
+    {
+      "dataset_key": "pub_p20_course_equivalency",
+      "name": "P20 — Course Equivalency",
+      "description": "Mapping of K-12 courses/sections to HE courses/sections for dual enrollment.",
+      "domain": "K-12",
+      "standard": "OneRoster",
+      "freshness_ts": "2025-10-12T08:10:00Z",
+      "dq_score": 91,
+      "schema_version": "1.0.0",
+      "sensitivity_tags": ["DEIDENTIFIED"]
+    },
+    {
+      "dataset_key": "pub_he_credentials_awarded",
+      "name": "HE — Credentials Awarded",
+      "description": "Credential awards with award date and level.",
+      "domain": "HE",
+      "standard": "CEDS",
+      "freshness_ts": "2025-10-17T20:00:00Z",
+      "dq_score": 94,
+      "schema_version": "1.2.0",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_k12_roster",
+      "name": "K12 — Roster (OneRoster bridge)",
+      "description": "Users, orgs, courses, classes, enrollments with term/session refs.",
+      "domain": "K-12",
+      "standard": "OneRoster",
+      "freshness_ts": "2025-10-18T04:05:00Z",
+      "dq_score": 95,
+      "schema_version": "1.1.0",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_he_academic_record",
+      "name": "HE — Academic Record",
+      "description": "Course outcomes aligned to term and program.",
+      "domain": "HE",
+      "standard": "CEDS",
+      "freshness_ts": "2025-10-13T03:30:00Z",
+      "dq_score": 89,
+      "schema_version": "1.0.4",
+      "sensitivity_tags": ["PII_STRICT"]
+    },
+    {
+      "dataset_key": "pub_k12_program_participation",
+      "name": "K12 — Program Participation",
+      "description": "Student participation across programs with effective dates.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-11T07:25:00Z",
+      "dq_score": 86,
+      "schema_version": "1.0.2",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_k12_staff_directory",
+      "name": "K12 — Staff Directory",
+      "description": "Staff identities, assignments, and org affiliations (directory-level).",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-09T10:00:00Z",
+      "dq_score": 93,
+      "schema_version": "1.0.0",
+      "sensitivity_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "dataset_key": "pub_he_term_calendar",
+      "name": "HE — Term Calendar",
+      "description": "Academic terms and census dates.",
+      "domain": "HE",
+      "standard": "CEDS",
+      "freshness_ts": "2025-10-01T00:00:00Z",
+      "dq_score": 99,
+      "schema_version": "1.0.0",
+      "sensitivity_tags": []
+    },
+    {
+      "dataset_key": "pub_k12_district_orgs",
+      "name": "K12 — District/School Orgs",
+      "description": "Organizations, schools, and hierarchy entries.",
+      "domain": "K-12",
+      "standard": "Ed-Fi",
+      "freshness_ts": "2025-10-05T19:45:00Z",
+      "dq_score": 98,
+      "schema_version": "1.0.1",
+      "sensitivity_tags": []
+    }
+  ],
+  "total_estimate": 15
+}

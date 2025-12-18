@@ -1,0 +1,14 @@
+{
+  "meta": { "title": "Consumer Landing", "version": "1.2.1" },
+  "sections": [
+    { "title": "Catalog",          "area": "Discover", "desc": "Browse published datasets with freshness and data quality signals.", "link": "catalog-browse.html" },
+    { "title": "Dataset Detail",   "area": "Discover", "desc": "Read dataset descriptions and schema preview.", "link": "dataset-detail.html" },
+    { "title": "Query Workbench",  "area": "Analyze",  "desc": "Run SQL with purpose & masking preview.", "link": "query-workbench.html" },
+    { "title": "Saved Queries",    "area": "Analyze",  "desc": "Manage your saved SQL snippets.", "link": "saved-queries.html" },
+    { "title": "External BI & Tools", "area": "Consume", "desc": "Open approved downstream tools and subscriptions.", "link": "reports-dashboards.html" },
+    { "title": "Subscriptions",    "area": "Automate", "desc": "Manage scheduled deliveries.", "link": "subscriptions.html" },
+    { "title": "New Export Request","area": "Govern",  "desc": "Request governed extracts with policy checks.", "link": "export-requests-new.html" },
+    { "title": "Export History",   "area": "Govern",   "desc": "Track request status and evidence manifests.", "link": "export-requests-history.html" },
+    { "title": "My Access",        "area": "Profile",  "desc": "See roles, purposes, and masking overview.", "link": "my-access.html" }
+  ]
+}

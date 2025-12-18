@@ -1,0 +1,36 @@
+{
+  "current_access": {
+    "user": "jane.doe@district.edu",
+    "role": "Data Consumer",
+    "purposes": ["Operational", "Compliance"],
+    "scopes": {
+      "org": ["District-12"],
+      "campus": ["Campus-01", "Campus-05"],
+      "program": ["General Education"],
+      "term": ["2024-25"]
+    },
+    "sensitivity_outcome": "PII masked"
+  },
+  "options": {
+    "purposes": ["Operational", "Compliance", "Research", "Accountability / Reporting"],
+    "orgs": ["District-12", "District-34", "Charter-07"],
+    "campuses": ["Campus-01", "Campus-02", "Campus-05", "Campus-09"],
+    "programs": ["General Education", "STEM Magnet", "SPED", "Title I"],
+    "terms": ["2023-24", "2024-25", "2025-26"],
+    "datasets": ["pub_k12_roster", "pub_k12_attendance_daily", "pub_k12_grades_term", "pub_he_enrollment_term"],
+    "retentions": ["90 days", "180 days", "1 year", "2 years", "Deidentified"],
+    "urgency": ["Standard", "High", "Critical"]
+  },
+  "help": {
+    "purpose_hint": "Choose the closest matching purpose. Research may require de-identified datasets and approvals.",
+    "scope_hint": "Request the smallest scope that meets your need (org, campus, program, term).",
+    "pick_minimum": "Least privilege: broader scopes can slow approval.",
+    "datasets_hint": "Optional. Listing target datasets helps stewards evaluate your request faster.",
+    "justification_hint": "Describe the user impact, decisions enabled, and any deadlines."
+  },
+  "workflow": {
+    "queue_name": "Governance — Approval Queue",
+    "sla": "Reviewed daily at 2pm",
+    "approvers": ["Data Steward", "Security", "Registrar"]
+  }
+}

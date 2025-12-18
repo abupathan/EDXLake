@@ -1,0 +1,33 @@
+/* Catalog — production styles */
+
+/* Skip link a11y */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; padding: .5rem .75rem;
+  background: var(--bs-body-bg); border: 1px solid var(--bs-border-color);
+  border-radius: .375rem; z-index: 1050;
+}
+.skip-link:focus { left: .5rem; top: .5rem; }
+
+/* Cards & badges */
+.dataset-card:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); }
+.badge-dq { min-width: 3ch; }
+.badge-dq.good     { background: var(--bs-success-bg-subtle); color: var(--bs-success-text-emphasis); border: 1px solid var(--bs-success-border-subtle); }
+.badge-dq.warning  { background: var(--bs-warning-bg-subtle); color: var(--bs-warning-text-emphasis); border: 1px solid var(--bs-warning-border-subtle); }
+.badge-dq.poor     { background: var(--bs-danger-bg-subtle);  color: var(--bs-danger-text-emphasis);  border: 1px solid var(--bs-danger-border-subtle); }
+
+.meta-kv { font-size: .8rem; color: var(--bs-secondary-color); }
+.meta-kv .key { color: var(--bs-secondary-color); }
+.meta-kv .value { color: var(--bs-body-color); }
+
+/* Skeletons */
+.skeleton { position:relative; overflow:hidden; background: var(--bs-secondary-bg); border-radius: var(--bs-border-radius); min-height: 48px; }
+.skeleton::after {
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,.06), transparent);
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+
+/* Pagination bar */
+.pager { display:flex; align-items:center; justify-content:space-between; gap:.5rem; flex-wrap:wrap; }
+.page-token { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .75rem; }

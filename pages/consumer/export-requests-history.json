@@ -1,0 +1,170 @@
+{
+  "meta": { "title": "Export Requests — History", "version": "2.0.0" },
+  "requests": [
+    {
+      "id": "exp_2025_10_15_007",
+      "dataset": "pub_k12_attendance_daily",
+      "purpose": "Operational",
+      "scope": ["Attendance","K12"],
+      "retention": "90 days",
+      "approval_status": "Approved",
+      "job_status": "running",
+      "updated": "2025-10-15 09:12Z",
+      "evidence_url": null,
+      "status_stream": [
+        { "ts": "2025-10-15 09:12Z", "status": "queued",  "attempt": 1 },
+        { "ts": "2025-10-15 09:13Z", "status": "running", "attempt": 1 }
+      ],
+      "manifest": {
+        "schema_version": "1.2.1",
+        "row_count": null,
+        "generated_at": null,
+        "policy_snapshot_id": "psnap-7f39a4d2",
+        "filters": [
+          { "field": "term", "op": "=", "value": "2024-25" },
+          { "field": "org", "op": "IN", "value": "District-12" }
+        ],
+        "hashes": []
+      }
+    },
+    {
+      "id": "exp_2025_10_14_006",
+      "dataset": "pub_k12_grades_term",
+      "purpose": "Compliance",
+      "scope": ["Grades","K12"],
+      "retention": "1 year",
+      "approval_status": "Approved",
+      "job_status": "succeeded",
+      "updated": "2025-10-14 16:20Z",
+      "evidence_url": "/evidence/exp_2025_10_14_006.zip",
+      "status_stream": [
+        { "ts": "2025-10-14 16:10Z", "status": "queued",  "attempt": 1 },
+        { "ts": "2025-10-14 16:11Z", "status": "running", "attempt": 1 },
+        { "ts": "2025-10-14 16:20Z", "status": "succeeded", "attempt": 1 }
+      ],
+      "manifest": {
+        "schema_version": "2.0.0",
+        "row_count": 385120,
+        "generated_at": "2025-10-14 16:20Z",
+        "policy_snapshot_id": "psnap-51cf0e99",
+        "filters": [
+          { "field": "term", "op": "=", "value": "2024-25" },
+          { "field": "final_mark", "op": "IS NOT", "value": "NULL" }
+        ],
+        "hashes": [
+          { "part": "grades_0001.csv.gz", "sha256": "6aa9b4c7...a12" },
+          { "part": "grades_0002.csv.gz", "sha256": "b4aa113c...98f" }
+        ]
+      }
+    },
+    {
+      "id": "exp_2025_10_13_005",
+      "dataset": "pub_k12_behavior_incidents",
+      "purpose": "Research",
+      "scope": ["Discipline","Deidentified"],
+      "retention": "Deidentified",
+      "approval_status": "Approved",
+      "job_status": "succeeded",
+      "updated": "2025-10-14 10:02Z",
+      "evidence_url": "/evidence/exp_2025_10_13_005.zip",
+      "status_stream": [
+        { "ts": "2025-10-14 09:55Z", "status": "queued",  "attempt": 1 },
+        { "ts": "2025-10-14 09:56Z", "status": "running", "attempt": 1 },
+        { "ts": "2025-10-14 10:02Z", "status": "succeeded", "attempt": 1 }
+      ],
+      "manifest": {
+        "schema_version": "1.0.3",
+        "row_count": 112430,
+        "generated_at": "2025-10-14 10:02Z",
+        "policy_snapshot_id": "psnap-408ae7ba",
+        "filters": [
+          { "field": "term", "op": "=", "value": "2024-25" },
+          { "field": "sensitivity", "op": "=", "value": "Deidentified" }
+        ],
+        "hashes": [
+          { "part": "incidents.csv.gz", "sha256": "0e93ac51...2bd" }
+        ]
+      }
+    },
+    {
+      "id": "exp_2025_10_12_004",
+      "dataset": "pub_k12_roster",
+      "purpose": "Compliance",
+      "scope": ["Roster"],
+      "retention": "1 year",
+      "approval_status": "Approved",
+      "job_status": "succeeded",
+      "updated": "2025-10-13 14:05Z",
+      "evidence_url": "/evidence/exp_2025_10_12_004.zip",
+      "status_stream": [
+        { "ts": "2025-10-13 13:54Z", "status": "queued",  "attempt": 1 },
+        { "ts": "2025-10-13 13:55Z", "status": "running", "attempt": 1 },
+        { "ts": "2025-10-13 14:05Z", "status": "succeeded", "attempt": 1 }
+      ],
+      "manifest": {
+        "schema_version": "1.1.0",
+        "row_count": 245312,
+        "generated_at": "2025-10-13 14:05Z",
+        "policy_snapshot_id": "psnap-67d0e0aa",
+        "filters": [
+          { "field": "term", "op": "=", "value": "2024-25" }
+        ],
+        "hashes": [
+          { "part": "roster_0001.csv.gz", "sha256": "f19a8ef4...991" },
+          { "part": "roster_0002.csv.gz", "sha256": "1b41aa7e...c42" }
+        ]
+      }
+    },
+    {
+      "id": "exp_2025_10_12_003",
+      "dataset": "pub_k12_roster",
+      "purpose": "Operational",
+      "scope": ["Roster","K12"],
+      "retention": "90 days",
+      "approval_status": "Approved",
+      "job_status": "failed",
+      "updated": "2025-10-12 18:40Z",
+      "evidence_url": null,
+      "status_stream": [
+        { "ts": "2025-10-12 18:35Z", "status": "queued",  "attempt": 1 },
+        { "ts": "2025-10-12 18:36Z", "status": "running", "attempt": 1 },
+        { "ts": "2025-10-12 18:38Z", "status": "failed",  "attempt": 1, "reason_code": "DQ_THRESHOLD_NOT_MET" },
+        { "ts": "2025-10-12 18:39Z", "status": "queued",  "attempt": 2 },
+        { "ts": "2025-10-12 18:40Z", "status": "failed",  "attempt": 2, "reason_code": "RETRY_LIMIT_EXCEEDED" }
+      ],
+      "manifest": {
+        "schema_version": "1.1.0",
+        "row_count": null,
+        "generated_at": null,
+        "policy_snapshot_id": "psnap-67d0e0aa",
+        "filters": [
+          { "field": "term", "op": "=", "value": "2024-25" }
+        ],
+        "hashes": []
+      }
+    },
+
+
+    { "id": "exp_2025_10_11_002", "dataset": "pub_he_enrollment_term", "purpose": "Research", "scope": ["HE","Deidentified"], "retention": "Deidentified", "approval_status": "Rejected", "job_status": "failed", "updated": "2025-10-11 17:40Z", "evidence_url": null },
+    { "id": "exp_2025_10_10_001", "dataset": "pub_k12_attendance_daily", "purpose": "Operational", "scope": ["Attendance","K12"], "retention": "90 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-10 08:11Z", "evidence_url": "/evidence/exp_2025_10_10_001.zip" },
+    { "id": "exp_2025_10_09_009", "dataset": "pub_he_completion", "purpose": "Compliance", "scope": ["HE","Completion"], "retention": "2 years", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-09 12:30Z", "evidence_url": "/evidence/exp_2025_10_09_009.zip" },
+    { "id": "exp_2025_10_08_008", "dataset": "pub_k12_transport", "purpose": "Operational", "scope": ["Transport"], "retention": "180 days", "approval_status": "Approved", "job_status": "queued", "updated": "2025-10-08 07:02Z", "evidence_url": null },
+    { "id": "exp_2025_10_07_007", "dataset": "pub_k12_meals", "purpose": "Compliance", "scope": ["Meals"], "retention": "3 years", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-07 19:55Z", "evidence_url": "/evidence/exp_2025_10_07_007.zip" },
+    { "id": "exp_2025_10_06_006", "dataset": "pub_k12_meals", "purpose": "Research", "scope": ["Meals","Deidentified"], "retention": "Deidentified", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-06 09:00Z", "evidence_url": "/evidence/exp_2025_10_06_006.zip" },
+    { "id": "exp_2025_10_05_005", "dataset": "pub_k12_attendance_daily", "purpose": "Operational", "scope": ["Attendance","K12"], "retention": "90 days", "approval_status": "Rejected", "job_status": "failed", "updated": "2025-10-05 15:44Z", "evidence_url": null },
+    { "id": "exp_2025_10_04_004", "dataset": "pub_he_enrollment_term", "purpose": "Compliance", "scope": ["HE","Registrar"], "retention": "2 years", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-04 11:27Z", "evidence_url": "/evidence/exp_2025_10_04_004.zip" },
+    { "id": "exp_2025_10_03_003", "dataset": "pub_k12_roster", "purpose": "Operational", "scope": ["Roster","K12"], "retention": "90 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-03 08:05Z", "evidence_url": "/evidence/exp_2025_10_03_003.zip" },
+    { "id": "exp_2025_10_02_002", "dataset": "pub_k12_behavior_incidents", "purpose": "Research", "scope": ["Discipline","Deidentified"], "retention": "Deidentified", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-10-02 21:18Z", "evidence_url": "/evidence/exp_2025_10_02_002.zip" },
+    { "id": "exp_2025_10_01_001", "dataset": "pub_he_completion", "purpose": "Operational", "scope": ["HE","Completion"], "retention": "180 days", "approval_status": "Approved", "job_status": "queued", "updated": "2025-10-01 10:10Z", "evidence_url": null },
+    { "id": "exp_2025_09_30_004", "dataset": "pub_he_aid_awards", "purpose": "Compliance", "scope": ["HE","Aid"], "retention": "7 years", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-30 16:42Z", "evidence_url": "/evidence/exp_2025_09_30_004.zip" },
+    { "id": "exp_2025_09_29_003", "dataset": "pub_k12_special_programs", "purpose": "Research", "scope": ["SPED","Deidentified"], "retention": "Deidentified", "approval_status": "Rejected", "job_status": "failed", "updated": "2025-09-29 13:02Z", "evidence_url": null },
+    { "id": "exp_2025_09_28_002", "dataset": "pub_k12_special_programs", "purpose": "Operational", "scope": ["SPED","K12"], "retention": "180 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-28 08:41Z", "evidence_url": "/evidence/exp_2025_09_28_002.zip" },
+    { "id": "exp_2025_09_27_001", "dataset": "pub_k12_grades_term", "purpose": "Research", "scope": ["Grades","Deidentified"], "retention": "Deidentified", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-27 09:25Z", "evidence_url": "/evidence/exp_2025_09_27_001.zip" },
+    { "id": "exp_2025_09_26_006", "dataset": "pub_k12_transport", "purpose": "Operational", "scope": ["Transport"], "retention": "180 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-26 06:55Z", "evidence_url": "/evidence/exp_2025_09_26_006.zip" },
+    { "id": "exp_2025_09_25_005", "dataset": "pub_k12_meals", "purpose": "Operational", "scope": ["Meals"], "retention": "90 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-25 14:11Z", "evidence_url": "/evidence/exp_2025_09_25_005.zip" },
+    { "id": "exp_2025_09_24_004", "dataset": "pub_he_enrollment_term", "purpose": "Research", "scope": ["HE","Deidentified"], "retention": "Deidentified", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-24 09:33Z", "evidence_url": "/evidence/exp_2025_09_24_004.zip" },
+    { "id": "exp_2025_09_23_003", "dataset": "pub_k12_attendance_daily", "purpose": "Compliance", "scope": ["Attendance","K12"], "retention": "1 year", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-23 18:47Z", "evidence_url": "/evidence/exp_2025_09_23_003.zip" },
+    { "id": "exp_2025_09_22_002", "dataset": "pub_k12_roster", "purpose": "Operational", "scope": ["Roster"], "retention": "90 days", "approval_status": "Approved", "job_status": "succeeded", "updated": "2025-09-22 07:05Z", "evidence_url": "/evidence/exp_2025_09_22_002.zip" },
+    { "id": "exp_2025_09_21_001", "dataset": "pub_k12_roster", "purpose": "Operational", "scope": ["Roster","K12"], "retention": "90 days", "approval_status": "Withdrawn", "job_status": "failed", "updated": "2025-09-21 11:11Z", "evidence_url": null }
+  ]
+}

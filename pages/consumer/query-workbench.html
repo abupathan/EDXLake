@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Query Workbench</title>
+  <meta name="description" content="Run governed queries against the publish layer (read-only)." />
+  <meta name="color-scheme" content="light dark" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src  'self' https://cdn.jsdelivr.net;
+                 font-src   'self' https://cdn.jsdelivr.net data:;
+                 img-src    'self' data:;
+                 connect-src 'self';
+                 base-uri   'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="../../assets/css/edx-global.css">
+  <link rel="stylesheet" href="./query-workbench.css">
+</head>
+
+<body data-edx-sidebar="consumer">
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2">
+        <div id="app-sidebar"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="main" tabindex="-1" role="main" aria-label="Query Workbench">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+              <li class="breadcrumb-item"><a href="./catalog-browse.html">Catalog</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Query Workbench</li>
+            </ol>
+          </nav>
+          <div class="btn-group">
+            <a class="btn btn-outline-secondary btn-sm" href="./catalog-browse.html">
+              <i class="bi bi-arrow-left" aria-hidden="true"></i> Back to Catalog
+            </a>
+            <a class="btn btn-outline-primary btn-sm" id="openDetailsBtn" href="./dataset-detail.html">
+              <i class="bi bi-card-list" aria-hidden="true"></i> Dataset Details
+            </a>
+          </div>
+        </div>
+
+        <!-- Effective policy banner -->
+        <section id="policyBanner" class="alert alert-info d-flex align-items-start gap-2" role="note" aria-live="polite">
+          <i class="bi bi-shield-check mt-1" aria-hidden="true"></i>
+          <div>
+            <div class="fw-semibold">Effective policy</div>
+            <div class="small text-body-secondary" id="policyLine">Resolving…</div>
+          </div>
+          <div class="ms-auto small">
+            <span class="badge rounded-pill text-bg-light border" id="policySnapshot">policy_snapshot_id=—</span>
+          </div>
+        </section>
+
+        <section class="card shadow-sm mb-3">
+          <div class="card-body">
+            <div class="d-flex flex-wrap gap-3 align-items-start">
+              <div class="flex-grow-1">
+                <div class="row g-2 mb-2">
+                  <div class="col-12 col-lg-6">
+                    <label for="dataset" class="form-label">Dataset (publish views only)</label>
+                    <select id="dataset" class="form-select" aria-describedby="datasetHelp"></select>
+                    <div id="datasetHelp" class="form-text">Populated from allow-list; only governed publish views are runnable.</div>
+                  </div>
+                  <div class="col-12 col-lg-3">
+                    <label for="purpose" class="form-label">Purpose <span class="text-danger">*</span></label>
+                    <select id="purpose" class="form-select" required></select>
+                  </div>
+                  <div class="col-12 col-lg-3">
+                    <label for="limit" class="form-label">Row Limit (server-enforced)</label>
+                    <select id="limit" class="form-select" aria-label="Row limit">
+                      <option value="100">100</option>
+                      <option value="200">200</option>
+                      <option value="300">300</option>
+                      <option value="500">500</option>
+                    </select>
+                  </div>
+                </div>
+
+                <label for="sql" class="form-label">Query (read-only; publish layer)</label>
+                <textarea id="sql" class="form-control font-monospace" rows="9" spellcheck="false"
+                          placeholder="SELECT * FROM pub_k12_roster WHERE enroll_status = 'active' ORDER BY student_id LIMIT 100;"></textarea>
+
+                <div id="compatWarning" class="alert alert-warning d-none mt-2" role="alert">
+                  <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+                  <span id="compatText">Saved query was created on an older schema version.</span>
+                </div>
+              </div>
+
+              <div class="workbench-aside">
+                <label class="form-label">Run</label>
+                <div class="d-grid">
+                  <button id="runBtn" class="btn btn-primary">
+                    <i class="bi bi-play-fill" aria-hidden="true"></i> Run
+                  </button>
+                </div>
+
+                <hr>
+
+                <div>
+                  <div class="small text-body-secondary mb-1">Applied policies</div>
+                  <div id="appliedPolicies" class="small"></div>
+                </div>
+
+                <hr>
+
+                <div>
+                  <div class="small text-body-secondary mb-1">Save</div>
+                  <div class="d-grid gap-2">
+                    <button id="saveQueryBtn" class="btn btn-outline-secondary btn-sm">
+                      <i class="bi bi-bookmark-plus" aria-hidden="true"></i> Save Query
+                    </button>
+                    <button id="loadQueryBtn" class="btn btn-outline-secondary btn-sm">
+                      <i class="bi bi-cloud-download" aria-hidden="true"></i> Load Last Saved
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="results" aria-live="polite"></section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- Shared partials + page logic -->
+  <script type="module" src="../../assets/js/partials-loader.js"></script>
+  <script type="module" src="./query-workbench.js"></script>
+</body>
+</html>

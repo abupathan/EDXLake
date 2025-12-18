@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Export Requests: History</title>
+  <meta name="description" content="Review export jobs, status streams, manifests, and reproduce past exports." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- In production, deliver CSP via response headers (meta is for local dev only) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 img-src 'self' data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="../../assets/css/edx-global.css">
+  <link rel="stylesheet" href="./export-requests-history.css">
+</head>
+
+<body data-edx-sidebar="consumer">
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2">
+        <div id="app-sidebar"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" tabindex="-1" role="main"
+            aria-label="Export Requests History">
+        <!-- JS renders toolbar, table, and modals -->
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS (CSP-safe: external modules only) -->
+  <script type="module" src="../../assets/js/partials-loader.js"></script>
+  <script type="module" src="./export-requests-history.js"></script>
+</body>
+</html>
