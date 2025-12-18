@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for EduData Exchange (EDX) SaaS platform." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- For local dev only; in production, set CSP via response headers -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 img-src 'self' data:;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./privacy.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container my-4" id="policy-root">
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3">
+        <nav id="toc" class="card position-sticky top-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">Contents</h2>
+            <ol id="toc-list" class="list-unstyled m-0"></ol>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9" id="policy-main" tabindex="-1" role="main" aria-label="Privacy Policy">
+        <header class="mb-4">
+          <h1 class="h3 mb-1">Privacy Policy</h1>
+          <div class="text-body-secondary small">Last updated: <time datetime="2025-10-18">October 18, 2025</time></div>
+          <p class="mt-3">
+            EduData Exchange (“<strong>EDX</strong>”, “we”, “us”, or “our”)
+            provides a governed data platform for education institutions and agencies.
+            This Privacy Policy explains how we collect, use, share, and protect information
+            in connection with our SaaS platform and related services.
+          </p>
+          <div class="alert alert-info small mb-0" role="note">
+            <strong>Education privacy</strong>: EDX is designed to support FERPA, COPPA, PPRA, and applicable state laws,
+            and provides tooling to help customers meet GDPR/UK GDPR and CCPA/CPRA obligations. Your institution remains
+            the data controller (or school official, as applicable); EDX operates as a data processor/service provider.
+          </div>
+        </header>
+
+        <section id="scope">
+          <h2>Scope & Roles</h2>
+          <p>This policy covers use of EDX products and websites where this policy is linked. For K-12 and Higher-Ed customers,
+            the institution or district is the data controller (or the agency responsible for student records). EDX acts as:</p>
+          <ul>
+            <li><strong>Data Processor / Service Provider</strong> for customer-provided data; and</li>
+            <li><strong>Controller</strong> for our own business operations data (e.g., billing, product telemetry).</li>
+          </ul>
+        </section>
+
+        <section id="info-we-collect">
+          <h2>Information We Collect</h2>
+          <h3>1) Customer-Provided Data</h3>
+          <p>Data ingested by your tenant via connectors/APIs (“Customer Data”), such as records aligned to Ed-Fi, OneRoster, or CEDS.
+             Customer Data may include personal information and, where authorized, student records.</p>
+          <h3>2) Account & Support</h3>
+          <ul>
+            <li>Profile and SSO identifiers (e.g., name, email, org ID), roles, and purposes of use.</li>
+            <li>Support tickets, comments, call/chat transcripts.</li>
+          </ul>
+          <h3>3) Platform Telemetry</h3>
+          <ul>
+            <li>Events (auth, policy evaluation, API usage), job/pipeline metrics, and error logs.</li>
+            <li>Device & browser metadata (user agent, approximate region); no keystroke logging.</li>
+          </ul>
+          <h3>4) Website & Cookies</h3>
+          <p>Essential cookies for session and security; optional analytics cookies with consent where required.</p>
+        </section>
+
+        <section id="how-we-use">
+          <h2>How We Use Information</h2>
+          <ul>
+            <li>Provide, secure, and operate the platform (auth, policy enforcement, auditing, resiliency).</li>
+            <li>Maintain data quality, lineage, and governance features configured by your institution.</li>
+            <li>Support and improve the service (e.g., performance tuning, feature development).</li>
+            <li>Comply with law, enforce agreements, and prevent misuse or security incidents.</li>
+          </ul>
+        </section>
+
+        <section id="legal-bases">
+          <h2>Legal Bases (GDPR/UK GDPR)</h2>
+          <p>Where we are a processor, the legal basis is determined by the customer controller (e.g., public interest/official
+             authority in education, legal obligation, legitimate interests, or consent as applicable). For EDX business data,
+             we rely on contract performance, legitimate interests (service improvement, security), legal obligation, or consent
+             where required (e.g., optional analytics cookies).</p>
+        </section>
+
+        <section id="education-privacy">
+          <h2>Education Privacy</h2>
+          <ul>
+            <li><strong>FERPA</strong>: EDX acts as a “school official” with legitimate educational interests under the customer’s control and written agreement.</li>
+            <li><strong>COPPA</strong>: For services directed to children under 13, we operate only at the direction of the school/district or parent where required.</li>
+            <li><strong>PPRA</strong>: EDX does not create or administer student surveys; any such data is processed per customer instructions.</li>
+            <li><strong>State laws</strong>: EDX supports data protection requirements (e.g., SOPPA/NY Ed Law 2-d) via contracts and technical controls.</li>
+          </ul>
+        </section>
+
+        <section id="sharing">
+          <h2>How We Share Information</h2>
+          <ul>
+            <li><strong>Sub-processors</strong> who provide infrastructure or support (listed below), bound by DPA terms.</li>
+            <li><strong>Third-party integrations</strong> explicitly enabled by customers (e.g., SSO, analytics destinations).</li>
+            <li><strong>Legal/Safety</strong> when required to comply with law or respond to lawful requests.</li>
+            <li>We do <strong>not</strong> sell personal information and do not use Customer Data to build advertising profiles.</li>
+          </ul>
+        </section>
+
+        <section id="subprocessors">
+          <h2>Sub-processors</h2>
+          <p class="mb-2">Current sub-processors for EDX are listed below. We’ll post updates before adding a new sub-processor where required by contract.</p>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="subp-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Provider</th>
+                    <th scope="col">Service</th>
+                    <th scope="col">Region(s)</th>
+                    <th scope="col">Data Types</th>
+                    <th scope="col">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Example demo rows. You can extend or replace with your live list. -->
+                  <tr>
+                    <td>CloudCo</td>
+                    <td>IaaS (compute, storage, networking)</td>
+                    <td>US, EU</td>
+                    <td>Customer Data, metadata, logs</td>
+                    <td>Hosting the EDX platform</td>
+                  </tr>
+                  <tr>
+                    <td>AuthHub</td>
+                    <td>Identity & SSO</td>
+                    <td>US</td>
+                    <td>Account identifiers, roles</td>
+                    <td>Authentication and access control</td>
+                  </tr>
+                  <tr>
+                    <td>MailWorks</td>
+                    <td>Transactional email</td>
+                    <td>US, EU</td>
+                    <td>Notification content, email</td>
+                    <td>Notify job status, exports, alerts</td>
+                  </tr>
+                  <tr>
+                    <td>LogStream</td>
+                    <td>Logging & monitoring</td>
+                    <td>US</td>
+                    <td>System logs, event metadata</td>
+                    <td>Reliability and incident response</td>
+                  </tr>
+                  <tr>
+                    <td>HelpDesk</td>
+                    <td>Support ticketing</td>
+                    <td>US, EU</td>
+                    <td>Contact details, ticket content</td>
+                    <td>Customer support</td>
+                  </tr>
+                  <tr>
+                    <td>ScanGuard</td>
+                    <td>Security scanning</td>
+                    <td>US</td>
+                    <td>Build artifacts, vulnerability data</td>
+                    <td>Security assurance</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (CSP-safe; wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="subp-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-subp>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="subp-size">Rows</label>
+                  <select id="subp-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="subp-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="subp-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="transfers">
+          <h2>International Transfers</h2>
+          <p>Where data are transferred internationally, we use lawful transfer mechanisms (e.g., SCCs, UK IDTA/Addendum) and
+             implement technical and organizational measures aligned to risk.</p>
+        </section>
+
+        <section id="retention">
+          <h2>Data Retention</h2>
+          <p>Customer Data retention is governed by your tenant’s policies and agreements. EDX retains platform logs and support
+             records for legitimate business needs and legal obligations, then securely deletes or anonymizes them.</p>
+        </section>
+
+        <section id="security">
+          <h2>Security</h2>
+          <ul>
+            <li>Encryption in transit and at rest; key management aligned with industry standards.</li>
+            <li>Least-privilege access, role-/purpose-based policy enforcement, and row/column masking.</li>
+            <li>Secure SDLC, vulnerability management, and third-party testing.</li>
+            <li>Continuous monitoring and incident response with audit logging.</li>
+          </ul>
+        </section>
+
+        <section id="your-rights">
+          <h2>Your Privacy Choices & Rights</h2>
+          <p>Depending on your location and role, you may have rights of access, correction, deletion, portability, restriction,
+             or objection. For student records, please contact your institution; EDX processes requests at the controller’s direction.
+             For EDX business data (e.g., your account), contact us directly as described below.</p>
+        </section>
+
+        <section id="children">
+          <h2>Children’s Privacy</h2>
+          <p>EDX does not offer direct-to-student consumer services. Where Customer Data includes information about children,
+             we process it only per school/agency direction, consistent with FERPA/COPPA and contract obligations.</p>
+        </section>
+
+        <section id="changes">
+          <h2>Changes to This Policy</h2>
+          <p>We may update this Privacy Policy to reflect operational, legal, or regulatory changes. Material changes will be
+             communicated through the service or by email where appropriate, with an updated “Last updated” date.</p>
+        </section>
+
+        <section id="contact">
+          <h2>Contact Us</h2>
+          <address class="mb-0">
+            Privacy Team, EduData Exchange<br>
+            XXX<br>
+            XXX<br>
+            <a href="mailto:privacy@edx.example">privacy@edx.example</a>
+          </address>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="./privacy.js"></script>
+</body>
+</html>

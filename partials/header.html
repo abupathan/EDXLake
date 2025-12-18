@@ -1,0 +1,61 @@
+<!-- EDX Header (CSP-safe: no inline JS/styles) -->
+<header class="navbar navbar-expand-lg bg-body border-bottom" role="banner" aria-label="EDX Header">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="/index.html">
+      <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-hidden="true">
+        <path d="M3 6.5L12 2l9 4.5v7c0 3.866-5.373 7-9 7s-9-3.134-9-7v-7z" fill="currentColor"/>
+      </svg>
+      <span class="fw-semibold">EDX</span>
+      <span class="text-body-secondary d-none d-sm-inline">EduData Exchange</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#edxNav"
+            aria-controls="edxNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="edxNav" class="collapse navbar-collapse">
+      <!-- Left: primary nav (minimal; extend if needed) -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="../../support/docs.html">Docs</a></li>
+        <li class="nav-item"><a class="nav-link" href="../../support/api.html">API</a></li>
+        <li class="nav-item"><a class="nav-link" href="../../support/status.html">Status</a></li>
+      </ul>
+
+      <!-- Right: user menu -->
+      <div class="d-flex align-items-center gap-2">
+        <!-- Theme toggle placeholder (wired elsewhere if you use it) -->
+        <button class="btn btn-outline-secondary btn-sm d-none" type="button" id="themeToggle" aria-label="Toggle theme">
+          <i class="bi bi-moon" aria-hidden="true"></i>
+        </button>
+
+        <!-- Profile chip -->
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary d-flex align-items-center gap-2" type="button"
+                  data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu">
+            <span class="d-inline-flex rounded-circle border align-items-center justify-content-center"
+                  style="width:24px;height:24px">
+              <i class="bi bi-person" aria-hidden="true"></i>
+            </span>
+            <span id="currentUserName" class="text-truncate" style="max-width:10rem">user</span>
+            <span id="currentUserRole" class="badge text-bg-secondary text-uppercase">role</span>
+            <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li class="dropdown-header small">
+              <div class="fw-semibold" id="menuUserName">user</div>
+              <div class="text-body-secondary" id="menuUserEmail">user@example.edu</div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../consumer/my-access.html">My Access & Purpose</a></li>
+            <li><a class="dropdown-item" href="../../support/profile.html">Profile & Preferences</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <!-- Sign out: anchor id is used by auth.js to clear session and redirect -->
+            <li><a id="signoutHook" class="dropdown-item text-danger" href="../../signin.html">Sign out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

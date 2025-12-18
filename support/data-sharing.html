@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Data Sharing</title>
+  <meta name="description" content="Data sharing principles, approvals, technical controls, and Data Sharing Agreements for EduData Exchange (EDX) SaaS." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- For local dev only; in production, set CSP via response headers -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 img-src 'self' data:;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./data-sharing.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container my-4" id="sharing-root">
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3">
+        <nav id="toc" class="card position-sticky top-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">Contents</h2>
+            <ol id="toc-list" class="list-unstyled m-0"></ol>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9" id="sharing-main" tabindex="-1" role="main" aria-label="Data Sharing">
+        <header class="mb-4">
+          <h1 class="h3 mb-1">Data Sharing</h1>
+          <div class="text-body-secondary small">Last updated: <time datetime="2025-10-18">October 18, 2025</time></div>
+          <p class="mt-3">
+            EduData Exchange (“<strong>EDX</strong>”) enables institutions to create policy-enforced data shares with
+            agencies, research partners, and vendors. This page outlines principles, approvals, technical controls,
+            and our current Data Sharing Agreements (DSAs).
+          </p>
+          <div class="alert alert-info small mb-0">
+            <strong>Controller responsibility:</strong> Your institution defines purpose, scope, recipient, and duration
+            for any share. EDX enforces those decisions with column masking, row-level filters, and revocable access.
+          </div>
+        </header>
+
+        <section id="principles">
+          <h2>Principles</h2>
+          <ul>
+            <li><strong>Purpose-bound</strong> access with least privilege.</li>
+            <li><strong>Consistency</strong> across SQL, APIs, exports, and shares (same masking & row filters).</li>
+            <li><strong>Transparency</strong> via catalog classification, policy simulator, and audit trails.</li>
+            <li><strong>Revocability</strong> with immediate cut-off and link/token expiration.</li>
+          </ul>
+        </section>
+
+        <section id="types">
+          <h2>Types of Sharing</h2>
+          <ul>
+            <li><strong>Inter-agency</strong> (district ↔ state/consortium) for compliance and reporting.</li>
+            <li><strong>Research</strong> with IRB-approved purposes and de-identification where applicable.</li>
+            <li><strong>Vendor</strong> integrations (curriculum, assessment, analytics) with contract controls.</li>
+          </ul>
+        </section>
+
+        <section id="legal">
+          <h2>Legal Bases & Frameworks</h2>
+          <p>
+            For K-12 and Higher-Ed, sharing is governed by FERPA and applicable state laws; for international contexts,
+            GDPR/UK GDPR principles apply via controller determination and Data Processing Agreements.
+          </p>
+        </section>
+
+        <section id="governance">
+          <h2>Governance & Approvals</h2>
+          <ol>
+            <li><strong>Proposal</strong>: Data Steward drafts scope, purpose, recipients, and retention.</li>
+            <li><strong>Simulation</strong>: Policy simulator previews masking and row counts by scope.</li>
+            <li><strong>Review</strong>: Legal/compliance approves the DSA template and addenda.</li>
+            <li><strong>Activation</strong>: Share created with TTL, allowed IPs, and signer references.</li>
+          </ol>
+          <p class="small text-body-secondary mb-0">All steps are logged with immutable audit entries and evidence packs.</p>
+        </section>
+
+        <section id="technical">
+          <h2>Technical Controls</h2>
+          <ul>
+            <li>Column masking driven by classification (PII_STRICT, HEALTH, DISCIPLINE, etc.).</li>
+            <li>Attribute-based row filters (org/campus/department/program/term/purpose).</li>
+            <li>Time-boxed access tokens, optional IP allowlists, and purpose enforcement.</li>
+            <li>Share-scoped API keys and webhook destinations with HMAC signatures.</li>
+          </ul>
+        </section>
+
+        <section id="revocation">
+          <h2>Recipient Access & Revocation</h2>
+          <p>Share recipients access only the published slice. Revocation is immediate and invalidates tokens/links.
+             Historical downloads remain subject to the recipient’s contractual obligations.</p>
+        </section>
+
+        <section id="subs-vs-exports">
+          <h2>Subscriptions, Exports & Shares</h2>
+          <ul>
+            <li><strong>Subscriptions</strong>: Scheduled delivery to internal recipients.</li>
+            <li><strong>Exports</strong>: One-time governed extracts with TTL.</li>
+            <li><strong>Shares</strong>: Ongoing, revocable access for external recipients under a DSA.</li>
+          </ul>
+        </section>
+
+        <section id="dsa">
+          <h2>Current Data Sharing Agreements (DSA)</h2>
+          <p class="mb-2">Representative DSAs are listed below. Institutions may publish their own registry via the admin console.</p>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="dsa-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Recipient</th>
+                    <th scope="col">Purpose</th>
+                    <th scope="col">Dataset Scope</th>
+                    <th scope="col">Masking/Filters</th>
+                    <th scope="col">Effective</th>
+                    <th scope="col">Expires</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Example demo rows (static); JS paginates only -->
+                  <tr>
+                    <td>State Education Agency</td>
+                    <td>Accountability reporting</td>
+                    <td>Enrollment, assessment, attendance</td>
+                    <td>PII_STRICT masked; org=District 12</td>
+                    <td>2025-07-01</td>
+                    <td>2026-06-30</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>University Research Lab</td>
+                    <td>Early warning research (IRB #12345)</td>
+                    <td>De-identified longitudinal cohort</td>
+                    <td>De-identified; program=STEM</td>
+                    <td>2025-09-01</td>
+                    <td>2026-08-31</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>Curriculum Vendor</td>
+                    <td>Product integration</td>
+                    <td>Roster, course sections</td>
+                    <td>Directory fields only</td>
+                    <td>2025-08-15</td>
+                    <td>2026-08-14</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>County Health Dept.</td>
+                    <td>Health screening coordination</td>
+                    <td>Immunization, screening flags</td>
+                    <td>Row filter: consent=true</td>
+                    <td>2025-04-01</td>
+                    <td>2025-12-31</td>
+                    <td>Expiring</td>
+                  </tr>
+                  <tr>
+                    <td>Independent Auditor</td>
+                    <td>Federal program audit</td>
+                    <td>Finance transactions, grants</td>
+                    <td>PII_STRICT masked</td>
+                    <td>2025-01-01</td>
+                    <td>2025-12-31</td>
+                    <td>Active</td>
+                  </tr>
+                  <tr>
+                    <td>Assessment Vendor</td>
+                    <td>Roster sync for testing</td>
+                    <td>Roster, accommodations</td>
+                    <td>Row filter: term=2025-26</td>
+                    <td>2025-10-01</td>
+                    <td>2026-09-30</td>
+                    <td>Pending</td>
+                  </tr>
+                  <tr>
+                    <td>Researcher – External</td>
+                    <td>Graduation outcomes study</td>
+                    <td>High-school cohort 2020-2024</td>
+                    <td>De-identified; small-cell suppression</td>
+                    <td>2024-09-01</td>
+                    <td>2025-08-31</td>
+                    <td>Closed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="dsa-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-dsa>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="dsa-size">Rows</label>
+                  <select id="dsa-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="dsa-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="dsa-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="audit">
+          <h2>Evidence & Audit</h2>
+          <p>Each share generates immutable audit events, including simulator output, policy versions, approvers, and job results.
+             Evidence packs (CSV/JSON) are available to admins and auditors.</p>
+        </section>
+
+        <section id="contact">
+          <h2>Questions</h2>
+          <p>For DSA templates, approvals, or evidence packs, contact your EDX Customer Success Manager or email
+             <a href="mailto:support@edx.example">support@edx.example</a>.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="./data-sharing.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* assets/css/index.css */
+/* Home page tweaks + small a11y polish */
+
+header[role="banner"],
+#app-header header {
+  position: sticky; top: 0;
+}
+
+.card-role .btn { min-width: 4.5rem; }
+
+.table-responsive.is-empty::after {
+  content: "No recent activity"; display: block; padding: 1rem;
+  color: var(--bs-secondary-color);
+}
+
+/* Pagination controls created by JS */
+[data-edx-pagination-controls] .btn { min-width: 4.25rem; }
+[data-edx-pagination-controls] .form-select { width: auto; }
+
+/* Footer spacing when partial not loaded yet (defensive) */
+#app-footer:empty { min-height: 3rem; }
+
+/* Dark mode contrast tweak for KPI values */
+[data-bs-theme="dark"] .kpi .value { color: var(--bs-light); }

@@ -1,0 +1,32 @@
+/* Evidence — production styles (CSP-safe, no inline) */
+
+#toc { border: 1px solid var(--bs-border-color); }
+#toc .active > a { font-weight: 600; }
+
+#evidence-main h2 { scroll-margin-top: 90px; }
+#evidence-main h3 { margin-top: 1rem; }
+
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Toolbar sizing */
+.toolbar .form-control,
+.toolbar .form-select { max-width: 260px; }
+.toolbar .form-select.narrow { max-width: 200px; }
+
+/* Pagination */
+.pagination-wrap{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+.page-input{ width:4.5rem; }
+
+/* Section spacing */
+section + section { margin-top: 2rem; }
+
+/* Focus styles for accessibility */
+a:focus, button:focus, input:focus, select:focus {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+/* Sticky TOC behavior on short viewports */
+@media (max-height: 700px) {
+  #toc { position: static !important; }
+}

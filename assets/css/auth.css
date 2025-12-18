@@ -1,0 +1,58 @@
+/* assets/css/auth.css */
+/* Minimal, professional auth layout */
+
+.auth-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  background: var(--bs-body-bg);
+}
+
+.auth-header,
+.auth-footer {
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.auth-footer {
+  border-top: 1px solid var(--bs-border-color);
+  border-bottom: 0;
+  text-align: center;
+}
+
+.auth-main {
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--bs-border-color);
+  border-radius: .75rem;
+}
+
+.auth-sep {
+  position: relative;
+  text-align: center;
+  margin: 1rem 0 1.25rem 0;
+  color: var(--bs-secondary-color);
+}
+.auth-sep::before,
+.auth-sep::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  border-top: 1px solid var(--bs-border-color);
+}
+.auth-sep::before { left: 0; }
+.auth-sep::after { right: 0; }
+
+details summary { cursor: pointer; }
+details[open] summary { color: var(--bs-emphasis-color); }
+
+[data-bs-theme="dark"] .auth-card {
+  border-color: rgba(255,255,255,.18);
+}

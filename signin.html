@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — EDX</title>
+  <meta name="description" content="Sign in to EduData Exchange with SSO or your account." />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- 
+    ✅ Local Dev CSP (Live Server Safe)
+    For Production, move CSP to HTTP headers (no unsafe-inline, add frame-ancestors 'none').
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 img-src 'self' data:;
+                 connect-src 'self' ws:;
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD"
+        crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="./assets/css/edx-global.css">
+  <link rel="stylesheet" href="./assets/css/auth.css">
+</head>
+<body class="auth-shell">
+  <header class="auth-header" role="banner" aria-label="EDX">
+    <a class="navbar-brand d-inline-flex align-items-center gap-2 text-decoration-none" href="/index.html">
+      <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-hidden="true">
+        <path d="M3 6.5L12 2l9 4.5v7c0 3.866-5.373 7-9 7s-9-3.134-9-7v-7z" fill="currentColor"/>
+      </svg>
+      <span class="fw-semibold">EDX</span>
+      <span class="text-body-secondary d-none d-sm-inline">EduData Exchange</span>
+    </a>
+  </header>
+
+  <main id="main" class="auth-main" tabindex="-1" role="main" aria-label="Sign in">
+    <div class="card auth-card shadow-sm">
+      <div class="card-body p-4 p-lg-5">
+        <div class="text-center mb-4">
+          <h1 class="h4 mb-1">Welcome back</h1>
+          <p class="text-body-secondary mb-0">Sign in with SSO or with your account.</p>
+        </div>
+
+        <!-- SSO (instant demo sign-in using selected role) -->
+        <div class="mb-3">
+          <button class="btn btn-dark w-100 d-flex align-items-center justify-content-center gap-2"
+                  type="button" data-auth-provider="institution">
+            <i class="bi bi-building-lock" aria-hidden="true"></i> Continue with Institution SSO
+          </button>
+        </div>
+        <div class="row g-2 mb-3">
+          <div class="col-12 col-sm-6">
+            <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"
+                    type="button" data-auth-provider="google">
+              <i class="bi bi-google" aria-hidden="true"></i> Google
+            </button>
+          </div>
+          <div class="col-12 col-sm-6">
+            <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2"
+                    type="button" data-auth-provider="linkedin">
+              <i class="bi bi-linkedin" aria-hidden="true"></i> LinkedIn
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-sep" role="separator" aria-label="or">or</div>
+
+        <!-- Email + Password + Role -->
+        <form id="signinForm"
+              data-role-home-admin="EDX/pages/admin/landing.html"
+              data-role-home-engineer="EDX/pages/engineer/landing.html"
+              data-role-home-steward="EDX/pages/steward/landing.html"
+              data-role-home-consumer="EDX/pages/consumer/landing.html"
+              novalidate>
+          <div class="mb-3">
+            <label for="siEmail" class="form-label">Email</label>
+            <input id="siEmail" name="email" type="email" class="form-control"
+                   placeholder="you@example.edu" required autocomplete="username" inputmode="email">
+            <div class="invalid-feedback">Enter a valid email (e.g., user@example.edu).</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="siRole" class="form-label">Role</label>
+            <select id="siRole" name="role" class="form-select" required>
+              <option value="admin">Platform Admin</option>
+              <option value="engineer">Data Engineer</option>
+              <option value="steward">Data Steward</option>
+              <option value="consumer" selected>Data Consumer</option>
+            </select>
+            <div class="invalid-feedback">Choose a role to continue.</div>
+          </div>
+
+          <div class="mb-2">
+            <label for="siPassword" class="form-label d-flex justify-content-between">
+              <span>Password</span>
+              <a href="#" class="small link-secondary" aria-label="Forgot password (demo)">Forgot?</a>
+            </label>
+            <input id="siPassword" name="password" type="password" class="form-control"
+                   placeholder="••••••••" required minlength="8" autocomplete="current-password">
+            <div class="invalid-feedback">Password must be at least 8 characters.</div>
+          </div>
+
+          <div id="authError" class="alert alert-danger py-2 px-3 d-none" role="alert" aria-live="assertive">
+            Invalid email or password for the selected role.
+          </div>
+
+          <div id="authSuccess" class="alert alert-success py-2 px-3 d-none" role="status" aria-live="polite">
+            <div class="d-flex align-items-center gap-2">
+              <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>
+              <span>Signed in successfully. Redirecting…</span>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="siRemember">
+              <label class="form-check-label" for="siRemember">Remember me</label>
+            </div>
+            <a href="/index.html" class="small link-secondary">Cancel</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Sign in</button>
+          <p class="form-text mt-2 mb-0">This is a demo login. In production, SSO/SCIM is used.</p>
+        </form>
+
+        <details class="mt-4">
+          <summary class="small text-body-secondary">Show demo user IDs & passwords</summary>
+          <div class="mt-2">
+            <table class="table table-sm align-middle mb-0">
+              <thead class="table-light">
+                <tr><th>Role</th><th>User ID</th><th>Password</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Platform Admin</td><td><code>admin@edx.demo</code></td><td><code>Admin#2025!</code></td></tr>
+                <tr><td>Data Engineer</td><td><code>engineer@edx.demo</code></td><td><code>Engineer#2025!</code></td></tr>
+                <tr><td>Data Steward</td><td><code>steward@edx.demo</code></td><td><code>Steward#2025!</code></td></tr>
+                <tr><td>Data Consumer</td><td><code>consumer@edx.demo</code></td><td><code>Consumer#2025!</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+      <div class="card-footer text-center small text-body-secondary">© 2025 EduData Exchange</div>
+    </div>
+  </main>
+
+  <footer class="auth-footer" role="contentinfo">
+    <a class="link-secondary text-decoration-none" href="/legal/privacy.html">Privacy</a>
+    <span class="mx-2">•</span>
+    <a class="link-secondary text-decoration-none" href="/legal/data-sharing.html">Data Sharing</a>
+  </footer>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script src="./assets/js/index.js "></script>
+  <script src="./assets/js/auth.js"></script>
+</body>
+</html>

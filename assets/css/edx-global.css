@@ -1,0 +1,62 @@
+/* assets/css/edx-global.css */
+/* Design tokens & accessibility */
+
+:root {
+  --edx-focus-ring: 0 0 0 .25rem rgba(25, 135, 84, .35); /* bootstrap-ish green */
+  --edx-border-soft: rgba(0,0,0,.08);
+  --edx-border-soft-dark: rgba(255,255,255,.15);
+}
+
+html:focus-within { scroll-behavior: smooth; }
+
+/* Skip link */
+.edx-skiplink,
+#app-header .edx-skiplink {
+  position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.edx-skiplink:focus,
+#app-header .edx-skiplink:focus {
+  position: static; width: auto; height: auto; padding: .5rem .75rem;
+  background: var(--bs-body-bg); border: 1px solid var(--bs-border-color);
+  border-radius: .5rem; z-index: 10000;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: none !important;
+  box-shadow: var(--edx-focus-ring) !important;
+}
+
+/* Cards & tables */
+.card-role { border: 1px solid var(--bs-border-color); }
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Status dots */
+.status-dot {
+  display: inline-block; width: .6rem; height: .6rem; border-radius: 50%; margin-right: .25rem;
+  background-color: #198754; /* default ok */
+}
+.status-dot.status-ok { background-color: #198754; }
+.status-dot.status-warn { background-color: #ffc107; }
+.status-dot.status-bad { background-color: #dc3545; }
+
+/* KPI */
+.kpi {
+  padding: .75rem 1rem; border: 1px solid var(--bs-border-color); border-radius: .75rem;
+  background: var(--bs-body-bg);
+}
+.kpi .value { font-variant-numeric: tabular-nums; }
+
+/* Dark mode tweaks */
+[data-bs-theme="dark"] .card-role,
+[data-bs-theme="dark"] .kpi {
+  border-color: var(--edx-border-soft-dark);
+}
+[data-bs-theme="dark"] .table thead th {
+  background: rgba(255,255,255,.03);
+}
+/* Slightly stronger borders in dark mode for table */
+[data-bs-theme="dark"] table, 
+[data-bs-theme="dark"] .table {
+  --bs-border-color: rgba(255,255,255,.2);
+}

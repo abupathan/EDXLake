@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Data Retention & Deletion</title>
+  <meta name="description" content="Data retention, deletion, backups, and legal hold practices for EduData Exchange (EDX) SaaS." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- For local dev only; in production, set CSP via response headers -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 img-src 'self' data:;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./data-retention.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container my-4" id="retention-root">
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3">
+        <nav id="toc" class="card position-sticky top-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">Contents</h2>
+            <ol id="toc-list" class="list-unstyled m-0"></ol>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9" id="retention-main" tabindex="-1" role="main" aria-label="Data Retention & Deletion">
+        <header class="mb-4">
+          <h1 class="h3 mb-1">Data Retention & Deletion</h1>
+          <div class="text-body-secondary small">Last updated: <time datetime="2025-10-18">October 18, 2025</time></div>
+          <p class="mt-3">
+            EduData Exchange (“<strong>EDX</strong>”) provides configurable retention and deletion controls to help
+            education institutions meet regulatory, contractual, and operational requirements. This page describes
+            defaults, options, and processes for Customer Data, metadata, logs, backups, and derived artifacts.
+          </p>
+          <div class="alert alert-info small mb-0">
+            <strong>Controller vs Processor:</strong> Your institution controls retention for Customer Data. EDX applies
+            the controller’s policy and maintains limited business records and security logs as a processor/service provider.
+          </div>
+        </header>
+
+        <section id="scope">
+          <h2>Scope & Definitions</h2>
+          <ul>
+            <li><strong>Customer Data</strong>: Data ingested into your tenant (e.g., Ed-Fi/OneRoster/CEDS aligned records).</li>
+            <li><strong>Metadata</strong>: Catalog, lineage, quality results, and policy configurations.</li>
+            <li><strong>Operational Logs</strong>: Audit, access, pipeline, and system logs.</li>
+            <li><strong>Derived Artifacts</strong>: Query results, temp tables, exports, and caches.</li>
+            <li><strong>Backups</strong>: Encrypted point-in-time copies for disaster recovery.</li>
+          </ul>
+        </section>
+
+        <section id="defaults">
+          <h2>Default Retention Profiles</h2>
+          <p>EDX offers baseline profiles that can be tuned per tenant by Platform Admins and Data Stewards:</p>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                  <h3 class="h6">Standard (Default)</h3>
+                  <ul class="small mb-0">
+                    <li>Customer Data: <strong>controller-defined</strong> (no hard EDX limit)</li>
+                    <li>Query temp artifacts: <strong>7 days</strong></li>
+                    <li>Exports: <strong>30 days</strong> (or controller-defined)</li>
+                    <li>Operational logs: <strong>365 days</strong></li>
+                    <li>Backups: rolling <strong>35 days</strong></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                  <h3 class="h6">Restricted</h3>
+                  <ul class="small mb-0">
+                    <li>Temp artifacts: <strong>24 hours</strong></li>
+                    <li>Exports: <strong>7 days</strong></li>
+                    <li>Operational logs: <strong>180 days</strong></li>
+                    <li>Backups: rolling <strong>14 days</strong></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="small text-body-secondary mt-2">Actual values may be tightened/extended by contract or law. Changes are tracked via audit logs.</p>
+        </section>
+
+        <section id="schedule">
+          <h2>Retention Schedule</h2>
+          <p class="mb-2">Representative categories and typical retention targets are shown below. Your tenant’s settings may override these defaults.</p>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="retention-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Category</th>
+                    <th scope="col">Examples</th>
+                    <th scope="col">Default Retention</th>
+                    <th scope="col">Deletion Method</th>
+                    <th scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Demo rows (JS adds pagination only; all content is static here) -->
+                  <tr>
+                    <td>Student PII</td>
+                    <td>Enrollment, demographics, identifiers</td>
+                    <td>Controller-defined (no hard cap)</td>
+                    <td>Targeted purge on record scope</td>
+                    <td>Governed by district/HE policy (FERPA)</td>
+                  </tr>
+                  <tr>
+                    <td>Directory Info</td>
+                    <td>Name, grade level, school, email (where designated)</td>
+                    <td>Controller-defined</td>
+                    <td>Targeted purge</td>
+                    <td>Masking always applies for non-directory fields</td>
+                  </tr>
+                  <tr>
+                    <td>Assessment</td>
+                    <td>Test results, score bands</td>
+                    <td>7–10 years (typical)</td>
+                    <td>Partition drop + residual purge</td>
+                    <td>As required by state program rules</td>
+                  </tr>
+                  <tr>
+                    <td>Attendance</td>
+                    <td>Daily/period presence, reasons</td>
+                    <td>7 years (typical)</td>
+                    <td>Partition drop + purge</td>
+                    <td>Roll-off by term/year partitions</td>
+                  </tr>
+                  <tr>
+                    <td>Discipline</td>
+                    <td>Incidents, dispositions</td>
+                    <td>5–7 years (typical)</td>
+                    <td>Targeted purge</td>
+                    <td>Apply legal hold if required</td>
+                  </tr>
+                  <tr>
+                    <td>Health</td>
+                    <td>Immunization, screenings</td>
+                    <td>Controller-defined</td>
+                    <td>Targeted purge</td>
+                    <td>Subject to additional privacy laws</td>
+                  </tr>
+                  <tr>
+                    <td>Staff HR</td>
+                    <td>Assignments, credentials</td>
+                    <td>7 years (typical)</td>
+                    <td>Partition drop + purge</td>
+                    <td>Per HR policy/contract</td>
+                  </tr>
+                  <tr>
+                    <td>Finance</td>
+                    <td>AP/AR, reimbursements</td>
+                    <td>7 years (typical)</td>
+                    <td>Partition drop + purge</td>
+                    <td>Accounting/audit requirements</td>
+                  </tr>
+                  <tr>
+                    <td>Operational Logs</td>
+                    <td>Audit, access, pipeline logs</td>
+                    <td>365 days (default)</td>
+                    <td>Time-based roll-off</td>
+                    <td>Configurable 180–730 days</td>
+                  </tr>
+                  <tr>
+                    <td>Query Temp</td>
+                    <td>Ad-hoc result caches, temp tables</td>
+                    <td>7 days (default)</td>
+                    <td>TTL auto-expire</td>
+                    <td>Restricted profile: 24 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Exports</td>
+                    <td>Files generated for recipients</td>
+                    <td>30 days (default)</td>
+                    <td>TTL auto-expire + shred</td>
+                    <td>Configurable 1–90 days</td>
+                  </tr>
+                  <tr>
+                    <td>Backups</td>
+                    <td>Encrypted snapshots for DR</td>
+                    <td>35 days (default)</td>
+                    <td>Automated rotation</td>
+                    <td>Immutable; out-of-band deletion not supported</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="sched-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-sched>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="sched-size">Rows</label>
+                  <select id="sched-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="sched-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="sched-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="deletion">
+          <h2>Deletion Workflow</h2>
+          <ol>
+            <li><strong>Initiation</strong>: Data Steward submits purge job by category, scope (org/program/term), and time window.</li>
+            <li><strong>Validation</strong>: Policy simulator reports rows affected, masking impact, and downstream dependencies.</li>
+            <li><strong>Execution</strong>: Purge performs partition drops and targeted deletes; exports an evidence pack (counts, hashes, lineage).</li>
+            <li><strong>Audit</strong>: Immutable logs record requester, approver, policy version, job output, and timestamps.</li>
+          </ol>
+          <p class="small text-body-secondary mb-0">Deletion jobs honor legal holds and will skip protected scopes with an explicit reason code.</p>
+        </section>
+
+        <section id="legal-hold">
+          <h2>Legal Holds</h2>
+          <p>Platform Admins can place holds by category/scope. Held data are excluded from deletion and backup expiration
+             until the hold is released. All actions are audited.</p>
+        </section>
+
+        <section id="exports">
+          <h2>Exports & Subscriptions</h2>
+          <p>Generated files are retained per your export policy (default 30 days). Delivery links expire at generation+TTL.
+             Recipients must re-request access after expiry; masked and row-level policies still apply.</p>
+        </section>
+
+        <section id="backups">
+          <h2>Backups & Disaster Recovery</h2>
+          <ul>
+            <li>Backups are encrypted, rotated automatically, and tested regularly for restore.</li>
+            <li>Customer-direct deletion from backups is not supported; data age out per rotation policy.</li>
+            <li>Upon tenant termination, a final backup may be retained for a defined period per contract.</li>
+          </ul>
+        </section>
+
+        <section id="controls">
+          <h2>Customer Controls</h2>
+          <ul>
+            <li>Configure per-category retention targets and export TTLs.</li>
+            <li>Schedule recurring purges by term/year partitions.</li>
+            <li>Request evidence packs and deletion certificates from the audit console.</li>
+          </ul>
+        </section>
+
+        <section id="contact">
+          <h2>Questions</h2>
+          <p>For retention configurations, legal holds, or deletion evidence, contact your EDX Customer Success Manager or email
+             <a href="mailto:support@edx.example">support@edx.example</a>.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="./data-retention.js"></script>
+</body>
+</html>

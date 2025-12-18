@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Evidence & Audit</title>
+  <meta name="description" content="Evidence packs and audit artifacts for EduData Exchange (EDX) SaaS: generation, contents, integrity, and downloads." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- For local dev only; in production, set CSP via response headers -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 img-src 'self' data:;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./evidence.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container my-4" id="evidence-root">
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3">
+        <nav id="toc" class="card position-sticky top-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">Contents</h2>
+            <ol id="toc-list" class="list-unstyled m-0"></ol>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9" id="evidence-main" tabindex="-1" role="main" aria-label="Evidence & Audit">
+        <header class="mb-4">
+          <h1 class="h3 mb-1">Evidence & Audit</h1>
+          <div class="text-body-secondary small">Last updated: <time datetime="2025-10-18">October 18, 2025</time></div>
+          <p class="mt-3">
+            EduData Exchange (<strong>EDX</strong>) generates immutable audit artifacts (“evidence packs”) for governed actions
+            such as data promotions, policy changes, purges, exports, and shares. This page explains the contents, how to request
+            or generate an evidence pack, and provides a searchable list of recent packs.
+          </p>
+          <div class="alert alert-info small mb-0" role="note">
+            Evidence packs support reviews for FERPA, state laws, GDPR/UK GDPR, and CCPA/CPRA. Hashes and signatures enable
+            tamper detection; all access is logged.
+          </div>
+        </header>
+
+        <section id="whats-included">
+          <h2>What’s Included</h2>
+          <ul>
+            <li><strong>Job summary</strong>: action, scope, requester, approver, timestamps, policy versions.</li>
+            <li><strong>Row counts & diffs</strong>: pre/post counts per table/partition; sample masked previews.</li>
+            <li><strong>Hashes</strong>: SHA-256 for outputs and downloadable files; optional signed manifest.</li>
+            <li><strong>Lineage</strong>: upstream/downstream impacts, dataset versions, and schema checks.</li>
+            <li><strong>Logs</strong>: normalized events and decision traces (masking & row filters).</li>
+          </ul>
+        </section>
+
+        <section id="generation">
+          <h2>Generating Evidence</h2>
+          <ol>
+            <li>From the relevant console (Purges, Exports, Shares, Policies), select <em>Generate Evidence</em>.</li>
+            <li>Confirm scope, legal hold checks, and recipients (Admin/Steward/Auditor).</li>
+            <li>EDX runs the job and posts an evidence pack with downloadable artifacts.</li>
+          </ol>
+          <p class="small text-body-secondary mb-0">Evidence packs inherit tenant retention settings and access controls.</p>
+        </section>
+
+        <section id="integrity">
+          <h2>Integrity & Verification</h2>
+          <ul>
+            <li>Each artifact includes a SHA-256 hash; the manifest may be cryptographically signed.</li>
+            <li>Download pages display hash values; verify locally before using in reviews.</li>
+            <li>All downloads are audited with user, time, and IP (or federated attributes).</li>
+          </ul>
+        </section>
+
+        <section id="packs">
+          <h2>Evidence Packs</h2>
+
+          <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2 toolbar" role="search" aria-label="Filter evidence packs">
+            <input id="q" class="form-control form-control-sm" placeholder="Search by action, id, requester, dataset…">
+            <select id="type" class="form-select form-select-sm narrow" aria-label="Type filter">
+              <option value="">All types</option>
+              <option value="Purge">Purge</option>
+              <option value="Export">Export</option>
+              <option value="Share">Share</option>
+              <option value="Promotion">Promotion</option>
+              <option value="Policy Change">Policy Change</option>
+            </select>
+            <select id="status" class="form-select form-select-sm narrow" aria-label="Status filter">
+              <option value="">All status</option>
+              <option>Ready</option>
+              <option>Running</option>
+              <option>Failed</option>
+              <option>Expired</option>
+            </select>
+            <input id="dateFrom" type="date" class="form-control form-control-sm" aria-label="From date">
+            <input id="dateTo" type="date" class="form-control form-control-sm" aria-label="To date">
+            <select id="sort" class="form-select form-select-sm narrow" title="Sort">
+              <option value="time:desc">Time (new→old)</option>
+              <option value="time:asc">Time (old→new)</option>
+              <option value="type:asc">Type (A→Z)</option>
+              <option value="status:asc">Status (A→Z)</option>
+            </select>
+          </div>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="packs-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Scope</th>
+                    <th scope="col">Requester</th>
+                    <th scope="col">Time (UTC)</th>
+                    <th scope="col">Status</th>
+                    <th scope="col" class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Demo rows (static). JS filters & paginates. -->
+                  <tr>
+                    <td>EV-20251018-001</td>
+                    <td data-type="Purge">Purge</td>
+                    <td>Discipline, term=2024-25</td>
+                    <td>jlee@district.edu</td>
+                    <td data-time="2025-10-18T05:30:00Z">2025-10-18 05:30</td>
+                    <td>Ready</td>
+                    <td class="text-end">
+                      <a class="btn btn-primary btn-sm" href="#" data-open="EV-20251018-001">Open</a>
+                      <a class="btn btn-outline-secondary btn-sm" href="#" data-dl="EV-20251018-001">Download</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>EV-20251017-004</td>
+                    <td data-type="Export">Export</td>
+                    <td>SEVIS export, cohort=Intl</td>
+                    <td>aroberts@college.edu</td>
+                    <td data-time="2025-10-17T21:10:00Z">2025-10-17 21:10</td>
+                    <td>Ready</td>
+                    <td class="text-end">
+                      <a class="btn btn-primary btn-sm" href="#" data-open="EV-20251017-004">Open</a>
+                      <a class="btn btn-outline-secondary btn-sm" href="#" data-dl="EV-20251017-004">Download</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>EV-20251017-003</td>
+                    <td data-type="Share">Share</td>
+                    <td>SEA reporting, org=District 12</td>
+                    <td>kpatel@district.edu</td>
+                    <td data-time="2025-10-17T18:00:00Z">2025-10-17 18:00</td>
+                    <td>Failed</td>
+                    <td class="text-end">
+                      <a class="btn btn-primary btn-sm" href="#" data-open="EV-20251017-003">Open</a>
+                      <a class="btn btn-outline-secondary btn-sm disabled" aria-disabled="true">Download</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>EV-20251016-002</td>
+                    <td data-type="Promotion">Promotion</td>
+                    <td>Attendance schema v3 → canonical</td>
+                    <td>mnguyen@district.edu</td>
+                    <td data-time="2025-10-16T12:45:00Z">2025-10-16 12:45</td>
+                    <td>Ready</td>
+                    <td class="text-end">
+                      <a class="btn btn-primary btn-sm" href="#" data-open="EV-20251016-002">Open</a>
+                      <a class="btn btn-outline-secondary btn-sm" href="#" data-dl="EV-20251016-002">Download</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>EV-20251012-006</td>
+                    <td data-type="Policy Change">Policy Change</td>
+                    <td>Masking update: HEALTH → PII_STRICT</td>
+                    <td>astewart@state.gov</td>
+                    <td data-time="2025-10-12T09:00:00Z">2025-10-12 09:00</td>
+                    <td>Expired</td>
+                    <td class="text-end">
+                      <a class="btn btn-primary btn-sm" href="#" data-open="EV-20251012-006">Open</a>
+                      <a class="btn btn-outline-secondary btn-sm disabled" aria-disabled="true">Download</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="packs-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-packs>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="packs-size">Rows</label>
+                  <select id="packs-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="packs-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="packs-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="access">
+          <h2>Access & Retention</h2>
+          <ul>
+            <li>Access is limited to Platform Admins, Data Stewards, and Security Auditors.</li>
+            <li>Evidence packs follow your tenant retention policy (e.g., 365 days) unless contractually extended.</li>
+            <li>Expired packs remain referenced in audit logs but downloads are disabled.</li>
+          </ul>
+        </section>
+
+        <section id="contact">
+          <h2>Questions</h2>
+          <p>For custom retention, hashes, or signed manifests, contact your EDX Customer Success Manager or email
+            <a href="mailto:support@edx.example">support@edx.example</a>.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="./evidence.js"></script>
+</body>
+</html>

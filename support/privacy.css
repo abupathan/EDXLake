@@ -1,0 +1,27 @@
+/* Privacy — production styles (CSP-safe, no inline) */
+
+#toc { border: 1px solid var(--bs-border-color); }
+#toc .active > a { font-weight: 600; }
+
+#policy-main h2 { scroll-margin-top: 90px; }
+#policy-main h3 { margin-top: 1rem; }
+
+/* Table responsiveness */
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Card spacing in subsections */
+section + section { margin-top: 2rem; }
+
+/* Small utilities for visual rhythm */
+.small-muted { color: var(--bs-secondary-color); }
+
+/* Make sticky TOC behave well under short viewports */
+@media (max-height: 700px) {
+  #toc { position: static !important; }
+}
+
+/* Focus styles for accessibility */
+a:focus, button:focus, input:focus, select:focus {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}

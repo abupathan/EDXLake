@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Accessibility</title>
+  <meta name="description" content="Accessibility commitment, WCAG conformance, assistive technology support, and contact for EduData Exchange (EDX)." />
+  <meta name="color-scheme" content="light dark" />
+  <!-- For local dev only; in production, set CSP via response headers -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 img-src 'self' data:;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 connect-src 'self';
+                 base-uri 'self';
+                 form-action 'self'">
+
+  <!-- Vendor CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="./accessibility.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Partials -->
+  <div id="app-header"></div>
+
+  <div class="container my-4" id="a11y-root">
+    <div class="row g-4">
+      <aside class="col-12 col-lg-3">
+        <nav id="toc" class="card position-sticky top-0 shadow-sm">
+          <div class="card-body">
+            <h2 class="h6 mb-3">Contents</h2>
+            <ol id="toc-list" class="list-unstyled m-0"></ol>
+          </div>
+        </nav>
+      </aside>
+
+      <main class="col-12 col-lg-9" id="a11y-main" tabindex="-1" role="main" aria-label="Accessibility">
+        <header class="mb-4">
+          <h1 class="h3 mb-1">Accessibility at EDX</h1>
+          <div class="text-body-secondary small">Last updated: <time datetime="2025-10-18">October 18, 2025</time></div>
+          <p class="mt-3">
+            EduData Exchange (<strong>EDX</strong>) is committed to building inclusive products aligned with
+            <abbr title="Web Content Accessibility Guidelines">WCAG</abbr> 2.2 Level AA and Section 508.
+            This page summarizes our standards, testing, assistive technology support, and how to request
+            accommodations or report issues.
+          </p>
+          <div class="alert alert-info small mb-0" role="note">
+            EDX provides a <strong>VPAT®</strong> on request and continuously improves accessibility through
+            design reviews, automated checks, and user testing.
+          </div>
+        </header>
+
+        <section id="commitment">
+          <h2>Our Commitment</h2>
+          <ul>
+            <li>Design and code reviews include accessibility criteria (color/contrast, semantics, focus order).</li>
+            <li>Automated linting plus manual screen reader tests before release.</li>
+            <li>Accessible alternatives for time-based media and complex visualizations.</li>
+            <li>Responsive layouts and reflow support at 200–400% zoom.</li>
+          </ul>
+        </section>
+
+        <section id="standards">
+          <h2>Standards & Scope</h2>
+          <ul>
+            <li>WCAG 2.2 Level AA (success criteria integrated into our SDLC checklists).</li>
+            <li>Section 508 (U.S.), EN 301 549 (where applicable).</li>
+            <li>Scope includes the EDX web app, public docs pages, and support portal.</li>
+          </ul>
+        </section>
+
+        <section id="assistive-tech">
+          <h2>Assistive Technology Support Matrix</h2>
+          <p class="mb-2">We test with common combinations below; additional environments may work but are not listed here.</p>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="at-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Platform</th>
+                    <th scope="col">Browser</th>
+                    <th scope="col">Assistive Tech</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Static demo rows; JS paginates -->
+                  <tr><td>Windows</td><td>Chrome</td><td>JAWS</td><td>Supported</td><td>Most-tested combo</td></tr>
+                  <tr><td>Windows</td><td>Edge</td><td>NVDA</td><td>Supported</td><td>ARIA grids verified</td></tr>
+                  <tr><td>Windows</td><td>Firefox</td><td>NVDA</td><td>Supported</td><td>Quick nav landmarks</td></tr>
+                  <tr><td>macOS</td><td>Safari</td><td>VoiceOver</td><td>Supported</td><td>Rotor headings/links</td></tr>
+                  <tr><td>macOS</td><td>Chrome</td><td>VoiceOver</td><td>Supported</td><td>Scroll/zoom OK</td></tr>
+                  <tr><td>iOS</td><td>Safari</td><td>VoiceOver</td><td>Supported</td><td>Reflow @400%</td></tr>
+                  <tr><td>Android</td><td>Chrome</td><td>TalkBack</td><td>Supported</td><td>Large text mode</td></tr>
+                  <tr><td>Windows</td><td>Chrome</td><td>Dragon</td><td>Supported</td><td>Voice commands</td></tr>
+                  <tr><td>ChromeOS</td><td>Chrome</td><td>ChromeVox</td><td>Supported</td><td>Testing in progress</td></tr>
+                  <tr><td>Linux</td><td>Firefox</td><td>Orca</td><td>Partial</td><td>Known grid quirks</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="at-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-at>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="at-size">Rows</label>
+                  <select id="at-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="at-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="at-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="keyboard">
+          <h2>Keyboard Navigation</h2>
+          <ul>
+            <li>Logical focus order; visible focus styles; skip-to-content link.</li>
+            <li>Modal dialogs trap focus and restore on close.</li>
+            <li>Menus and disclosure widgets use ARIA roles and keyboard patterns.</li>
+          </ul>
+        </section>
+
+        <section id="contrast">
+          <h2>Color & Contrast</h2>
+          <p>EDX meets or exceeds 4.5:1 text contrast for body text and 3:1 for large text. Dark mode and high-contrast themes are available where supported by your tenant settings.</p>
+        </section>
+
+        <section id="non-text">
+          <h2>Non-Text Content</h2>
+          <ul>
+            <li>Meaningful images include alt text; decorative images are hidden from AT.</li>
+            <li>Charts include data tables or text alternatives where feasible.</li>
+            <li>Icons are labeled via <code>aria-label</code> or visually hidden text.</li>
+          </ul>
+        </section>
+
+        <section id="forms">
+          <h2>Forms & Validation</h2>
+          <ul>
+            <li>Labels bound to inputs; required fields indicated; inline error messages announced via ARIA live regions.</li>
+            <li>Clear instructions and examples; no reliance on color alone.</li>
+          </ul>
+        </section>
+
+        <section id="media">
+          <h2>Video/Audio</h2>
+          <ul>
+            <li>Captions for prerecorded content; transcripts where appropriate.</li>
+            <li>Audio descriptions for essential visual information when feasible.</li>
+          </ul>
+        </section>
+
+        <section id="limits">
+          <h2>Known Limitations & Roadmap</h2>
+          <p class="mb-2">Items below are tracked internally and prioritized for resolution. Dates are targets and may shift.</p>
+
+          <div class="card shadow-sm">
+            <div class="table-responsive">
+              <table class="table align-middle mb-0" id="limits-table">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Area</th>
+                    <th scope="col">Issue</th>
+                    <th scope="col">Impact</th>
+                    <th scope="col">Target Fix</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Example demo rows; JS paginates -->
+                  <tr><td>Data grids</td><td>Orca announces column headers inconsistently</td><td>Low</td><td>Q4 FY25</td><td>Open</td></tr>
+                  <tr><td>Charts</td><td>Keyboard panning in heatmaps is not consistent</td><td>Medium</td><td>Q1 FY26</td><td>Planned</td></tr>
+                  <tr><td>Forms</td><td>Inline error group label missing in one legacy form</td><td>Low</td><td>Nov 2025</td><td>In Progress</td></tr>
+                  <tr><td>Docs</td><td>Some old SVGs lack <code>role="img"</code></td><td>Low</td><td>Dec 2025</td><td>Planned</td></tr>
+                  <tr><td>Tables</td><td>Sticky header announces twice in ChromeVox</td><td>Low</td><td>Dec 2025</td><td>Investigating</td></tr>
+                  <tr><td>Navigation</td><td>Skip link hidden by custom theme in rare case</td><td>Low</td><td>Nov 2025</td><td>In Progress</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination (wired by JS) -->
+            <div class="card-footer d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <div class="small text-body-secondary" id="limits-count" aria-live="polite"></div>
+              <div class="d-flex align-items-center gap-2" data-paginate-limits>
+                <div class="d-flex align-items-center gap-2">
+                  <label class="small me-1" for="limits-size">Rows</label>
+                  <select id="limits-size" class="form-select form-select-sm" aria-label="Rows per page">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                  </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" data-first aria-label="First page">«</button>
+                <button class="btn btn-outline-secondary btn-sm" data-prev aria-label="Previous page">‹</button>
+                <span class="small">Page</span>
+                <input class="form-control form-control-sm" id="limits-page" type="number" min="1" value="1" aria-label="Current page" style="width:4.5rem">
+                <span class="small" id="limits-pages-label">of 1</span>
+                <button class="btn btn-outline-secondary btn-sm" data-next aria-label="Next page">›</button>
+                <button class="btn btn-outline-secondary btn-sm" data-last aria-label="Last page">»</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="feedback">
+          <h2>Feedback & Contact</h2>
+          <p>If you encounter accessibility barriers or need an alternative format, email
+            <a href="mailto:accessibility@edx.example">accessibility@edx.example</a>. Please include your
+            browser/OS, assistive tech (if any), steps to reproduce, and screenshots or recordings if possible.</p>
+        </section>
+
+        <section id="accommodations">
+          <h2>Requesting Accommodations</h2>
+          <p>Customers can request reasonable accommodations via their Customer Success Manager or by emailing
+            <a href="mailto:support@edx.example">support@edx.example</a>. We coordinate with the institution’s accessibility office.</p>
+        </section>
+
+        <section id="versioning">
+          <h2>Updates & Versioning</h2>
+          <p>We review this page at least annually and after significant UI changes. A current VPAT® is available on request.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="module" src="./accessibility.js"></script>
+</body>
+</html>

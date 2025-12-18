@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Access & Purpose — EDX</title>
+  <meta name="description" content="View your effective masking and row filters by role and purpose of use." />
+  <meta name="color-scheme" content="light dark" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://cdn.jsdelivr.net;
+                 style-src 'self' https://cdn.jsdelivr.net;
+                 font-src 'self' https://cdn.jsdelivr.net data:;
+                 img-src 'self' data:;
+                 connect-src 'self';
+                 frame-ancestors 'none';
+                 base-uri 'self';
+                 form-action 'self'">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+        integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="/assets/css/edx-global.css">
+</head>
+<body>
+  <div id="app-header"></div>
+
+  <main id="main" class="container my-4" tabindex="-1" role="main" aria-label="My Access & Purpose">
+    <header class="mb-4">
+      <h1 class="h3 mb-1">My Access & Purpose</h1>
+      <p class="text-body-secondary mb-0">Your effective permissions and policies for governed datasets.</p>
+    </header>
+
+    <section class="row g-4">
+      <div class="col-12 col-lg-5">
+        <div class="card">
+          <div class="card-header">Identity</div>
+          <div class="card-body">
+            <dl class="row mb-0">
+              <dt class="col-5">User</dt><dd class="col-7" id="accUser">user@example.edu</dd>
+              <dt class="col-5">Current role</dt><dd class="col-7" id="accRole">CONSUMER</dd>
+              <dt class="col-5">Purpose of use</dt><dd class="col-7" id="accPurpose">Analytics: Reporting</dd>
+            </dl>
+            <div class="form-text mt-2">Roles and purposes are tenant-scoped and auditable.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-7">
+        <div class="card">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <span>Effective Policies</span>
+            <span class="small text-body-secondary">Preview</span>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" data-edx-paginate data-edx-pagekey="access:effective" data-edx-pagesize="5">
+              <table class="table table-sm align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Dataset</th>
+                    <th>Masking</th>
+                    <th>Row Filter</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Students</td><td>PII_STRICT (names masked)</td><td>Campus=North; Program=K-5</td></tr>
+                  <tr><td>Attendance</td><td>PII_DIRECTORY</td><td>Campus=North</td></tr>
+                  <tr><td>Grades</td><td>PII_STRICT</td><td>Program=K-5</td></tr>
+                  <tr><td>Staff</td><td>PII_DIRECTORY</td><td>Department=Student Services</td></tr>
+                  <tr><td>Assessments</td><td>DEIDENTIFIED</td><td>Term=2025-FALL</td></tr>
+                  <tr><td>Enrollment</td><td>PII_DIRECTORY</td><td>Campus=North</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="small text-body-secondary mt-3 mb-0">Policies shown reflect your current role &amp; purpose; they apply across SQL, API, exports, and shares.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+  <script src="/assets/js/partials-loader.js"></script>
+  <script src="/assets/js/index.js"></script>
+</body>
+</html>

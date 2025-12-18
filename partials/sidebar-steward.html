@@ -1,0 +1,87 @@
+<!-- partials/sidebar-steward.html (Revised, links only to existing pages) -->
+<nav id="sidebarNav" class="d-flex flex-column flex-shrink-0 p-3 border-end bg-body"
+     role="navigation" aria-label="Data Steward navigation">
+
+  <ul class="nav nav-pills flex-column mb-auto" id="sidebarNavList">
+    <!-- Home -->
+    <li class="nav-item">
+      <a href="../steward/landing.html" class="nav-link link-body-emphasis" aria-label="Home">
+        <i class="bi bi-house-door me-2" aria-hidden="true"></i> Home
+      </a>
+    </li>
+
+    <!-- Approvals & Governance -->
+    <li class="mt-2 px-2 small text-uppercase text-body-secondary" aria-hidden="true">Approvals &amp; Governance</li>
+    <li>
+      <a href="../steward/approvals-queue.html" class="nav-link link-body-emphasis" aria-label="Approvals Queue">
+        <i class="bi bi-inboxes me-2" aria-hidden="true"></i> Approvals Queue
+        <span class="badge rounded-pill text-bg-secondary ms-2" id="approvalsCount" aria-label="Pending approvals">0</span>
+      </a>
+    </li>
+    <li>
+      <a href="../steward/promotion-approvals.html" class="nav-link link-body-emphasis" aria-label="Promotion Approvals">
+        <i class="bi bi-check2-square me-2" aria-hidden="true"></i> Promotion Approvals
+      </a>
+    </li>
+    <li>
+      <a href="../steward/promotion-gates.html" class="nav-link link-body-emphasis" aria-label="Promotion Gates">
+        <i class="bi bi-arrow-up-right-square me-2" aria-hidden="true"></i> Promotion Gates
+      </a>
+    </li>
+
+    <!-- Data Quality -->
+    <li class="mt-2 px-2 small text-uppercase text-body-secondary" aria-hidden="true">Data Quality</li>
+    <li>
+      <a href="../steward/dq-rules.html" class="nav-link link-body-emphasis" aria-label="Data Quality Rules">
+        <i class="bi bi-clipboard-check me-2" aria-hidden="true"></i> Data Quality Rules
+      </a>
+    </li>
+    <li>
+      <!-- Relinked: Validation & Drift -> data-validation.html -->
+      <a href="../steward/data-validation.html" class="nav-link link-body-emphasis" aria-label="Data Validation & Drift">
+        <i class="bi bi-graph-down-arrow me-2" aria-hidden="true"></i> Data Validation &amp; Drift
+      </a>
+    </li>
+
+    <!-- Catalog Stewardship -->
+    <li class="mt-2 px-2 small text-uppercase text-body-secondary" aria-hidden="true">Catalog Stewardship</li>
+    <li>
+      <!-- Consolidated: Catalog + Business Glossary into one page you have -->
+      <a href="../steward/catalog-glossary.html" class="nav-link link-body-emphasis" aria-label="Catalog & Glossary">
+        <i class="bi bi-collection me-2" aria-hidden="true"></i> Catalog &amp; Glossary
+      </a>
+    </li>
+    <li>
+      <a href="../steward/dataset-tagging.html" class="nav-link link-body-emphasis" aria-label="Dataset Tagging">
+        <i class="bi bi-tags me-2" aria-hidden="true"></i> Dataset Tagging
+      </a>
+    </li>
+
+    <!-- Policy Review & Simulation -->
+    <li class="mt-2 px-2 small text-uppercase text-body-secondary" aria-hidden="true">Policies</li>
+    <li>
+      <a href="../steward/policy-simulator.html" class="nav-link link-body-emphasis" aria-label="Policy Simulator">
+        <i class="bi bi-shield-lock me-2" aria-hidden="true"></i> Policy Simulator
+      </a>
+    </li>
+
+    <!-- Shares & Exports -->
+    <li class="mt-2 px-2 small text-uppercase text-body-secondary" aria-hidden="true">Shares &amp; Exports</li>
+    <li>
+      <a href="../steward/data-shares.html" class="nav-link link-body-emphasis" aria-label="Data Shares">
+        <i class="bi bi-box-arrow-up-right me-2" aria-hidden="true"></i> Data Shares
+      </a>
+    </li>
+    <li>
+      <a href="../steward/export-requests.html" class="nav-link link-body-emphasis" aria-label="Export Requests">
+        <i class="bi bi-send-check me-2" aria-hidden="true"></i> Export Requests
+      </a>
+    </li>
+  </ul>
+
+  <hr>
+  <div class="text-body-secondary small mt-auto">
+    <i class="bi bi-shield-lock me-1" aria-hidden="true"></i>
+    <span>EDX v1.0 • Data Steward Role</span>
+  </div>
+</nav>
