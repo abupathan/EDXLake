@@ -16,7 +16,7 @@
     </button>
 
     <div id="edxNav" class="collapse navbar-collapse">
-      <!-- Left: primary nav (minimal; extend if needed) -->
+      <!-- Left: primary nav -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" href="/support/docs.html">Docs</a></li>
         <li class="nav-item"><a class="nav-link" href="/support/api.html">API</a></li>
@@ -25,7 +25,7 @@
 
       <!-- Right: user menu -->
       <div class="d-flex align-items-center gap-2">
-        <!-- Theme toggle placeholder (wired elsewhere if you use it) -->
+        <!-- Theme toggle placeholder -->
         <button class="btn btn-outline-secondary btn-sm d-none" type="button" id="themeToggle" aria-label="Toggle theme">
           <i class="bi bi-moon" aria-hidden="true"></i>
         </button>
@@ -42,22 +42,23 @@
             <span id="currentUserRole" class="badge text-bg-secondary text-uppercase">role</span>
             <i class="bi bi-caret-down-fill ms-1" aria-hidden="true"></i>
           </button>
+
           <ul class="dropdown-menu dropdown-menu-end shadow-sm">
             <li class="dropdown-header small">
               <div class="fw-semibold" id="menuUserName">user</div>
               <div class="text-body-secondary" id="menuUserEmail">user@example.edu</div>
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="../consumer/my-access.html">My Access & Purpose</a></li>
-            <li><a class="dropdown-item" href="../../support/profile.html">Profile & Preferences</a></li>
+
+            <li><a class="dropdown-item" href="/pages/consumer/my-access.html">My Access &amp; Purpose</a></li>
+            <li><a class="dropdown-item" href="/support/profile.html">Profile &amp; Preferences</a></li>
+
             <li><hr class="dropdown-divider"></li>
-            <!-- Sign out: anchor id is used by auth.js to clear session and redirect -->
-            <li><a id="signoutHook" class="dropdown-item text-danger" href="../../signin.html">Sign out</a></li>
+            <!-- auth.js uses this id -->
+            <li><a id="signoutHook" class="dropdown-item text-danger" href="/signin.html">Sign out</a></li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 </header>
-
-
