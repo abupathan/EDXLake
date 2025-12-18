@@ -1,0 +1,29 @@
+{
+  "meta": { "title": "Promotion Controls (RO)", "version": "1.2.0" },
+  "flows": [
+    { "name": "Landing → Staging",    "from": "landing",   "to": "staging",   "gates": ["Schema OK", "Virus Scan OK"], "approvers": ["Data Engineer"] },
+    { "name": "Staging → Canonical",  "from": "staging",   "to": "canonical", "gates": ["DQ ≥ 95", "Schema OK", "Lineage Updated"], "approvers": ["Data Steward"] },
+    { "name": "Canonical → Publish",  "from": "canonical", "to": "publish",   "gates": ["Masking Ok", "RLS Enabled", "Purpose Map"], "approvers": ["Data Steward"] },
+
+    { "name": "Roster Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Ed-Fi Conformance", "DQ ≥ 97"], "approvers": ["Registrar", "Data Steward"] },
+    { "name": "Assessments Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 96"], "approvers": ["Program Steward"] },
+    { "name": "Finance Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled", "PII_STRICT"], "approvers": ["Finance Steward"] },
+    { "name": "Discipline Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled"], "approvers": ["Compliance Steward"] },
+    { "name": "Attendance Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 95"], "approvers": ["Program Steward"] },
+    { "name": "HR Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 98", "Lineage Updated"], "approvers": ["HR Steward"] },
+    { "name": "HR Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled"], "approvers": ["HR Steward"] },
+
+    { "name": "Transportation Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 95"], "approvers": ["Ops Steward"] },
+    { "name": "Transportation Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled"], "approvers": ["Ops Steward"] },
+    { "name": "Special Ed Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 96", "FERPA Review"], "approvers": ["Program Steward", "Compliance Steward"] },
+    { "name": "Special Ed Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled", "PII_STRICT"], "approvers": ["Compliance Steward"] },
+    { "name": "CTE Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 95"], "approvers": ["Program Steward"] },
+    { "name": "CTE Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled"], "approvers": ["Program Steward"] },
+
+    { "name": "Health Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 99", "HIPAA Review"], "approvers": ["Health Steward", "Compliance Steward"] },
+    { "name": "Health Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok", "RLS Enabled", "PII_STRICT"], "approvers": ["Health Steward"] },
+
+    { "name": "Facilities Staging → Canonical", "from": "staging", "to": "canonical", "gates": ["Schema OK", "DQ ≥ 94"], "approvers": ["Ops Steward"] },
+    { "name": "Facilities Canonical → Publish", "from": "canonical", "to": "publish", "gates": ["Masking Ok"], "approvers": ["Ops Steward"] }
+  ]
+}

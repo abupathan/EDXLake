@@ -1,0 +1,37 @@
+{
+  "meta": { "title": "Masking & RLS", "version": "1.2.0" },
+  "masking": {
+    "enabled": true,
+    "default_strategy": "FULL_MASK",
+    "strategies": ["FULL_MASK", "PARTIAL", "REDACT", "HASH_SHA256", "TOKENIZE", "NULLIFY"]
+  },
+  "rls": {
+    "enabled": true,
+    "active": [
+      "scope:org",
+      "scope:campus",
+      "scope:department",
+      "scope:program",
+      "scope:term",
+      "purpose:operational",
+      "purpose:research",
+      "campus:north_hs",
+      "campus:east_ms",
+      "program:special_ed",
+      "department:finance",
+      "term:2025FALL",
+      "scope:grade_level_9",
+      "scope:grade_level_10",
+      "scope:grade_level_11",
+      "scope:grade_level_12"
+    ],
+    "notes": {
+      "scope:org": "Tenant boundary by organization.",
+      "scope:campus": "Campus-level partition for principals.",
+      "scope:department": "Restrict finance datasets to finance staff only.",
+      "purpose:research": "IRB-approved datasets only; masking must be strict.",
+      "program:special_ed": "FERPA-sensitive program scope.",
+      "term:2025FALL": "Semester scoping for counselors."
+    }
+  }
+}

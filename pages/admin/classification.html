@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Classification & Tagging</title>
+  <meta name="description" content="Define and manage classification tags and auto-tagging rules that drive masking and row-level policies." />
+  <meta name="color-scheme" content="light dark" />
+
+  <!-- Bootstrap CSS (CDN with SRI) -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  >
+
+  <!-- Optional global styles -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+
+  <!-- Page styles -->
+  <link href="classification.css" rel="stylesheet">
+</head>
+<body data-edx-sidebar="admin">
+  <!-- Header / Sidebar via partials -->
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2"><div id="app-sidebar"></div></aside>
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Rule Editor Modal -->
+  <div class="modal fade" id="ruleModal" tabindex="-1" aria-labelledby="ruleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ruleModalLabel">Rule</h5>
+          <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="ruleForm" class="vstack gap-3" novalidate>
+            <div>
+              <label class="form-label">Pattern <span class="text-body-secondary small">(regex)</span></label>
+              <input id="fPattern" class="form-control" placeholder="e.g., ssn|social_security" required>
+              <div class="form-text">Matches column or dataset names depending on scope.</div>
+            </div>
+            <div>
+              <label class="form-label">Scope</label>
+              <select id="fScope" class="form-select">
+                <option value="column">column</option>
+                <option value="dataset">dataset</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Tags to add</label>
+              <div id="fTags" class="d-flex flex-wrap gap-2"></div>
+              <div class="form-text">Use classification tags below, or add new tags on the main page.</div>
+            </div>
+            <input type="hidden" id="fIndex" value="-1">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button id="btnRuleSave" class="btn btn-primary">Save Rule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CSV Preview Modal -->
+  <div class="modal fade" id="csvModal" tabindex="-1" aria-labelledby="csvModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="csvModalLabel" class="modal-title">CSV Preview</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <pre id="csvPreview" class="mb-0" style="white-space: pre-wrap;"></pre>
+        </div>
+        <div class="modal-footer">
+          <button id="btnCopyCsv" class="btn btn-outline-secondary btn-sm">Copy to clipboard</button>
+          <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (CDN with SRI) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Partials loader: support global (window.EDXPartials) OR ESM fallback without breaking CSP -->
+  <script>
+    (async () => {
+      try {
+        if (window.EDXPartials && window.EDXPartials.loadPartials) {
+          await window.EDXPartials.loadPartials({ role: 'admin' });
+        } else {
+          const mod = await import('../../assets/js/partials-loader.js');
+          const fn = mod.loadPartials || (mod.EDXPartials && mod.EDXPartials.loadPartials);
+          if (fn) { await fn({ role: 'admin' }); }
+        }
+      } catch (e) {
+        console.warn('Partials load failed', e);
+      }
+    })();
+  </script>
+
+  <!-- Page logic -->
+  <script type="module" src="classification.js"></script>
+</body>
+</html>

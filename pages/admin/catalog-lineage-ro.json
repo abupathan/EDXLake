@@ -1,0 +1,97 @@
+{
+  "meta": { "title": "Catalog & Lineage (RO)", "version": "1.2.0" },
+  "datasets": [
+    {
+      "name": "pub_k12_roster",
+      "schema_version": "1.0.0",
+      "freshness": "15 min ago",
+      "freshness_mins": 15,
+      "dq_score": 98,
+      "desc": "Roster bridge (OneRoster)",
+      "tags": ["k12", "oneroster", "directory"],
+      "owners": ["data-stewards@districta.edu"],
+      "schema": [
+        { "name": "student_id", "type": "STRING", "pk": true,  "tags": ["PII_DIRECTORY"] },
+        { "name": "student_name", "type": "STRING", "pk": false, "tags": ["PII_DIRECTORY"] },
+        { "name": "grade_level", "type": "STRING", "pk": false, "tags": [] },
+        { "name": "school_id", "type": "STRING", "pk": false, "tags": [] }
+      ],
+      "lineage": { "from": ["canvas.courses", "powerschool.students"], "to": "pub_k12_roster" }
+    },
+    {
+      "name": "pub_k12_attendance_daily",
+      "schema_version": "1.0.0",
+      "freshness": "1 hr ago",
+      "freshness_mins": 60,
+      "dq_score": 97,
+      "desc": "Daily attendance events",
+      "tags": ["k12", "attendance"],
+      "owners": ["attendance-ops@districta.edu"],
+      "schema": [
+        { "name": "event_id", "type": "STRING", "pk": true,  "tags": [] },
+        { "name": "student_id", "type": "STRING", "pk": false, "tags": ["PII_DIRECTORY"] },
+        { "name": "event_date", "type": "DATE",   "pk": false, "tags": [] },
+        { "name": "code",       "type": "STRING", "pk": false, "tags": [] }
+      ],
+      "lineage": { "from": ["powerschool.attendance_events"], "to": "pub_k12_attendance_daily" }
+    },
+    {
+      "name": "pub_he_enrollment_term",
+      "schema_version": "1.0.0",
+      "freshness": "Today 02:00Z",
+      "freshness_mins": 0,
+      "dq_score": 99,
+      "desc": "Term enrollments (CEDS)",
+      "tags": ["highered", "ceds", "enrollment"],
+      "owners": ["registrar@collegeb.edu"],
+      "schema": [
+        { "name": "person_id", "type": "STRING", "pk": true,  "tags": ["PII_DIRECTORY"] },
+        { "name": "term_code", "type": "STRING", "pk": false, "tags": [] },
+        { "name": "program",   "type": "STRING", "pk": false, "tags": [] },
+        { "name": "status",    "type": "STRING", "pk": false, "tags": [] }
+      ],
+      "lineage": { "from": ["banner.enrollment"], "to": "pub_he_enrollment_term" }
+    },
+    {
+      "name": "pub_fin_aid_disbursements",
+      "schema_version": "1.0.0",
+      "freshness": "3 hr ago",
+      "freshness_mins": 180,
+      "dq_score": 96,
+      "desc": "Financial aid disbursements",
+      "tags": ["highered", "finance"],
+      "owners": ["fin-aid@collegeb.edu"],
+      "schema": [
+        { "name": "disb_id",   "type": "STRING", "pk": true,  "tags": [] },
+        { "name": "person_id", "type": "STRING", "pk": false, "tags": ["PII_DIRECTORY"] },
+        { "name": "amount",    "type": "NUMBER", "pk": false, "tags": ["FINANCIAL"] },
+        { "name": "disb_date", "type": "DATE",   "pk": false, "tags": [] }
+      ],
+      "lineage": { "from": ["workday.fa_disbursements"], "to": "pub_fin_aid_disbursements" }
+    },
+
+    { "name": "pub_k12_grades_term", "schema_version": "1.0.0", "freshness": "45 min ago", "freshness_mins": 45, "dq_score": 95, "desc": "Term grades", "tags": ["k12","grades"], "owners": ["assessment@districta.edu"], "schema": [ { "name": "student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"course_id","type":"STRING","pk":false,"tags":[] }, { "name":"term","type":"STRING","pk":false,"tags":[] }, { "name":"letter","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["canvas.grades","powerschool.sections"], "to": "pub_k12_grades_term" } },
+    { "name": "pub_k12_discipline_events", "schema_version": "1.0.0", "freshness": "2 hr ago", "freshness_mins": 120, "dq_score": 94, "desc": "Discipline events (deidentified for externals)", "tags": ["k12","discipline","deidentified"], "owners": ["student-services@districta.edu"], "schema": [ { "name":"event_id","type":"STRING","pk":true,"tags":[] }, { "name":"school_id","type":"STRING","pk":false,"tags":[] }, { "name":"event_date","type":"DATE","pk":false,"tags":[] }, { "name":"type","type":"STRING","pk":false,"tags":["DISCIPLINE"] } ], "lineage": { "from": ["powerschool.incidents"], "to": "pub_k12_discipline_events" } },
+    { "name": "pub_he_credentials_awarded", "schema_version": "1.0.0", "freshness": "Today 01:30Z", "freshness_mins": 0, "dq_score": 99, "desc": "Credentials by term (IPEDS)", "tags": ["highered","ipeds"], "owners": ["institutional-research@collegeb.edu"], "schema": [ { "name":"person_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"credential","type":"STRING","pk":false,"tags":[] }, { "name":"term","type":"STRING","pk":false,"tags":[] }, { "name":"cip_code","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["banner.awards"], "to": "pub_he_credentials_awarded" } },
+    { "name": "pub_p20_student_identity", "schema_version": "1.0.0", "freshness": "Today 00:20Z", "freshness_mins": 0, "dq_score": 98, "desc": "Crosswalk identity across K12→HE", "tags": ["p20","directory"], "owners": ["data-office@state.edu"], "schema": [ { "name":"p20_id","type":"STRING","pk":true,"tags":[] }, { "name":"k12_student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"he_person_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] } ], "lineage": { "from": ["pub_k12_roster","pub_he_enrollment_term"], "to": "pub_p20_student_identity" } },
+    { "name": "pub_k12_assessment_results", "schema_version": "1.0.0", "freshness": "6 hr ago", "freshness_mins": 360, "dq_score": 93, "desc": "Assessment outcomes (summative)", "tags": ["k12","assessment"], "owners": ["assessment@districta.edu"], "schema": [ { "name":"student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"assessment","type":"STRING","pk":false,"tags":[] }, { "name":"scale_score","type":"NUMBER","pk":false,"tags":[] }, { "name":"performance_level","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["assessment.vendor_scores"], "to": "pub_k12_assessment_results" } },
+    { "name": "pub_k12_attendance_daily_agg", "schema_version": "1.0.0", "freshness": "1 hr ago", "freshness_mins": 60, "dq_score": 97, "desc": "Daily attendance aggregates", "tags": ["k12","attendance"], "owners": ["attendance-ops@districta.edu"], "schema": [ { "name":"school_id","type":"STRING","pk":false,"tags":[] }, { "name":"event_date","type":"DATE","pk":false,"tags":[] }, { "name":"present","type":"NUMBER","pk":false,"tags":[] }, { "name":"absent","type":"NUMBER","pk":false,"tags":[] } ], "lineage": { "from": ["pub_k12_attendance_daily"], "to": "pub_k12_attendance_daily_agg" } },
+    { "name": "pub_he_financial_aid_awards", "schema_version": "1.0.0", "freshness": "3 hr ago", "freshness_mins": 180, "dq_score": 96, "desc": "Financial aid awards by person", "tags": ["highered","finance"], "owners": ["fin-aid@collegeb.edu"], "schema": [ { "name":"award_id","type":"STRING","pk":true,"tags":[] }, { "name":"person_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"program","type":"STRING","pk":false,"tags":[] }, { "name":"amount","type":"NUMBER","pk":false,"tags":["FINANCIAL"] } ], "lineage": { "from": ["workday.fa_awards"], "to": "pub_he_financial_aid_awards" } },
+    { "name": "pub_k12_staff_directory", "schema_version": "1.0.0", "freshness": "2 hr ago", "freshness_mins": 120, "dq_score": 98, "desc": "Staff directory", "tags": ["k12","directory"], "owners": ["hr@districta.edu"], "schema": [ { "name":"staff_id","type":"STRING","pk":true,"tags":[] }, { "name":"name","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"school_id","type":"STRING","pk":false,"tags":[] }, { "name":"email","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] } ], "lineage": { "from": ["hr_system.staff"], "to": "pub_k12_staff_directory" } },
+    { "name": "pub_k12_course_catalog", "schema_version": "1.0.0", "freshness": "Yesterday", "freshness_mins": 1440, "dq_score": 99, "desc": "Course catalog", "tags": ["k12","catalog"], "owners": ["curriculum@districta.edu"], "schema": [ { "name":"course_id","type":"STRING","pk":true,"tags":[] }, { "name":"title","type":"STRING","pk":false,"tags":[] }, { "name":"credits","type":"NUMBER","pk":false,"tags":[] } ], "lineage": { "from": ["powerschool.courses"], "to": "pub_k12_course_catalog" } },
+    { "name": "pub_he_programs", "schema_version": "1.0.0", "freshness": "Today 03:00Z", "freshness_mins": 0, "dq_score": 98, "desc": "Programs and CIP mapping", "tags": ["highered","catalog"], "owners": ["registrar@collegeb.edu"], "schema": [ { "name":"program","type":"STRING","pk":true,"tags":[] }, { "name":"cip_code","type":"STRING","pk":false,"tags":[] }, { "name":"award_level","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["banner.programs"], "to": "pub_he_programs" } },
+    { "name": "pub_he_course_enrollment", "schema_version": "1.0.0", "freshness": "2 hr ago", "freshness_mins": 120, "dq_score": 95, "desc": "Course enrollments per section", "tags": ["highered","enrollment"], "owners": ["registrar@collegeb.edu"], "schema": [ { "name":"section_id","type":"STRING","pk":true,"tags":[] }, { "name":"person_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"status","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["banner.registration"], "to": "pub_he_course_enrollment" } },
+    { "name": "pub_k12_transport_routes", "schema_version": "1.0.0", "freshness": "4 hr ago", "freshness_mins": 240, "dq_score": 92, "desc": "Transportation routes", "tags": ["k12","ops"], "owners": ["ops@districta.edu"], "schema": [ { "name":"route_id","type":"STRING","pk":true,"tags":[] }, { "name":"school_id","type":"STRING","pk":false,"tags":[] }, { "name":"stops","type":"NUMBER","pk":false,"tags":[] } ], "lineage": { "from": ["transit.routes"], "to": "pub_k12_transport_routes" } },
+    { "name": "pub_k12_calendar", "schema_version": "1.0.0", "freshness": "Today", "freshness_mins": 0, "dq_score": 99, "desc": "District calendar", "tags": ["k12","calendar"], "owners": ["ops@districta.edu"], "schema": [ { "name":"date","type":"DATE","pk":true,"tags":[] }, { "name":"type","type":"STRING","pk":false,"tags":[] }, { "name":"notes","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["ops.calendar"], "to": "pub_k12_calendar" } },
+    { "name": "pub_he_student_finance", "schema_version": "1.0.0", "freshness": "5 hr ago", "freshness_mins": 300, "dq_score": 94, "desc": "Student finance ledger", "tags": ["highered","finance"], "owners": ["bursar@collegeb.edu"], "schema": [ { "name":"ledger_id","type":"STRING","pk":true,"tags":[] }, { "name":"person_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"balance","type":"NUMBER","pk":false,"tags":["FINANCIAL"] } ], "lineage": { "from": ["workday.student_ledger"], "to": "pub_he_student_finance" } },
+    { "name": "pub_k12_special_programs", "schema_version": "1.0.0", "freshness": "3 hr ago", "freshness_mins": 180, "dq_score": 96, "desc": "Special programs roster", "tags": ["k12","programs"], "owners": ["programs@districta.edu"], "schema": [ { "name":"student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"program","type":"STRING","pk":false,"tags":[] }, { "name":"status","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["powerschool.special_programs"], "to": "pub_k12_special_programs" } },
+    { "name": "pub_k12_meals_eligibility", "schema_version": "1.0.0", "freshness": "Yesterday", "freshness_mins": 1440, "dq_score": 97, "desc": "Meals eligibility (NSLP)", "tags": ["k12","meals"], "owners": ["nutrition@districta.edu"], "schema": [ { "name":"student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"eligibility","type":"STRING","pk":false,"tags":[] }, { "name":"start_date","type":"DATE","pk":false,"tags":[] } ], "lineage": { "from": ["nutrition.eligibility"], "to": "pub_k12_meals_eligibility" } },
+    { "name": "pub_he_library_loans", "schema_version": "1.0.0", "freshness": "8 hr ago", "freshness_mins": 480, "dq_score": 92, "desc": "Library loans (aggregated)", "tags": ["highered","library","deidentified"], "owners": ["library@collegeb.edu"], "schema": [ { "name":"loan_id","type":"STRING","pk":true,"tags":[] }, { "name":"item_type","type":"STRING","pk":false,"tags":[] }, { "name":"loan_date","type":"DATE","pk":false,"tags":[] } ], "lineage": { "from": ["library.circulation"], "to": "pub_he_library_loans" } },
+    { "name": "pub_k12_device_inventory", "schema_version": "1.0.0", "freshness": "2 hr ago", "freshness_mins": 120, "dq_score": 95, "desc": "1:1 device inventory", "tags": ["k12","devices"], "owners": ["it@districta.edu"], "schema": [ { "name":"asset_tag","type":"STRING","pk":true,"tags":[] }, { "name":"model","type":"STRING","pk":false,"tags":[] }, { "name":"assigned_to","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] } ], "lineage": { "from": ["jamf.inventory"], "to": "pub_k12_device_inventory" } },
+    { "name": "pub_he_room_scheduling", "schema_version": "1.0.0", "freshness": "Today", "freshness_mins": 0, "dq_score": 99, "desc": "Room scheduling matrix", "tags": ["highered","ops"], "owners": ["facilities@collegeb.edu"], "schema": [ { "name":"room","type":"STRING","pk":true,"tags":[] }, { "name":"slot","type":"STRING","pk":false,"tags":[] }, { "name":"status","type":"STRING","pk":false,"tags":[] } ], "lineage": { "from": ["facilities.rooms"], "to": "pub_he_room_scheduling" } },
+    { "name": "pub_k12_parent_contacts", "schema_version": "1.0.0", "freshness": "5 hr ago", "freshness_mins": 300, "dq_score": 93, "desc": "Parent/guardian contacts", "tags": ["k12","directory"], "owners": ["registrar@districta.edu"], "schema": [ { "name":"student_id","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"guardian_name","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] }, { "name":"phone","type":"STRING","pk":false,"tags":["PII_DIRECTORY"] } ], "lineage": { "from": ["powerschool.contacts"], "to": "pub_k12_parent_contacts" } },
+    { "name": "pub_he_retention_cohort", "schema_version": "1.0.0", "freshness": "Yesterday", "freshness_mins": 1440, "dq_score": 97, "desc": "Cohort retention dashboard feed", "tags": ["highered","analytics"], "owners": ["ir@collegeb.edu"], "schema": [ { "name":"cohort","type":"STRING","pk":true,"tags":[] }, { "name":"size","type":"NUMBER","pk":false,"tags":[] }, { "name":"retention_rate","type":"NUMBER","pk":false,"tags":[] } ], "lineage": { "from": ["banner.enrollment","workday.fa_awards"], "to": "pub_he_retention_cohort" } },
+    { "name": "pub_k12_sis_changes", "schema_version": "1.0.0", "freshness": "30 min ago", "freshness_mins": 30, "dq_score": 98, "desc": "SIS change log (auditable)", "tags": ["k12","audit"], "owners": ["it@districta.edu"], "schema": [ { "name":"change_id","type":"STRING","pk":true,"tags":[] }, { "name":"entity","type":"STRING","pk":false,"tags":[] }, { "name":"actor","type":"STRING","pk":false,"tags":[] }, { "name":"ts_utc","type":"TIMESTAMP","pk":false,"tags":[] } ], "lineage": { "from": ["powerschool.audit"], "to": "pub_k12_sis_changes" } },
+    { "name": "pub_p20_transition_events", "schema_version": "1.0.0", "freshness": "Today", "freshness_mins": 0, "dq_score": 96, "desc": "Transitions K12→HE", "tags": ["p20","events"], "owners": ["data-office@state.edu"], "schema": [ { "name":"event_id","type":"STRING","pk":true,"tags":[] }, { "name":"p20_id","type":"STRING","pk":false,"tags":[] }, { "name":"event","type":"STRING","pk":false,"tags":[] }, { "name":"event_date","type":"DATE","pk":false,"tags":[] } ], "lineage": { "from": ["pub_p20_student_identity","pub_he_enrollment_term"], "to": "pub_p20_transition_events" } }
+  ]
+}

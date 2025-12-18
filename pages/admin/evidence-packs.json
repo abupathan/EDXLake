@@ -1,0 +1,17 @@
+{
+  "meta": { "title": "Evidence Exports", "version": "1.1.0" },
+  "bundles": [
+    { "name": "audit_pack_2025Q3", "created": "2025-10-01 12:00Z", "scope": "Q3 2025", "items": 1243, "owner": "Platform Admin" },
+    { "name": "policy_review_sep", "created": "2025-09-30 18:30Z", "scope": "Sep 2025", "items": 412,  "owner": "Data Steward" },
+    { "name": "access_week_40",   "created": "2025-10-05 07:15Z", "scope": "Week 40", "items": 980,  "owner": "Security Auditor" },
+    { "name": "config_diffs_oct", "created": "2025-10-08 02:05Z", "scope": "Oct 2025", "items": 276,  "owner": "Platform Admin" },
+    { "name": "dq_review_q3",     "created": "2025-09-20 10:20Z", "scope": "Q3 2025", "items": 331,  "owner": "Data Steward" },
+    { "name": "pii_proof_demo",   "created": "2025-10-10 04:10Z", "scope": "PII Demo", "items": 150,  "owner": "Security Auditor" },
+    { "name": "weekly_rollup_41", "created": "2025-10-12 03:00Z", "scope": "Week 41", "items": 615,  "owner": "Export Operator" },
+    { "name": "incident_4728",    "created": "2025-09-28 23:40Z", "scope": "Case 4728", "items": 208, "owner": "Platform Admin" },
+    { "name": "audit_pack_2025Q2", "created": "2025-07-01 12:00Z", "scope": "Q2 2025", "items": 1175, "owner": "Platform Admin" },
+    { "name": "policy_review_aug", "created": "2025-08-31 18:30Z", "scope": "Aug 2025", "items": 389, "owner": "Data Steward" },
+    { "name": "weekly_rollup_39",  "created": "2025-09-29 03:00Z", "scope": "Week 39", "items": 540, "owner": "Export Operator" },
+    { "name": "config_diffs_sep",  "created": "2025-09-08 01:55Z", "scope": "Sep 2025", "items": 260, "owner": "Platform Admin" }
+  ]
+}

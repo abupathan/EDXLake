@@ -1,0 +1,31 @@
+{
+  "meta": { "title": "Tenants", "version": "1.2.0" },
+  "tenants": [
+    { "name": "K12 District A",      "env": "Production",  "owner": "Admin1",  "status": "Active",       "domains": ["district-a.edu","students.district-a.edu"], "sso": "Azure AD", "created": "2025-08-12T10:00:00Z", "notes": "FERPA on file" },
+    { "name": "HE College B",        "env": "Staging",     "owner": "Admin2",  "status": "Active",       "domains": ["collegeb.edu"], "sso": "Okta", "created": "2025-07-01T08:30:00Z", "notes": "" },
+    { "name": "Charter Network C",   "env": "Production",  "owner": "Ops1",    "status": "Active",       "domains": ["charterc.org"], "sso": "Azure AD", "created": "2025-05-03T16:45:00Z" },
+    { "name": "State DOE D",         "env": "Production",  "owner": "GovOps",  "status": "Active",       "domains": ["state-d.gov"], "sso": "ADFS", "created": "2025-06-20T12:00:00Z" },
+    { "name": "K12 District E",      "env": "Development", "owner": "DevTeam", "status": "Provisioning", "domains": ["dist-e.edu"], "sso": "Google", "created": "2025-09-14T09:00:00Z" },
+    { "name": "HE University F",     "env": "Production",  "owner": "Admin3",  "status": "Active",       "domains": ["unif.edu","alumni.unif.edu"], "sso": "Okta", "created": "2025-04-11T14:10:00Z" },
+    { "name": "Research Partner G",  "env": "Sandbox",     "owner": "Research","status": "Active",       "domains": ["rp-g.org"], "sso": "None", "created": "2025-03-05T07:12:00Z" },
+    { "name": "K12 District H",      "env": "Staging",     "owner": "Admin4",  "status": "Suspended",    "domains": ["dist-h.edu"], "sso": "Azure AD", "created": "2025-02-01T11:30:00Z", "notes": "Billing hold" },
+    { "name": "HE College I",        "env": "Development", "owner": "Admin5",  "status": "Provisioning", "domains": ["collegei.edu"], "sso": "Google", "created": "2025-09-30T18:22:00Z" },
+    { "name": "Consortium J",        "env": "Sandbox",     "owner": "PMO",     "status": "Active",       "domains": ["consortium-j.net"], "sso": "Other", "created": "2025-07-22T06:00:00Z" },
+    { "name": "K12 District K",      "env": "Production",  "owner": "Admin6",  "status": "Active",       "domains": ["dist-k.edu"], "sso": "Azure AD", "created": "2025-08-02T10:05:00Z" },
+    { "name": "HE Institute L",      "env": "Production",  "owner": "Admin7",  "status": "Active",       "domains": ["instl.edu"], "sso": "Okta", "created": "2025-06-16T15:40:00Z" },
+    { "name": "K12 Magnet M",        "env": "Staging",     "owner": "Ops2",    "status": "Active",       "domains": ["magnet-m.edu"], "sso": "Azure AD", "created": "2025-05-19T09:55:00Z" },
+    { "name": "Private School N",    "env": "Sandbox",     "owner": "Admin8",  "status": "Active",       "domains": ["psn.org"], "sso": "None", "created": "2025-01-28T12:12:00Z" },
+    { "name": "Regional Co-Op O",    "env": "Production",  "owner": "Ops3",    "status": "Suspended",    "domains": ["coop-o.edu"], "sso": "ADFS", "created": "2025-03-30T20:00:00Z" },
+    { "name": "HE College P",        "env": "Production",  "owner": "Admin9",  "status": "Active",       "domains": ["collegep.edu"], "sso": "Okta", "created": "2025-08-29T08:18:00Z" },
+    { "name": "STEM Charter Q",      "env": "Development", "owner": "DevOps",  "status": "Provisioning", "domains": ["stemq.edu"], "sso": "Other", "created": "2025-10-01T07:35:00Z" },
+    { "name": "Language Academy R",  "env": "Production",  "owner": "Admin10", "status": "Active",       "domains": ["lar.edu"], "sso": "Google", "created": "2025-09-05T16:16:00Z" },
+    { "name": "Arts Magnet S",       "env": "Staging",     "owner": "Admin11", "status": "Active",       "domains": ["ams.edu"], "sso": "Azure AD", "created": "2025-07-09T13:03:00Z" },
+    { "name": "EdTech Pilot T",      "env": "Sandbox",     "owner": "PMO",     "status": "Active",       "domains": ["pilot-t.org"], "sso": "None", "created": "2025-06-01T01:00:00Z" },
+    { "name": "K12 District U",      "env": "Production",  "owner": "Admin12", "status": "Active",       "domains": ["dist-u.edu","hs.dist-u.edu"], "sso": "Azure AD", "created": "2025-09-10T10:10:00Z" },
+    { "name": "HE Institute V",      "env": "Production",  "owner": "Admin13", "status": "Active",       "domains": ["instv.edu"], "sso": "Okta", "created": "2025-05-07T07:07:00Z" },
+    { "name": "Learning Center W",   "env": "Development", "owner": "DevTeam", "status": "Provisioning", "domains": ["lcw.edu"], "sso": "Google", "created": "2025-10-13T09:09:00Z" },
+    { "name": "State DOE X",         "env": "Production",  "owner": "GovOps",  "status": "Active",       "domains": ["state-x.gov"], "sso": "ADFS", "created": "2025-04-14T22:22:00Z" },
+    { "name": "Charter Network Y",   "env": "Staging",     "owner": "Ops4",    "status": "Suspended",    "domains": ["chartery.org"], "sso": "Azure AD", "created": "2025-09-22T18:44:00Z" },
+    { "name": "HE University Z",     "env": "Production",  "owner": "Admin14", "status": "Active",       "domains": ["uniz.edu"], "sso": "Okta", "created": "2025-02-02T05:05:00Z" }
+  ]
+}

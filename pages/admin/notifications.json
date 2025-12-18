@@ -1,0 +1,31 @@
+{
+  "meta": { "title": "Notifications & Webhooks", "version": "1.2.0" },
+  "channels": [
+    { "address": "ops@acmeisd.org",        "events": ["PipelineFailure", "ValidationError", "Quarantined"], "notes": "Ops rotation" },
+    { "address": "security@acmeisd.org",   "events": ["AnomalousAccess", "PolicyChange"], "notes": "Security IR" },
+    { "address": "governance@acmeisd.org", "events": ["PolicyChange", "ShareCreated", "ShareRevoked"], "notes": "Data governance board" },
+    { "address": "registrar@acmeisd.org",  "events": ["PromotionRequested", "PromotionApproved", "PromotionRejected"], "notes": "Registrar approvals" },
+    { "address": "finance@acmeisd.org",    "events": ["BillingThreshold"], "notes": "Cost center alerts" },
+    { "address": "backup@acmeisd.org",     "events": ["BackupFailed"], "notes": "Backup on-call" },
+    { "address": "etl@acmeisd.org",        "events": ["PipelineFailure", "DriftDetected"], "notes": "ETL on-call" },
+    { "address": "research@acmeisd.org",   "events": ["ShareCreated"], "notes": "External research teams" },
+    { "address": "exports@acmeisd.org",    "events": ["ExportReady"], "notes": "Evidence/export operators" },
+    { "address": "alerts@acmeisd.org",     "events": ["PipelineFailure", "AnomalousAccess", "BackupFailed"], "notes": "Global alert list" },
+    { "address": "auditors@acmeisd.org",   "events": ["PolicyChange", "ShareRevoked"], "notes": "Read-only audit reviewers" },
+    { "address": "principal@northhs.edu",  "events": ["PromotionApproved"], "notes": "Campus notifications" }
+  ],
+  "webhooks": [
+    { "url": "https://hooks.acmeisd.org/edx",      "events": ["PromotionApproved", "ShareCreated"], "secret": "whsec_7b1f9a", "notes": "Primary partner system" },
+    { "url": "https://ops.acmeisd.org/hook/etl",   "events": ["PipelineFailure", "ValidationError", "DriftDetected"], "secret": "whsec_etl_01", "notes": "Ops incident bridge" },
+    { "url": "https://siem.partner.gov/ingest",    "events": ["AnomalousAccess", "PolicyChange"], "secret": "whsec_siem_gov", "notes": "Gov SIEM" },
+    { "url": "https://audit.partner.org/webhook",  "events": ["ShareCreated", "ShareRevoked"], "secret": "whsec_audit", "notes": "Audit partner" },
+    { "url": "https://exporter.internal/hook",     "events": ["ExportReady"], "secret": "whsec_export", "notes": "Internal exporter" },
+    { "url": "https://backup.monitor/hook",        "events": ["BackupFailed"], "secret": "whsec_backup", "notes": "Backup monitoring" },
+    { "url": "https://billing.cloud/hook",         "events": ["BillingThreshold"], "secret": "whsec_billing", "notes": "FinOps tool" },
+    { "url": "https://governance.tool/hook",       "events": ["PolicyChange"], "secret": "whsec_gov", "notes": "Governance portal" },
+    { "url": "https://research.bridge/hook",       "events": ["ShareCreated"], "secret": "whsec_research", "notes": "Research bridge" },
+    { "url": "https://campus.northhs.edu/hook",    "events": ["PromotionApproved"], "secret": "whsec_northhs", "notes": "Campus dashboard" },
+    { "url": "https://observability.cloud/hook",   "events": ["PipelineFailure", "BackupFailed"], "secret": "whsec_obs", "notes": "Observability" },
+    { "url": "https://compliance.ops/hook",        "events": ["PolicyChange", "ShareRevoked"], "secret": "whsec_comp", "notes": "Compliance workflows" }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "meta": { "title": "SSO / SCIM", "version": "1.2.0" },
+  "idp": {
+    "providers": ["Azure AD", "Okta", "Google", "ADFS", "Other"],
+    "protocols": ["OIDC", "SAML2"],
+    "provider": "Azure AD",
+    "protocol": "OIDC",
+    "issuer": "https://login.microsoftonline.com/12345678-aaaa-bbbb-cccc-1234567890ab/v2.0",
+    "metadata_url": "https://login.microsoftonline.com/12345678-aaaa-bbbb-cccc-1234567890ab/v2.0/.well-known/openid-configuration"
+  },
+  "scim": {
+    "enabled": true,
+    "base_url": "https://edx.example.com/api/scim/v2",
+    "token": "scim_demo_9x4q2g_maa1t3"
+  },
+  "mappings": [
+    { "source": "userPrincipalName", "target": "userName",         "transform": "",           "system": "Azure AD", "note": "Primary login" },
+    { "source": "mail",              "target": "emails[0].value",  "transform": "lower()",    "system": "Azure AD", "note": "Primary email" },
+    { "source": "givenName",         "target": "name.givenName",   "transform": "title()",    "system": "Azure AD", "note": "" },
+    { "source": "surname",           "target": "name.familyName",  "transform": "title()",    "system": "Azure AD", "note": "" },
+    { "source": "employeeId",        "target": "externalId",       "transform": "",           "system": "Azure AD", "note": "HR key" },
+    { "source": "department",        "target": "urn:edx:dept",     "transform": "upper()",    "system": "Azure AD", "note": "Custom schema" },
+    { "source": "jobTitle",          "target": "title",            "transform": "",           "system": "Azure AD", "note": "" },
+    { "source": "objectId",          "target": "id",               "transform": "",           "system": "Azure AD", "note": "IdP GUID" },
+    { "source": "onPremisesSamAccountName", "target": "userName",  "transform": "fallback()", "system": "ADFS",     "note": "Fallback for ADFS" },
+    { "source": "mail",              "target": "emails[0].value",  "transform": "",           "system": "Google",   "note": "" },
+    { "source": "given_name",        "target": "name.givenName",   "transform": "",           "system": "Google",   "note": "" },
+    { "source": "family_name",       "target": "name.familyName",  "transform": "",           "system": "Google",   "note": "" },
+    { "source": "custom.isTeacher",  "target": "roles[0].value",   "transform": "map(TEACHER)", "system": "Okta",   "note": "Role mapping" },
+    { "source": "custom.isStudent",  "target": "roles[0].value",   "transform": "map(STUDENT)", "system": "Okta",   "note": "Role mapping" },
+    { "source": "manager.email",     "target": "manager.value",    "transform": "",           "system": "Okta",     "note": "" },
+    { "source": "edfi.staffUniqueId","target": "urn:edx:edfiId",   "transform": "",           "system": "Other",    "note": "Ed-Fi bridge" },
+    { "source": "phoneNumber",       "target": "phoneNumbers[0].value", "transform": "e164()", "system": "Azure AD", "note": "Format sanitize" },
+    { "source": "streetAddress",     "target": "addresses[0].streetAddress", "transform": "", "system": "Azure AD", "note": "" },
+    { "source": "city",              "target": "addresses[0].locality", "transform": "",       "system": "Azure AD", "note": "" },
+    { "source": "state",             "target": "addresses[0].region", "transform": "",        "system": "Azure AD", "note": "" },
+    { "source": "postalCode",        "target": "addresses[0].postalCode", "transform": "",    "system": "Azure AD", "note": "" },
+    { "source": "country",           "target": "addresses[0].country", "transform": "upper()", "system": "Azure AD", "note": "" },
+    { "source": "edxCampusCode",     "target": "urn:edx:campus",   "transform": "upper()",    "system": "Other",    "note": "ABAC dimension" },
+    { "source": "edxProgram",        "target": "urn:edx:program",  "transform": "upper()",    "system": "Other",    "note": "ABAC dimension" }
+  ],
+  "logs": [
+    { "time": "2025-10-10T08:10:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Created 5 users, updated 7, deleted 0" },
+    { "time": "2025-10-09T20:45:12Z", "user": "idp:test-user", "action": "SSO Test (OIDC)",        "result": "SUCCESS", "message": "Demo login ok" },
+    { "time": "2025-10-09T07:02:30Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "ERROR",   "message": "HTTP 401 — token rejected" },
+    { "time": "2025-10-08T18:40:01Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Synced 12 users, 3 groups" },
+    { "time": "2025-10-07T09:14:22Z", "user": "idp:admin",     "action": "SSO Test (SAML2)",       "result": "SUCCESS", "message": "ACS round trip ok" },
+    { "time": "2025-10-06T12:21:17Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Updated 9 users" },
+    { "time": "2025-10-05T23:59:59Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "ERROR",   "message": "Timeout contacting IdP" },
+    { "time": "2025-10-04T10:05:44Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Created 3 users" },
+    { "time": "2025-10-03T16:32:10Z", "user": "idp:qa-user",   "action": "SSO Test (OIDC)",        "result": "SUCCESS", "message": "Demo login ok" },
+    { "time": "2025-10-02T06:18:03Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Updated 11 users" },
+    { "time": "2025-10-01T14:00:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Created 2, updated 4" },
+    { "time": "2025-09-30T08:10:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Updated 6 users" },
+    { "time": "2025-09-29T08:10:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "ERROR",   "message": "429 Too Many Requests" },
+    { "time": "2025-09-28T08:10:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Updated 5 users" },
+    { "time": "2025-09-27T08:10:00Z", "user": "scim:system",   "action": "SCIM Sync",              "result": "SUCCESS", "message": "Updated 8 users" }
+  ]
+}

@@ -1,0 +1,14 @@
+/* Connectors Registry — page styles */
+.sticky-toolbar { position: sticky; top: .5rem; z-index: 10; }
+.search-wrap { width: 280px; }
+.table thead th { white-space: nowrap; cursor: pointer; }
+.table thead th .sort { opacity: .6; font-size: .85em; }
+.badge-chip { font-weight: 500; }
+.badge-active { background: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
+.badge-inactive { background: #e2e3e5; color: #41464b; border: 1px solid #d3d6d8; }
+.badge-error { background: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+.pagination { margin-bottom: 0; }
+fieldset.secret { border: 1px dashed var(--bs-border-color); border-radius: .5rem; padding: .75rem; }
+fieldset.secret legend { font-size: .9rem; width: auto; padding: 0 .5rem; }
+small.help { color: var(--bs-secondary-color); }
+pre.inline-json { white-space: pre-wrap; background: var(--bs-tertiary-bg); border: 1px solid var(--bs-border-color); border-radius: .5rem; padding: .5rem; }

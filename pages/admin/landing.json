@@ -1,0 +1,25 @@
+{
+  "meta": { "title": "Platform Admin Landing", "version": "1.2.0" },
+  "sections": [
+    { "title": "Tenant Settings",          "area": "Organization", "desc": "Configure tenant name, residency, retention, and feature flags.", "link": "tenant-settings.html",      "alt": "" },
+
+    { "title": "Identity & SSO",           "area": "Access",       "desc": "Configure SSO providers, SCIM, and session policies.",          "link": "identity-sso.html",         "alt": "users-roles.html" },
+    { "title": "Users & Roles",            "area": "Access",       "desc": "Provision users, assign roles, and manage purposes.",           "link": "users-roles.html",          "alt": "identity-sso.html" },
+
+    { "title": "Secrets Vault",            "area": "Security",     "desc": "Manage connector secrets, API credentials, and key rotation.", "link": "secrets-vault.html",        "alt": "" },
+    { "title": "Network Access",           "area": "Security",     "desc": "IP allowlists and egress controls for APIs and consoles.",      "link": "network-access.html",       "alt": "" },
+
+    { "title": "Classification & Tagging", "area": "Governance",   "desc": "Apply PII/discipline/financial classifications to fields.",     "link": "classification.html",       "alt": "" },
+    { "title": "Masking & Row Policies",   "area": "Governance",   "desc": "Define dynamic masking and ABAC row-level policies.",           "link": "masking-rls.html",          "alt": "purpose-policies.html" },
+    { "title": "Purpose of Use Policies",  "area": "Governance",   "desc": "Set purpose-based access constraints across APIs/SQL/exports.", "link": "purpose-policies.html",     "alt": "masking-rls.html" },
+
+    { "title": "Audit Logs",               "area": "Compliance",   "desc": "Immutable audit of system activity with CSV evidence export.",  "link": "audit-logs.html",           "alt": "evidence-packs.html" },
+    { "title": "Evidence Packs",           "area": "Compliance",   "desc": "Generate downloadable evidence bundles for audits.",             "link": "evidence-packs.html",       "alt": "audit-logs.html" },
+
+    { "title": "Notifications & Alerts",   "area": "Operations",    "desc": "Alert routing, channels, and thresholds for incidents.",        "link": "notifications.html",        "alt": "slo-monitoring.html" },
+    { "title": "SLO Monitoring",           "area": "Operations",    "desc": "Track availability/error budgets across key services.",         "link": "slo-monitoring.html",       "alt": "notifications.html" },
+    { "title": "Data Protection Controls", "area": "Operations",    "desc": "Retention policies, backup windows, and legal hold.",           "link": "data-protection.html",      "alt": "audit-logs.html" },
+
+    { "title": "Catalog & Lineage (RO)",   "area": "Metadata",     "desc": "Browse datasets, schemas, and lineage (read-only).",            "link": "catalog-lineage-ro.html",   "alt": "" }
+  ]
+}

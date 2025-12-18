@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Classification & Tagging",
+    "version": "1.1.0",
+    "last_updated": "2025-10-18T22:00:00Z",
+    "author": "EDX Platform Admin",
+    "description": "Defines enterprise classification tags and auto-tagging rules to drive masking and row-level security across datasets.",
+    "schema": "https://schema.edudata.exchange/v1/classification.json"
+  },
+  "tags": [
+    {
+      "name": "PII_STRICT",
+      "description": "Personally identifiable information requiring highest protection (e.g., SSN, DOB).",
+      "severity": "critical",
+      "owner_role": "Data Steward",
+      "policy_link": "https://edx.local/policies/pii_strict",
+      "active": true
+    },
+    {
+      "name": "PII_DIRECTORY",
+      "description": "Directory-level personal identifiers (e.g., student ID, staff email).",
+      "severity": "high",
+      "owner_role": "Data Steward",
+      "policy_link": "https://edx.local/policies/pii_directory",
+      "active": true
+    },
+    {
+      "name": "HEALTH",
+      "description": "Health and clinical data under FERPA/HIPAA protection.",
+      "severity": "critical",
+      "owner_role": "Data Steward",
+      "policy_link": "https://edx.local/policies/health",
+      "active": true
+    },
+    {
+      "name": "FINANCIAL",
+      "description": "Financial aid, tuition, or transaction data subject to PCI DSS or internal finance controls.",
+      "severity": "high",
+      "owner_role": "Finance Data Owner",
+      "policy_link": "https://edx.local/policies/financial",
+      "active": true
+    },
+    {
+      "name": "DISCIPLINE",
+      "description": "Disciplinary records or conduct information, restricted under FERPA.",
+      "severity": "medium",
+      "owner_role": "Dean of Students",
+      "policy_link": "https://edx.local/policies/discipline",
+      "active": true
+    },
+    {
+      "name": "DEIDENTIFIED",
+      "description": "Data that has been anonymized or aggregated and poses minimal re-identification risk.",
+      "severity": "low",
+      "owner_role": "Data Steward",
+      "policy_link": "https://edx.local/policies/deidentified",
+      "active": true
+    }
+  ],
+  "rules": [
+    {
+      "pattern": "(?i)ssn|social_security|national_id",
+      "scope": "column",
+      "add": ["PII_STRICT"],
+      "example_match": ["student_ssn", "social_security_number"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Data Steward"
+    },
+    {
+      "pattern": "(?i)student_id|person_id|employee_id",
+      "scope": "column",
+      "add": ["PII_DIRECTORY"],
+      "example_match": ["student_id", "person_id"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Data Steward"
+    },
+    {
+      "pattern": "(?i)clinic|nurse|immunization|diagnosis|visit",
+      "scope": "dataset",
+      "add": ["HEALTH"],
+      "example_match": ["nurse_visit_records", "student_clinic_log"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Compliance Officer"
+    },
+    {
+      "pattern": "(?i)tuition|payment|invoice|scholarship|financial_aid",
+      "scope": "dataset",
+      "add": ["FINANCIAL"],
+      "example_match": ["financial_aid_awards", "tuition_invoices"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Finance Data Owner"
+    },
+    {
+      "pattern": "(?i)conduct|incident|discipline",
+      "scope": "dataset",
+      "add": ["DISCIPLINE"],
+      "example_match": ["student_conduct_log", "disciplinary_actions"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Dean of Students"
+    },
+    {
+      "pattern": "(?i)anonymized|aggregate|summary",
+      "scope": "dataset",
+      "add": ["DEIDENTIFIED"],
+      "example_match": ["survey_summary", "aggregate_performance"],
+      "last_reviewed": "2025-09-15",
+      "approved_by": "Data Steward"
+    }
+  ],
+  "ui_config": {
+    "defaults": {
+      "page_size": 10,
+      "sort_key": "pattern",
+      "sort_dir": "asc"
+    },
+    "validation": {
+      "tag_regex": "^[A-Z][A-Z0-9_]*$",
+      "max_tags": 50,
+      "max_rules": 100
+    }
+  },
+  "audit": {
+    "created_by": "admin@edx.local",
+    "created_at": "2025-10-10T09:00:00Z",
+    "last_modified_by": "admin@edx.local",
+    "last_modified_at": "2025-10-18T22:00:00Z"
+  }
+}

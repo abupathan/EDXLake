@@ -1,0 +1,19 @@
+{
+  "meta": { "title": "Masking Policies", "version": "1.1.0" },
+  "policies": [
+    { "name": "PII_STRICT",        "level": "Strict",   "mask_type": "FULL_MASK",  "example": "John Doe → *****",                       "notes": "All direct identifiers fully masked." },
+    { "name": "PII_DIRECTORY",     "level": "Moderate", "mask_type": "PARTIAL",    "example": "John Doe → J. Doe",                      "notes": "Directory-friendly display." },
+    { "name": "ADDRESS_REDACT",    "level": "Strict",   "mask_type": "REDACT",     "example": "123 Main St → [REDACTED]",               "notes": "Street address removed." },
+    { "name": "DOB_TOKENIZE",      "level": "Strict",   "mask_type": "TOKENIZE",   "example": "2008-04-12 → tok_9f3c…",                 "notes": "Consistent token for linkage." },
+    { "name": "EMAIL_HASH",        "level": "Moderate", "mask_type": "HASH_SHA256","example": "alice@school.org → 8b1a9953…",           "notes": "For deduplication without disclosure." },
+    { "name": "PHONE_PARTIAL",     "level": "Moderate", "mask_type": "PARTIAL",    "example": "555-867-5309 → ***-***-5309",            "notes": "Show last 4 only." },
+    { "name": "SSN_NULL",          "level": "Strict",   "mask_type": "NULLIFY",    "example": "123-45-6789 → NULL",                     "notes": "Remove entirely outside secure enclave." },
+    { "name": "DISCIPLINE_RED",    "level": "Strict",   "mask_type": "REDACT",     "example": "Detention → [REDACTED]",                 "notes": "Sensitive discipline programs." },
+    { "name": "HEALTH_PARTIAL",    "level": "Strict",   "mask_type": "PARTIAL",    "example": "Diagnosis → D*****",                     "notes": "Hide specifics; keep category." },
+    { "name": "FIN_AID_MASK",      "level": "Moderate", "mask_type": "FULL_MASK",  "example": "$1,250 → *****",                         "notes": "Aid amounts hidden from non-finance." },
+    { "name": "STAFF_EMAIL_HASH",  "level": "Low",      "mask_type": "HASH_SHA256","example": "t.smith@district.org → 2bd806c9…",       "notes": "Low risk; still avoid exposure." },
+    { "name": "GUARDIAN_PARTIAL",  "level": "Moderate", "mask_type": "PARTIAL",    "example": "Mary Johnson → M. Johnson",              "notes": "Family directory display." },
+    { "name": "STUDENT_ID_TOKEN",  "level": "Strict",   "mask_type": "TOKENIZE",   "example": "SID123456 → tok_a12b…",                  "notes": "Consistent pseudonym across systems." },
+    { "name": "ALT_CONTACT_NULL",  "level": "Low",      "mask_type": "NULLIFY",    "example": "Alt phone → NULL",                       "notes": "Rarely needed downstream." }
+  ]
+}

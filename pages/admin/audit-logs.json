@@ -1,0 +1,89 @@
+{
+  "meta": { "title": "Audit Logs", "version": "1.1.0" },
+  "logs": [
+    { "time": "2025-10-16 16:58Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:powerschool.daily", "result": "SUCCESS", "details": "Duration 12m 31s." },
+    { "time": "2025-10-16 16:55Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_k12_roster@3", "result": "APPROVED", "details": "DQ gates passed (>= 95%)." },
+    { "time": "2025-10-16 16:47Z", "actor": "Ivy Engineer", "action": "CONNECTOR_UPDATE", "target": "Canvas v1.2.5", "result": "SUCCESS", "details": "OAuth client rotated." },
+    { "time": "2025-10-16 16:31Z", "actor": "Sam Admin", "action": "SSO_CONFIG", "target": "Azure AD (OIDC)", "result": "UPDATED", "details": "Groups mapped to roles." },
+    { "time": "2025-10-16 16:20Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:state_agency_roster_2025Q3", "result": "ALLOWED", "details": "Scope: roster, deidentified." },
+    { "time": "2025-10-16 16:05Z", "actor": "Ops Bot", "action": "DRIFT_DETECTED", "target": "connector:infinite_campus", "result": "WARNING", "details": "Field 'student_email' missing." },
+    { "time": "2025-10-16 15:58Z", "actor": "Ivy Engineer", "action": "DRIFT_RESOLVED", "target": "connector:infinite_campus", "result": "SUCCESS", "details": "Mapping v1.3.2 applied." },
+    { "time": "2025-10-16 15:41Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_k12_attendance_daily", "result": "ALLOWED", "details": "RLS org=District 12; masking=PII_DIRECTORY." },
+    { "time": "2025-10-16 15:25Z", "actor": "Sam Admin", "action": "POLICY_UPDATE", "target": "masking:PII_STRICT", "result": "UPDATED", "details": "SSN fully masked; last4 removed." },
+    { "time": "2025-10-16 15:12Z", "actor": "Ops Bot", "action": "DQ_FAIL", "target": "dataset:edfi_enrollment", "result": "FAILED", "details": "FK violations 1.2% (> 1%)." },
+    { "time": "2025-10-16 14:59Z", "actor": "Kiran Steward", "action": "DQ_TRIAGE", "target": "dataset:edfi_enrollment", "result": "UPDATED", "details": "Threshold adjusted to 1.5% temporarily." },
+    { "time": "2025-10-16 14:44Z", "actor": "Ops Bot", "action": "EXPORT_CREATE", "target": "exports/ipeds_enrollment_2025Q3.csv", "result": "SUCCESS", "details": "Rows=128,345; hash=sha256:…85b" },
+    { "time": "2025-10-16 14:40Z", "actor": "Ops Bot", "action": "EXPORT_DOWNLOAD", "target": "edx://tenant-a/exports/..../ipeds_enrollment_2025Q3.csv", "result": "ALLOWED", "details": "Consumer: registrar" },
+    { "time": "2025-10-16 14:22Z", "actor": "Ivy Engineer", "action": "CONNECTOR_TEST", "target": "Synergy SIS", "result": "SUCCESS", "details": "Rate limit 120/min." },
+    { "time": "2025-10-16 14:05Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:banner.daily", "result": "SUCCESS", "details": "Duration 7m 40s." },
+    { "time": "2025-10-16 13:57Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_he_financial_aid_awards@2", "result": "APPROVED", "details": "PII masked per policy." },
+    { "time": "2025-10-16 13:40Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_he_enrollment_term", "result": "ALLOWED", "details": "RLS campus=North; term=2025Q3." },
+    { "time": "2025-10-16 13:23Z", "actor": "Sam Admin", "action": "RLS_UPDATE", "target": "role:Data Consumer", "result": "UPDATED", "details": "Scope added: campus=North." },
+    { "time": "2025-10-16 13:10Z", "actor": "Ops Bot", "action": "DRIFT_DETECTED", "target": "connector:canvas", "result": "WARNING", "details": "Enum 'gradingPeriod' new value 'Interim'." },
+    { "time": "2025-10-16 12:59Z", "actor": "Ivy Engineer", "action": "DRIFT_RESOLVED", "target": "connector:canvas", "result": "SUCCESS", "details": "Descriptor mapping added." },
+
+    { "time": "2025-10-15 22:10Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:colleague.daily", "result": "SUCCESS", "details": "Duration 5m 12s." },
+    { "time": "2025-10-15 21:54Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_k12_assessment_results@4", "result": "APPROVED", "details": "DQ pass 99.1%." },
+    { "time": "2025-10-15 21:33Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_k12_roster", "result": "ALLOWED", "details": "RLS org=District 7." },
+    { "time": "2025-10-15 21:01Z", "actor": "Sam Admin", "action": "POLICY_UPDATE", "target": "rowfilter:campus", "result": "UPDATED", "details": "Added Campus=East." },
+    { "time": "2025-10-15 20:44Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:research_partner_math", "result": "ALLOWED", "details": "Deidentified; purpose=research." },
+    { "time": "2025-10-15 20:15Z", "actor": "Ops Bot", "action": "DQ_PASS", "target": "dataset:oneroster_enrollments", "result": "SUCCESS", "details": "All checks passed." },
+
+    { "time": "2025-10-14 18:30Z", "actor": "Ivy Engineer", "action": "CONNECTOR_UPDATE", "target": "Banner v3.9.1", "result": "SUCCESS", "details": "Upgraded API client." },
+    { "time": "2025-10-14 18:10Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:banner.incr", "result": "SUCCESS", "details": "Duration 2m 49s." },
+    { "time": "2025-10-14 17:59Z", "actor": "Sam Admin", "action": "SSO_CONFIG", "target": "Google Workspace", "result": "UPDATED", "details": "IdP metadata rotated." },
+    { "time": "2025-10-14 17:45Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_p20_student_identity@1", "result": "APPROVED", "details": "Crosswalk complete." },
+    { "time": "2025-10-14 17:23Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_he_credentials_awarded", "result": "ALLOWED", "details": "RLS program=ENGR." },
+
+    { "time": "2025-10-13 11:58Z", "actor": "Ops Bot", "action": "DRIFT_DETECTED", "target": "connector:d2l", "result": "WARNING", "details": "Column 'pointsPossible' widened." },
+    { "time": "2025-10-13 11:42Z", "actor": "Ivy Engineer", "action": "DRIFT_RESOLVED", "target": "connector:d2l", "result": "SUCCESS", "details": "Mapping patched 1.2.7." },
+    { "time": "2025-10-13 11:25Z", "actor": "Kiran Steward", "action": "DQ_TRIAGE", "target": "dataset:edfi_attendance", "result": "UPDATED", "details": "Range check tuned." },
+    { "time": "2025-10-13 11:14Z", "actor": "Sam Admin", "action": "POLICY_UPDATE", "target": "masking:DISCIPLINE", "result": "UPDATED", "details": "Suppressed details for externals." },
+    { "time": "2025-10-13 10:51Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:accreditor_pack", "result": "ALLOWED", "details": "PII removed; link expires 24h." },
+
+    { "time": "2025-10-12 10:04Z", "actor": "Gabe Steward", "action": "PROMOTE", "target": "pub_k12_attendance_daily@1", "result": "APPROVED", "details": "DQ gates passed (>= 95%)." },
+    { "time": "2025-10-11 21:10Z", "actor": "Ivy Engineer", "action": "CONNECTOR_UPDATE", "target": "Canvas v1.2.4", "result": "SUCCESS", "details": "OAuth client rotated." },
+    { "time": "2025-10-11 20:58Z", "actor": "Sam Admin", "action": "SSO_CONFIG", "target": "Azure AD (OIDC)", "result": "UPDATED", "details": "Redirect URIs set." },
+    { "time": "2025-10-10 09:40Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_k12_roster", "result": "ALLOWED", "details": "RLS: org=District 12; masking: PII_DIRECTORY." },
+    { "time": "2025-10-09 16:20Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:state_agency_roster_2025Q1", "result": "ALLOWED", "details": "Scope: roster, deidentified." },
+
+    { "time": "2025-10-08 19:33Z", "actor": "Ops Bot", "action": "EXPORT_CREATE", "target": "exports/essa_accountability_2025.csv", "result": "SUCCESS", "details": "Rows=98,002; hash=sha256:…c1f" },
+    { "time": "2025-10-08 19:01Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:synergy.nightly", "result": "SUCCESS", "details": "Duration 13m 05s." },
+    { "time": "2025-10-08 18:45Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_k12_discipline_events@2", "result": "APPROVED", "details": "PII_STRICT masked." },
+    { "time": "2025-10-08 18:29Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_p20_course_equivalency", "result": "ALLOWED", "details": "RLS state=MI." },
+
+    { "time": "2025-10-07 12:32Z", "actor": "Ivy Engineer", "action": "CONNECTOR_TEST", "target": "Workday Student API", "result": "FAILED", "details": "401 unauthorized; scope missing." },
+    { "time": "2025-10-07 12:29Z", "actor": "Sam Admin", "action": "POLICY_UPDATE", "target": "purpose:research", "result": "UPDATED", "details": "Tightened masking for PII_DIRECTORY." },
+    { "time": "2025-10-07 12:03Z", "actor": "Ops Bot", "action": "DQ_PASS", "target": "dataset:ceds_enrollment", "result": "SUCCESS", "details": "Checks=16; pass=100%." },
+
+    { "time": "2025-10-06 09:55Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:dual_enroll_bridge", "result": "ALLOWED", "details": "Deidentified; policy snapshot v7." },
+    { "time": "2025-10-06 09:42Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:banner.daily", "result": "SUCCESS", "details": "Duration 7m 09s." },
+    { "time": "2025-10-06 09:21Z", "actor": "Kiran Steward", "action": "DQ_TRIAGE", "target": "dataset:edfi_student", "result": "UPDATED", "details": "Null birth_date < 0.5% accepted." },
+
+    { "time": "2025-10-05 17:40Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_he_academic_record", "result": "ALLOWED", "details": "RLS term=2025Q2." },
+    { "time": "2025-10-05 17:12Z", "actor": "Ivy Engineer", "action": "CONNECTOR_UPDATE", "target": "PeopleSoft extract job", "result": "SUCCESS", "details": "Filename convention updated." },
+    { "time": "2025-10-05 16:58Z", "actor": "Ops Bot", "action": "EXPORT_CREATE", "target": "exports/accreditation_pack_2025Q3.zip", "result": "SUCCESS", "details": "Artifacts=7." },
+
+    { "time": "2025-10-04 14:33Z", "actor": "Sam Admin", "action": "RLS_UPDATE", "target": "role:Share Recipient", "result": "UPDATED", "details": "Limited to dataset group 'Roster'." },
+    { "time": "2025-10-04 14:11Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:canvas.daily", "result": "SUCCESS", "details": "Duration 6m 45s." },
+    { "time": "2025-10-04 13:57Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:state_longitudinal", "result": "ALLOWED", "details": "Deidentified; 2 files." },
+
+    { "time": "2025-10-03 08:45Z", "actor": "Ops Bot", "action": "DRIFT_DETECTED", "target": "connector:skyward", "result": "WARNING", "details": "New column 'homeroom'." },
+    { "time": "2025-10-03 08:23Z", "actor": "Ivy Engineer", "action": "DRIFT_RESOLVED", "target": "connector:skyward", "result": "SUCCESS", "details": "Mapping v0.9.8." },
+    { "time": "2025-10-03 08:10Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_he_credentials_awarded@3", "result": "APPROVED", "details": "Backfill verified." },
+
+    { "time": "2025-10-02 19:18Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_k12_assessment_results", "result": "ALLOWED", "details": "RLS org=District 4." },
+    { "time": "2025-10-02 19:01Z", "actor": "Ops Bot", "action": "EXPORT_CREATE", "target": "exports/roster_snapshot_2025-10-02.csv", "result": "SUCCESS", "details": "Rows=152,004." },
+    { "time": "2025-10-02 18:49Z", "actor": "Sam Admin", "action": "POLICY_UPDATE", "target": "masking:FINANCIAL", "result": "UPDATED", "details": "Masked aid amounts for externals." },
+
+    { "time": "2025-10-01 12:36Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:renaissance.star", "result": "SUCCESS", "details": "Duration 4m 04s." },
+    { "time": "2025-10-01 12:27Z", "actor": "Ivy Engineer", "action": "CONNECTOR_TEST", "target": "Workday Student API", "result": "SUCCESS", "details": "200 OK." },
+    { "time": "2025-10-01 12:11Z", "actor": "External Share", "action": "SHARE_DOWNLOAD", "target": "share:research_partner_reading", "result": "ALLOWED", "details": "Deidentified; 1 file." },
+
+    { "time": "2025-09-30 09:13Z", "actor": "Sam Admin", "action": "SSO_CONFIG", "target": "Okta SAML", "result": "UPDATED", "details": "ACS URL rotated." },
+    { "time": "2025-09-29 21:28Z", "actor": "Ops Bot", "action": "PIPELINE_RUN", "target": "connector:banner.daily", "result": "SUCCESS", "details": "Duration 7m 12s." },
+    { "time": "2025-09-29 20:15Z", "actor": "Kiran Steward", "action": "PROMOTE", "target": "pub_p20_transition_events@1", "result": "APPROVED", "details": "QA reviewed." },
+    { "time": "2025-09-28 16:50Z", "actor": "Ana Analyst", "action": "QUERY", "target": "pub_he_financial_aid_awards", "result": "ALLOWED", "details": "RLS campus=West." },
+    { "time": "2025-09-28 15:39Z", "actor": "Ops Bot", "action": "DQ_PASS", "target": "dataset:edfi_assessment_result", "result": "SUCCESS", "details": "Checks=10; pass=99.8%." }
+  ]
+}

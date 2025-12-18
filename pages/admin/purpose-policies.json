@@ -1,0 +1,36 @@
+{
+  "meta": { "title": "Purpose of Use Policies", "version": "1.2.0" },
+  "roles": [
+    "Platform Admin", "Data Engineer", "Data Steward", "Data Consumer", "Share Recipient",
+    "Security Auditor", "Export Operator", "Catalog Viewer", "Registrar", "Program Steward",
+    "Finance Steward", "Compliance Steward", "HR Steward", "Health Steward", "Ops Steward",
+    "Research Analyst", "School Principal", "Teacher", "Counselor", "Transportation Lead"
+  ],
+  "purposes": [
+    "Operational", "Research", "Compliance", "Testing", "Curriculum Analytics",
+    "Attendance Monitoring", "Discipline Review", "Finance Reporting", "HR Operations",
+    "Health Services", "Transportation Planning", "Program Evaluation"
+  ],
+  "matrix": {
+    "Platform Admin": ["Operational"],
+    "Data Engineer": ["Operational", "Testing"],
+    "Data Steward": ["Operational", "Compliance", "Program Evaluation"],
+    "Data Consumer": ["Operational", "Research", "Compliance", "Program Evaluation"],
+    "Share Recipient": ["Research", "Compliance"],
+    "Security Auditor": ["Compliance"],
+    "Export Operator": ["Operational", "Compliance"],
+    "Catalog Viewer": [],
+    "Registrar": ["Operational", "Compliance", "Program Evaluation"],
+    "Program Steward": ["Operational", "Program Evaluation", "Compliance"],
+    "Finance Steward": ["Operational", "Finance Reporting", "Compliance"],
+    "Compliance Steward": ["Operational", "Compliance"],
+    "HR Steward": ["Operational", "HR Operations", "Compliance"],
+    "Health Steward": ["Operational", "Health Services", "Compliance"],
+    "Ops Steward": ["Operational", "Transportation Planning", "Compliance"],
+    "Research Analyst": ["Research", "Program Evaluation"],
+    "School Principal": ["Operational", "Program Evaluation"],
+    "Teacher": ["Operational", "Program Evaluation"],
+    "Counselor": ["Operational", "Program Evaluation"],
+    "Transportation Lead": ["Operational", "Transportation Planning"]
+  }
+}

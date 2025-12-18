@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "Tenant Settings",
+    "version": "1.3.0",
+    "last_updated": "2025-10-19T06:30:00Z",
+    "author": "platform-admin@edx.local",
+    "description": "Configures tenant identity, residency, data retention, feature toggles, notification thresholds, API keys, and webhooks."
+  },
+  "tenant_name": "Acme ISD",
+  "region": "US-East",
+  "regions": ["US-East", "US-West", "EU-Central", "AP-South", "AP-Southeast"],
+  "notes": "Pilot cohort with enhanced auditing enabled.",
+  "data_retention": { "pii_days": 365, "logs_days": 90, "exports_days": 30, "legal_hold": false },
+  "features": { "masking": true, "rls": true, "catalog": true, "exports": true, "webhooks": true },
+  "notifications": {
+    "owners": ["owner@acmeisd.edu", "ops@acmeisd.edu"],
+    "threshold_errors": 50,
+    "send_daily": true,
+    "send_weekly": false
+  },
+  "api_keys": [
+    { "id": "key_01", "label": "SIS integration", "scopes": ["read","write"], "created": "2025-07-01T08:30:00Z", "last_used": "2025-10-15T11:22:00Z", "secret": "sk_demo_01" },
+    { "id": "key_02", "label": "Analytics export", "scopes": ["read"], "created": "2025-08-12T10:00:00Z", "last_used": "", "secret": "sk_demo_02" },
+    { "id": "key_03", "label": "Testing", "scopes": ["read"], "created": "2025-09-05T16:16:00Z", "last_used": "2025-10-10T07:45:00Z", "secret": "sk_demo_03" },
+    { "id": "key_04", "label": "Partner app", "scopes": ["read","admin"], "created": "2025-09-22T18:44:00Z", "last_used": "", "secret": "sk_demo_04" },
+    { "id": "key_05", "label": "Automation", "scopes": ["admin"], "created": "2025-10-01T07:35:00Z", "last_used": "2025-10-16T09:02:00Z", "secret": "sk_demo_05" }
+  ],
+  "webhooks": [
+    { "id": "wh_01", "name": "On pipeline failure", "event": "pipeline.failed", "target": "https://hooks.acmeisd.edu/pipeline-failed", "active": true },
+    { "id": "wh_02", "name": "On export ready", "event": "export.ready", "target": "https://hooks.acmeisd.edu/export-ready", "active": true },
+    { "id": "wh_03", "name": "On policy change", "event": "policy.changed", "target": "https://hooks.acmeisd.edu/policy-changed", "active": false },
+    { "id": "wh_04", "name": "On login", "event": "auth.login", "target": "https://hooks.acmeisd.edu/auth-login", "active": false },
+    { "id": "wh_05", "name": "On drift detected", "event": "catalog.drift", "target": "https://hooks.acmeisd.edu/catalog-drift", "active": true },
+    { "id": "wh_06", "name": "On sync complete", "event": "scim.synced", "target": "https://hooks.acmeisd.edu/scim-synced", "active": true },
+    { "id": "wh_07", "name": "On anomaly", "event": "ops.anomaly", "target": "https://hooks.acmeisd.edu/ops-anomaly", "active": true },
+    { "id": "wh_08", "name": "On new tenant user", "event": "user.created", "target": "https://hooks.acmeisd.edu/user-created", "active": true },
+    { "id": "wh_09", "name": "On connector error", "event": "connector.error", "target": "https://hooks.acmeisd.edu/connector-error", "active": true },
+    { "id": "wh_10", "name": "On schedule missed", "event": "pipeline.missed", "target": "https://hooks.acmeisd.edu/pipeline-missed", "active": false }
+  ],
+  "audit": {
+    "created_by": "platform-admin@edx.local",
+    "created_at": "2025-10-01T09:00:00Z",
+    "last_modified_by": "platform-admin@edx.local",
+    "last_modified_at": "2025-10-19T06:30:00Z"
+  }
+}

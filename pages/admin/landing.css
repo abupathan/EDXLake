@@ -1,0 +1,25 @@
+/* EDX — Platform Admin Landing (production styles) */
+:root{
+  --chip-bg:#f1f3f5;
+  --chip-text:#495057;
+}
+.sticky-toolbar{ position: sticky; top: .5rem; z-index: 1020; }
+.kpi{
+  display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .7rem; border-radius:999px;
+  background:#f8f9fa; border:1px solid #edf2f7; font-weight:600;
+}
+.kpi .dot{ width:8px; height:8px; border-radius:50%; background:#0d6efd; display:inline-block; }
+.search-wrap{ min-width: 320px; }
+.card-elevated{ box-shadow: 0 4px 14px rgba(16,24,40,.06); }
+.card-link{ transition: box-shadow .2s ease, transform .08s ease; }
+.card-link:hover { box-shadow: 0 .5rem 1rem rgba(0,0,0,.08); transform: translateY(-1px); } /* keep your original hover intent */ 
+.badge-chip{
+  background: var(--chip-bg);
+  color: var(--chip-text);
+  font-weight: 600;
+}
+.tools .btn{ padding:.25rem .55rem; }
+.pagination{ margin-bottom: 0; }
+.empty{
+  border:1px dashed #dee2e6; border-radius:.5rem; padding:1.25rem; color:#6c757d; text-align:center;
+}

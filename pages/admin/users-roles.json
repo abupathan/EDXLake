@@ -1,0 +1,35 @@
+{
+  "meta": { "title": "Users & Roles", "version": "1.2.0" },
+  "roles": [
+    "Platform Admin",
+    "Data Engineer",
+    "Data Steward",
+    "Data Consumer",
+    "Share Recipient",
+    "Security Auditor",
+    "Export Operator",
+    "Catalog Viewer"
+  ],
+  "users": [
+    { "name": "Sam Admin",      "email": "sam.admin@example.org",     "roles": ["Platform Admin"],                              "status": "Active",     "notes": "Primary platform owner" },
+    { "name": "Ivy Engineer",   "email": "ivy.eng@example.org",       "roles": ["Data Engineer"],                               "status": "Active",     "notes": "" },
+    { "name": "Gabe Steward",   "email": "gabe.steward@example.org",  "roles": ["Data Steward"],                                "status": "Active",     "notes": "Approvals" },
+    { "name": "Ana Analyst",    "email": "ana.analyst@example.org",   "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Rui Auditor",    "email": "rui.audit@example.org",     "roles": ["Security Auditor"],                            "status": "Active",     "notes": "Read-only audit" },
+    { "name": "Eli Exporter",   "email": "eli.export@example.org",    "roles": ["Export Operator"],                             "status": "Active",     "notes": "Handles scheduled exports" },
+    { "name": "Mia Catalog",    "email": "mia.catalog@example.org",   "roles": ["Catalog Viewer"],                              "status": "Invited",    "notes": "Business data discovery" },
+    { "name": "Omar Partner",   "email": "omar.partner@example.org",  "roles": ["Share Recipient"],                             "status": "Active",     "notes": "External share" },
+    { "name": "Priya Hybrid",   "email": "priya.hybrid@example.org",  "roles": ["Data Engineer","Data Steward"],                "status": "Active",     "notes": "Dual-role for ops + approvals" },
+    { "name": "Jin Suspend",    "email": "jin.suspend@example.org",   "roles": ["Data Consumer"],                               "status": "Suspended",  "notes": "Access paused" },
+    { "name": "Alex Demo1",     "email": "alex1@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo2",     "email": "alex2@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo3",     "email": "alex3@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo4",     "email": "alex4@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo5",     "email": "alex5@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo6",     "email": "alex6@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo7",     "email": "alex7@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo8",     "email": "alex8@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo9",     "email": "alex9@example.org",         "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" },
+    { "name": "Alex Demo10",    "email": "alex10@example.org",        "roles": ["Data Consumer"],                               "status": "Active",     "notes": "" }
+  ]
+}

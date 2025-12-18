@@ -1,0 +1,94 @@
+{
+  "connectors": [
+    {
+      "name": "SFTP Roster Upload",
+      "type": "SFTP",
+      "status": "Active",
+      "owner": "Engineer Ops",
+      "desc": "Nightly OneRoster CSV feed (district SFTP).",
+      "config": { "sftp": { "host": "sftp.district.edu", "port": "22", "username": "roster", "path": "/inbound/oneroster" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Daily", "window": "02:00Z", "labels": ["k12","oneroster"] }
+    },
+    {
+      "name": "Vendor API",
+      "type": "REST",
+      "status": "Inactive",
+      "owner": "Integration Eng",
+      "desc": "3rd-party student information API.",
+      "config": { "rest": { "base_url": "https://api.vendor.example/v1", "auth_method": "api_key", "timeout": "30", "retries": "3" } },
+      "secretsConfigured": false,
+      "schedule": { "frequency": "Manual", "window": "", "labels": ["sis"] }
+    },
+    {
+      "name": "Canvas LMS API",
+      "type": "REST",
+      "status": "Active",
+      "owner": "Eng Canvas",
+      "desc": "Courses, enrollments, assignments.",
+      "config": { "rest": { "base_url": "https://canvas.example/api", "auth_method": "bearer", "timeout": "30", "retries": "2" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Hourly", "window": "*/60", "labels": ["lms"] }
+    },
+    {
+      "name": "PowerSchool SIS",
+      "type": "JDBC",
+      "status": "Active",
+      "owner": "DB Ops",
+      "desc": "Rosters, attendance, grades.",
+      "config": { "jdbc": { "driver": "org.postgresql.Driver", "url": "jdbc:postgresql://sis:5432/ps", "username": "edx_reader", "params": "sslmode=require" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Daily", "window": "01:00Z", "labels": ["k12","sis"] }
+    },
+    {
+      "name": "Workday Financial Aid",
+      "type": "REST",
+      "status": "Error",
+      "owner": "Finance Ops",
+      "desc": "Financial aid disbursements endpoint.",
+      "config": { "rest": { "base_url": "https://wd.example/fin-aid", "auth_method": "oauth2" } },
+      "secretsConfigured": false,
+      "schedule": { "frequency": "Daily", "window": "03:30Z", "labels": ["highered","finance"] }
+    },
+    {
+      "name": "OneRoster Provider",
+      "type": "OneRoster",
+      "status": "Active",
+      "owner": "Roster Team",
+      "desc": "Standards-based roster sync.",
+      "config": { "oneroster": { "base_url": "https://provider.example/oneroster", "version": "v1.1" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Daily", "window": "02:30Z", "labels": ["standard"] }
+    },
+    {
+      "name": "AWS S3 Landing",
+      "type": "AWS S3",
+      "status": "Active",
+      "owner": "Platform Ops",
+      "desc": "Bulk file ingress (parquet/csv).",
+      "config": { "s3": { "bucket": "edx-landing", "region": "us-east-1", "prefix": "/" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Hourly", "window": "*/60", "labels": ["storage"] }
+    },
+    {
+      "name": "Azure Blob Archive",
+      "type": "Azure Blob",
+      "status": "Inactive",
+      "owner": "Platform Ops",
+      "desc": "Long-term raw archive.",
+      "config": { "az": { "account": "edxarchive", "container": "raw", "endpoint": "" } },
+      "secretsConfigured": false,
+      "schedule": { "frequency": "Monthly", "window": "Sun 03:00Z", "labels": ["archive"] }
+    },
+    {
+      "name": "Google Sheets Intake",
+      "type": "Google Sheets",
+      "status": "Active",
+      "owner": "Program Ops",
+      "desc": "Small program data intake spreadsheet.",
+      "config": { "gs": { "sheet_id": "1abcDEF...", "worksheet": "Sheet1" } },
+      "secretsConfigured": true,
+      "schedule": { "frequency": "Weekly", "window": "Mon 04:00Z", "labels": ["intake"] }
+    }
+  ]
+}

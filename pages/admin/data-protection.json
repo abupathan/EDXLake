@@ -1,0 +1,29 @@
+{
+  "meta": { "title": "Data Protection", "version": "1.1.0" },
+  "retention": [
+    { "zone": "staging",   "time_travel": "7 days",  "retention": "30 days",  "notes": "Safe sandbox window for rollbacks." },
+    { "zone": "canonical", "time_travel": "30 days", "retention": "365 days", "notes": "Meets district/state archival policy." },
+    { "zone": "publish",   "time_travel": "14 days", "retention": "180 days", "notes": "Public-facing datasets; shorter window." },
+    { "zone": "quarantine","time_travel": "7 days",  "retention": "14 days",  "notes": "Failed/PII-violating loads; auto purge." },
+    { "zone": "archive",   "time_travel": "0 days",  "retention": "1825 days","notes": "Long-term cold storage (5 years)." },
+    { "zone": "staging",   "time_travel": "7 days",  "retention": "45 days",  "notes": "Program X override (pilot) — demo row." },
+    { "zone": "publish",   "time_travel": "14 days", "retention": "120 days", "notes": "Program Y override — demo row." },
+    { "zone": "canonical", "time_travel": "30 days", "retention": "730 days", "notes": "Extended archive demo." },
+    { "zone": "staging",   "time_travel": "3 days",  "retention": "15 days",  "notes": "Tight cycle test — demo." },
+    { "zone": "publish",   "time_travel": "7 days",  "retention": "90 days",  "notes": "Light footprint — demo." },
+    { "zone": "archive",   "time_travel": "0 days",  "retention": "3650 days","notes": "Very long-term (10 yrs) — demo." }
+  ],
+  "backups": [
+    { "name": "daily_full",    "schedule": "Daily 02:00Z", "last_restore_test": "2025-10-10 04:20Z", "encryption": "AES-256", "geo": "Yes", "retention": "35 days", "notes": "S3 Standard-IA" },
+    { "name": "hourly_logs",   "schedule": "Hourly",       "last_restore_test": "2025-10-11 01:00Z", "encryption": "AES-256", "geo": "Yes", "retention": "14 days", "notes": "Low-cost tier" },
+    { "name": "weekly_full",   "schedule": "Sun 03:00Z",   "last_restore_test": "2025-09-30 03:10Z", "encryption": "AES-256", "geo": "No",  "retention": "180 days", "notes": "On-prem vault" },
+    { "name": "monthly_full",  "schedule": "1st 04:00Z",   "last_restore_test": "2025-10-01 04:05Z", "encryption": "AES-128", "geo": "Yes", "retention": "365 days", "notes": "Glacier Deep Archive" },
+    { "name": "ad_hoc_test",   "schedule": "Manual",       "last_restore_test": "",                  "encryption": "AES-256", "geo": "No",  "retention": "",       "notes": "Demo-only runbooks" },
+    { "name": "etl_snapshots", "schedule": "Every 6 hours","last_restore_test": "2025-10-12 06:00Z", "encryption": "AES-256", "geo": "Yes", "retention": "21 days", "notes": "" },
+    { "name": "pii_vault",     "schedule": "Daily 01:00Z", "last_restore_test": "2025-10-13 01:15Z", "encryption": "AES-256", "geo": "Yes", "retention": "730 days", "notes": "Restricted access" },
+    { "name": "analytics",     "schedule": "Daily 05:00Z", "last_restore_test": "2025-10-08 05:30Z", "encryption": "AES-128", "geo": "No",  "retention": "90 days",  "notes": "" },
+    { "name": "docs_archive",  "schedule": "Monthly",      "last_restore_test": "2025-09-15 02:00Z", "encryption": "AES-256", "geo": "Yes", "retention": "1825 days","notes": "Legal hold scope" },
+    { "name": "cadence_demo1", "schedule": "Every 2 days", "last_restore_test": "",                  "encryption": "AES-256", "geo": "No",  "retention": "60 days",  "notes": "Demo row" },
+    { "name": "cadence_demo2", "schedule": "Every 12 hours","last_restore_test": "",                 "encryption": "AES-256", "geo": "Yes", "retention": "45 days",  "notes": "Demo row" }
+  ]
+}
