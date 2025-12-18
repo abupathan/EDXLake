@@ -1,0 +1,8 @@
+/* Minimal page-specific styles (kept from your file and extended lightly) */
+.log-box{ background:#0b0f16; color:#d7e1f2; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; padding:1rem; border-radius:.5rem; white-space:pre-wrap; max-height:360px; overflow:auto; }
+.kv dt{ width:160px; }
+.kv dd{ margin-left:0; }
+
+/* Table polish */
+.table td, .table th { white-space: nowrap; }
+.table thead th { position: sticky; top: 0; z-index: 1; }

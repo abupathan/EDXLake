@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "Mappings",
+    "version": "2.2.0",
+    "generated": "2025-10-18T10:00:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset showing cross-standard mappings (Ed-Fi, OneRoster, CEDS) with governance state, steward approvals, and change notes."
+  },
+
+  "summary": {
+    "count": 18,
+    "by_standard": { "Ed-Fi": 6, "OneRoster": 7, "CEDS": 5 },
+    "statuses": { "approved": 10, "draft": 6, "deprecated": 2 }
+  },
+
+  "mappings": [
+    {
+      "source": "ps.students.student_number",
+      "target": "oneroster.users.userId",
+      "standard": "OneRoster",
+      "version": "1.2",
+      "updated": "2025-10-12 10:40Z",
+      "status": "approved",
+      "steward": "Casey Steward",
+      "change_note": "Aligned to OneRoster 1.2 userId semantics.",
+      "sample_transform": "toString(trim(value))",
+      "policy_tags": ["PII_DIRECTORY"]
+    },
+    {
+      "source": "ps.attendance.events",
+      "target": "edfi.AttendanceEvent",
+      "standard": "Ed-Fi",
+      "version": "3.3",
+      "updated": "2025-10-08 14:22Z",
+      "status": "approved",
+      "steward": "Casey Steward",
+      "change_note": "Event subtype canonicalization.",
+      "sample_transform": "map(eventType, {A:'Absence',T:'Tardy'})",
+      "policy_tags": ["DEIDENTIFIED"]
+    },
+    {
+      "source": "banner.person.pidm",
+      "target": "ceds.Person.PersonID",
+      "standard": "CEDS",
+      "version": "1.0",
+      "updated": "2025-10-06 09:10Z",
+      "status": "draft",
+      "steward": "Registrar Team",
+      "change_note": "Initial PIDM to PersonID draft.",
+      "sample_transform": "toString(value)",
+      "policy_tags": ["PII_STRICT"]
+    },
+
+    { "source": "canvas.users.sis_user_id", "target": "oneroster.users.sourcedId", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-15 07:20Z", "status": "approved", "steward": "Casey Steward", "change_note": "Normalized sourcedId mapping.", "sample_transform": "upper(trim(value))", "policy_tags": ["PII_DIRECTORY"] },
+    { "source": "clever.sections.id", "target": "oneroster.classes.sourcedId", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-11 05:55Z", "status": "approved", "steward": "Program Office", "change_note": "Section to class mapping per OR 1.2.", "sample_transform": "value", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "ps.sections.course_number", "target": "edfi.Course.CourseCode", "standard": "Ed-Fi", "version": "3.3", "updated": "2025-10-09 11:05Z", "status": "approved", "steward": "Curriculum Team", "change_note": "Course code normalization.", "sample_transform": "padStart(value, 5, '0')", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "ps.schools.school_number", "target": "edfi.EducationOrganizationCode", "standard": "Ed-Fi", "version": "3.3", "updated": "2025-10-05 16:33Z", "status": "draft", "steward": "District Data", "change_note": "Pending verification of org codes.", "sample_transform": "toString(value)", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "canvas.enrollments.role", "target": "ceds.K12StudentEnrollment.Role", "standard": "CEDS", "version": "1.0", "updated": "2025-10-13 08:00Z", "status": "approved", "steward": "Program Office", "change_note": "Role taxonomy alignment.", "sample_transform": "map(value, {student:'Student',teacher:'Teacher'})", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "ps.students.birth_date", "target": "edfi.Student.BirthDate", "standard": "Ed-Fi", "version": "3.3", "updated": "2025-10-12 12:15Z", "status": "approved", "steward": "Registrar Team", "change_note": "Date format normalization.", "sample_transform": "parseDate(value,'YYYY-MM-DD')", "policy_tags": ["PII_STRICT"] },
+    { "source": "ps.contacts.email", "target": "oneroster.users.email", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-16 06:30Z", "status": "draft", "steward": "Registrar Team", "change_note": "Pending domain allowlist.", "sample_transform": "lower(trim(value))", "policy_tags": ["PII_DIRECTORY"] },
+    { "source": "map.results.rit_score", "target": "ceds.Assessment.ResultScore", "standard": "CEDS", "version": "1.0", "updated": "2025-10-10 03:42Z", "status": "approved", "steward": "Assessment Office", "change_note": "Numeric score coercion.", "sample_transform": "toNumber(value)", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "ps.students.gender", "target": "edfi.Student.Gender", "standard": "Ed-Fi", "version": "3.3", "updated": "2025-10-12 18:20Z", "status": "approved", "steward": "Registrar Team", "change_note": "Code set alignment.", "sample_transform": "map(value, {'M':'Male','F':'Female','X':'Nonbinary'})", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "ps.students.last_name", "target": "oneroster.users.familyName", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-14 09:02Z", "status": "approved", "steward": "Registrar Team", "change_note": "Trim + title case.", "sample_transform": "titleCase(trim(value))", "policy_tags": ["PII_DIRECTORY"] },
+    { "source": "ps.students.first_name", "target": "oneroster.users.givenName", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-14 09:03Z", "status": "approved", "steward": "Registrar Team", "change_note": "Trim + title case.", "sample_transform": "titleCase(trim(value))", "policy_tags": ["PII_DIRECTORY"] },
+    { "source": "ps.students.middle_name", "target": "oneroster.users.middleName", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-14 09:04Z", "status": "draft", "steward": "Registrar Team", "change_note": "Optional field handling.", "sample_transform": "nullIfEmpty(trim(value))", "policy_tags": ["PII_DIRECTORY"] },
+    { "source": "ps.students.id", "target": "ceds.PersonStateIdentifier", "standard": "CEDS", "version": "1.0", "updated": "2025-10-11 13:22Z", "status": "deprecated", "steward": "Registrar Team", "change_note": "Replaced by Person.PersonID.", "sample_transform": "toString(value)", "policy_tags": ["PII_STRICT"] },
+    { "source": "canvas.courses.sis_course_id", "target": "edfi.Course.IdentityCode", "standard": "Ed-Fi", "version": "3.3", "updated": "2025-10-13 12:44Z", "status": "draft", "steward": "Curriculum Team", "change_note": "New mapping proposal.", "sample_transform": "toString(value)", "policy_tags": ["DEIDENTIFIED"] },
+    { "source": "clever.schools.school_number", "target": "oneroster.orgs.identifier", "standard": "OneRoster", "version": "1.2", "updated": "2025-10-17 08:30Z", "status": "approved", "steward": "District Data", "change_note": "Org identifier alignment.", "sample_transform": "toString(value)", "policy_tags": ["DEIDENTIFIED"] }
+  ],
+
+  "history": [
+    {
+      "mapping": "ps.students.student_number -> oneroster.users.userId",
+      "entries": [
+        { "ts": "2025-09-20 08:00Z", "actor": "Data Engineer", "action": "create", "note": "Initial mapping." },
+        { "ts": "2025-10-12 10:40Z", "actor": "Casey Steward", "action": "approve", "note": "Meets OR 1.2 guidance." }
+      ]
+    }
+  ]
+}

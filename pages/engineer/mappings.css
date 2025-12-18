@@ -1,0 +1,21 @@
+/* Mappings — production-ready styles (Bootstrap friendly) */
+
+/* Toolbar */
+.toolbar { gap: .5rem; }
+.toolbar .form-select, .toolbar .form-control { min-width: 160px; }
+
+/* Table columns */
+.schema-col { width: 320px; } /* wider than original for long paths */
+.std-col    { width: 120px; }
+.ver-col    { width: 90px; }
+.time-col   { width: 170px; }
+
+/* Pagers */
+.pager { display:flex; align-items:center; gap:.4rem; }
+.pager .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+/* Code cells wrap gracefully on smaller screens */
+code { white-space: pre-wrap; word-break: break-word; }
+
+/* Accessibility helpers */
+.visually-hidden-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }

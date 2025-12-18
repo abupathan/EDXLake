@@ -1,0 +1,97 @@
+{
+  "meta": { "title": "Pipeline Detail Catalog", "version": "3.0.0" },
+
+  "pipelines": [
+    {
+      "name": "ps_roster_ingest",
+      "source": "PowerSchool",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "status": "Success",
+      "last_run": "2025-10-15 05:00Z",
+      "duration": "6m 21s",
+      "next": "2025-10-16 05:00Z",
+      "runs": [
+        { "id": "psr_1015_0500", "start": "2025-10-15 05:00Z", "end": "2025-10-15 05:06Z", "status": "Success", "duration": "6m 21s" },
+        { "id": "psr_1014_0500", "start": "2025-10-14 05:00Z", "end": "2025-10-14 05:07Z", "status": "Success", "duration": "7m 02s" },
+        { "id": "psr_1013_0500", "start": "2025-10-13 05:00Z", "end": "2025-10-13 05:01Z", "status": "Failed",  "duration": "1m 03s" },
+        { "id": "psr_1012_0500", "start": "2025-10-12 05:00Z", "end": "2025-10-12 05:08Z", "status": "Success", "duration": "8m 00s" },
+        { "id": "psr_1011_0500", "start": "2025-10-11 05:00Z", "end": "2025-10-11 05:05Z", "status": "Success", "duration": "5m 12s" }
+      ],
+      "last_log": "[INFO] 05:00Z start ingest\n[INFO] oauth… ok\n[INFO] fetched 12,431 users\n[INFO] loaded staging.powerschool.users_raw\n[INFO] mapping → canonical.oneroster.users\n[OK]   completed in 6m 21s",
+      "inputs": [
+        { "name": "ps.api.users", "count": 12431, "notes": "delta since 2025-10-14" },
+        { "name": "ps.api.classes", "count": 2431, "notes": "" }
+      ],
+      "outputs": [
+        { "dataset": "staging.powerschool.users_raw", "rows": 12431, "freshness": "05:06Z" },
+        { "dataset": "canonical.oneroster.users", "rows": 12990, "freshness": "05:06Z" }
+      ]
+    },
+
+    {
+      "name": "canvas_grades_ingest",
+      "source": "Canvas",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "status": "Warning",
+      "last_run": "2025-10-15 06:12Z",
+      "duration": "11m 40s",
+      "next": "2025-10-15 07:12Z",
+      "runs": [
+        { "id": "cvg_1015_0612", "start": "2025-10-15 06:12Z", "end": "2025-10-15 06:24Z", "status": "Warning", "duration": "11m 40s" },
+        { "id": "cvg_1015_0512", "start": "2025-10-15 05:12Z", "end": "2025-10-15 05:23Z", "status": "Success", "duration": "11m 10s" },
+        { "id": "cvg_1014_0612", "start": "2025-10-14 06:12Z", "end": "2025-10-14 06:23Z", "status": "Success", "duration": "11m 15s" }
+      ],
+      "last_log": "[WARN] drift: assignment scores schema missing `late_policy`\n[INFO] fetched 4,909 grade rows\n[OK]   loaded staging.canvas.grades_raw\n[ACTION] review mapping for late policy field",
+      "inputs": [
+        { "name": "canvas.api.grades", "count": 4909, "notes": "semester S1 partial" }
+      ],
+      "outputs": [
+        { "dataset": "staging.canvas.grades_raw", "rows": 4909, "freshness": "06:24Z" }
+      ]
+    },
+
+    {
+      "name": "map_assessment_ingest",
+      "source": "NWEA MAP",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "status": "Failed",
+      "last_run": "2025-10-10 02:00Z",
+      "duration": "1m 03s",
+      "next": "2025-10-11 02:00Z",
+      "runs": [
+        { "id": "map_1010_0200", "start": "2025-10-10 02:00Z", "end": "2025-10-10 02:01Z", "status": "Failed", "duration": "1m 03s" },
+        { "id": "map_1009_0200", "start": "2025-10-09 02:00Z", "end": "2025-10-09 02:10Z", "status": "Success", "duration": "10m 10s" }
+      ],
+      "last_log": "[ERROR] SFTP window closed (permission denied)\n[HINT] Verify partner window & key rotation\n[ABORT] exiting with code 13",
+      "inputs": [],
+      "outputs": []
+    },
+
+    {
+      "name": "canonical_roster_build",
+      "source": "—",
+      "zone": "canonical",
+      "owner": "Ivy Engineer",
+      "status": "Running",
+      "last_run": "2025-10-15 06:55Z",
+      "duration": "—",
+      "next": "—",
+      "runs": [
+        { "id": "crb_1015_0655", "start": "2025-10-15 06:55Z", "end": "", "status": "Running", "duration": "—" },
+        { "id": "crb_1014_0655", "start": "2025-10-14 06:55Z", "end": "2025-10-14 07:01Z", "status": "Success", "duration": "6m 11s" }
+      ],
+      "last_log": "[INFO] building canonical roster from staging sources\n[INFO] join users/enrollments/sections\n[RUNNING] step 3/8…",
+      "inputs": [
+        { "name": "staging.powerschool.users_raw", "count": 12431, "notes": "" },
+        { "name": "staging.canvas.enrollments_raw", "count": 22590, "notes": "" }
+      ],
+      "outputs": [
+        { "dataset": "canonical.oneroster.users", "rows": 12990, "freshness": "06:56Z" },
+        { "dataset": "canonical.oneroster.enrollments", "rows": 22590, "freshness": "06:57Z" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "meta": { "title": "Monitoring & Alerts", "version": "3.0.0" },
+
+  "kpis": {
+    "uptime_30d": "99.95%",
+    "open_alerts": 2,
+    "dq_hits_24h": 44,
+    "drift_signals_7d": 2
+  },
+
+  "alerts": [
+    {
+      "id": "ALRT-1024",
+      "opened": "2025-10-14 06:18Z",
+      "title": "Canvas grades ingest latency",
+      "sev": "P2",
+      "status": "Open",
+      "source": "Canvas",
+      "pipeline": "canvas_grades_ingest",
+      "run_id": "cvg_1015_0612",
+      "owner": "Ivy Engineer",
+      "tags": ["latency","LMS","staging"],
+      "description": "End-to-end ingestion exceeded SLO (10m).",
+      "links": [
+        { "label": "View pipeline", "href": "pipelines.html" },
+        { "label": "Open detail", "href": "pipeline-detail.html?pipeline=canvas_grades_ingest" }
+      ]
+    },
+    {
+      "id": "ALRT-1003",
+      "opened": "2025-10-10 02:05Z",
+      "title": "MAP assessment ingest failed",
+      "sev": "P1",
+      "status": "Acknowledged",
+      "source": "NWEA MAP",
+      "pipeline": "map_assessment_ingest",
+      "run_id": "map_1010_0200",
+      "owner": "Ivy Engineer",
+      "tags": ["failure","assessment","staging"],
+      "description": "SFTP partner window closed; key rotation suspected.",
+      "links": [
+        { "label": "View pipeline", "href": "pipelines.html" },
+        { "label": "Open detail", "href": "pipeline-detail.html?pipeline=map_assessment_ingest" }
+      ]
+    }
+  ],
+
+  "dq_hits": [
+    { "rule": "not_null(last_name)", "dataset": "staging.powerschool.users_raw", "severity": "high", "hits_24h": 3,  "threshold": 0,  "status": "breached" },
+    { "rule": "grade_in_range(0..100)", "dataset": "staging.canvas.grades_raw", "severity": "medium", "hits_24h": 41, "threshold": 5,  "status": "breached" }
+  ],
+
+  "drift": [
+    { "field": "grade_distribution.A", "segment": "District", "from": "41%", "to": "27%", "delta": "-14pp", "test": "KS-test", "status": "investigate" },
+    { "field": "enrollments_per_course", "segment": "HS", "from": "28.1", "to": "25.6", "delta": "-2.5", "test": "z-score", "status": "watch" }
+  ],
+
+  "policy_simulator": {
+    "users": [
+      { "id": "u_consumer_east", "display": "Alex — Data Consumer (HS-East)", "role": "Data Consumer", "org": "HS-EAST", "programs": ["ELA"], "terms": ["2025-S1"] },
+      { "id": "u_engineer",      "display": "Jordan — Data Engineer",        "role": "Data Engineer", "org": "DIST-001", "programs": [], "terms": [] },
+      { "id": "u_steward",       "display": "Casey — Data Steward",          "role": "Data Steward",  "org": "DIST-001", "programs": ["All"], "terms": ["All"] }
+    ],
+    "datasets": [
+      { "name": "canonical.oneroster.users",     "classifications": ["PII_DIRECTORY"], "scope": { "org": "DIST-001" } },
+      { "name": "canonical.oneroster.enrollments","classifications": ["DEIDENTIFIED"],  "scope": { "org": "DIST-001" } },
+      { "name": "staging.powerschool.users_raw", "classifications": ["PII_STRICT"],    "scope": { "org": "DIST-001" } },
+      { "name": "staging.canvas.grades_raw",     "classifications": ["PII_STRICT"],    "scope": { "org": "DIST-001", "term": "2025-S1" } }
+    ],
+    "masking_rules": {
+      "PII_STRICT":    "masked",
+      "PII_DIRECTORY": "masked",
+      "DEIDENTIFIED":  "clear"
+    },
+    "abac": {
+      "org_must_match": true,
+      "term_must_match_if_present": true
+    }
+  }
+}

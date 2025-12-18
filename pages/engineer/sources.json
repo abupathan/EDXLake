@@ -1,0 +1,36 @@
+{
+  "meta": { "title": "Sources", "version": "2.0.0" },
+
+  "registry": {
+    "categories": ["K-12 SIS", "LMS", "HE SIS", "Assessment", "HR/Finance"],
+    "vendors": {
+      "K-12 SIS": ["PowerSchool", "Infinite Campus", "Aeries", "Skyward", "Synergy"],
+      "LMS": ["Canvas", "Schoology", "D2L Brightspace", "Blackboard"],
+      "HE SIS": ["Ellucian Banner", "Workday Student", "Anthology (CampusNexus)", "Colleague"],
+      "Assessment": ["NWEA MAP Growth", "Renaissance", "i-Ready", "State Assessments"],
+      "HR/Finance": ["Workday HCM", "PeopleSoft", "UKG Pro"]
+    },
+    "auth_methods": {
+      "OAuth2": ["Client ID", "Client Secret", "Auth URL", "Token URL", "Scopes"],
+      "API Key": ["API Key"],
+      "SFTP": ["Host", "Port", "Username", "Private Key (PEM)", "Passphrase (optional)"]
+    },
+    "scopes_supported": ["District", "School", "Program", "Term"],
+    "classifications": ["PII_STRICT", "PII_DIRECTORY", "FINANCIAL", "DISCIPLINE", "HEALTH", "DEIDENTIFIED"]
+  },
+
+  "sources": [
+    { "system": "PowerSchool", "category": "K-12 SIS", "auth": "OAuth2 / SFTP", "cadence": "Daily", "status": "Healthy", "last_run": "2025-10-15T05:00:00Z" },
+    { "system": "Canvas", "category": "LMS", "auth": "OAuth2 / SFTP", "cadence": "Daily", "status": "Warning", "last_run": "2025-10-15T06:10:00Z" },
+    { "system": "Ellucian Banner", "category": "HE SIS", "auth": "OAuth2", "cadence": "Daily", "status": "Disabled", "last_run": "" },
+    { "system": "NWEA MAP Growth", "category": "Assessment", "auth": "SFTP", "cadence": "Term", "status": "Error", "last_run": "2025-10-10T02:00:00Z" },
+    { "system": "Infinite Campus", "category": "K-12 SIS", "auth": "API Key", "cadence": "Daily", "status": "Healthy", "last_run": "2025-10-14T07:20:00Z" },
+    { "system": "Aeries", "category": "K-12 SIS", "auth": "SFTP", "cadence": "Nightly", "status": "Healthy", "last_run": "2025-10-15T02:15:00Z" },
+    { "system": "D2L Brightspace", "category": "LMS", "auth": "OAuth2", "cadence": "Hourly", "status": "Healthy", "last_run": "2025-10-15T10:00:00Z" },
+    { "system": "Blackboard", "category": "LMS", "auth": "OAuth2", "cadence": "Daily", "status": "Healthy", "last_run": "2025-10-15T06:00:00Z" },
+    { "system": "Renaissance", "category": "Assessment", "auth": "SFTP", "cadence": "Weekly", "status": "Healthy", "last_run": "2025-10-13T03:25:00Z" },
+    { "system": "i-Ready", "category": "Assessment", "auth": "SFTP", "cadence": "Weekly", "status": "Warning", "last_run": "2025-10-12T04:05:00Z" },
+    { "system": "Workday HCM", "category": "HR/Finance", "auth": "OAuth2", "cadence": "Daily", "status": "Healthy", "last_run": "2025-10-15T04:10:00Z" },
+    { "system": "PeopleSoft", "category": "HR/Finance", "auth": "SFTP", "cadence": "Daily", "status": "Healthy", "last_run": "2025-10-14T23:55:00Z" }
+  ]
+}

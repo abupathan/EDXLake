@@ -1,0 +1,17 @@
+/* Sources — Bootstrap-friendly additions */
+
+.table td, .table th { white-space: nowrap; }
+.badge-status { border: 1px solid var(--bs-border-color); background: #fff; } /* keep from your prior file */ 
+
+/* Wizard layouts */
+.wiz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.wiz-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+@media (max-width: 992px) {
+  .wiz-grid, .wiz-grid-3 { grid-template-columns: 1fr; }
+}
+
+.code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace; font-size: .85rem; }
+.help { color: var(--bs-secondary-color); }
+
+/* Stepper breadcrumb visual nudge */
+#stepper .breadcrumb-item + .breadcrumb-item::before { content: "›"; }

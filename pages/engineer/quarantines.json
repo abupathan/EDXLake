@@ -1,0 +1,105 @@
+{
+  "meta": { 
+    "title": "Quarantines", 
+    "version": "2.1.0",
+    "generated": "2025-10-18T09:00:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset illustrating file- and row-level quarantines for multiple connectors and reasons."
+  },
+
+  "files": [
+    {
+      "file": "canvas/grades_2025-10-10.csv",
+      "source": "Canvas LMS",
+      "reason": "schema_mismatch",
+      "rows": 124,
+      "detected": "2025-10-10 02:05Z",
+      "pipeline": "canvas_grades_ingest",
+      "severity": "high"
+    },
+    {
+      "file": "ps/users_2025-10-14.csv",
+      "source": "PowerSchool SIS",
+      "reason": "invalid_utf8",
+      "rows": 3,
+      "detected": "2025-10-14 05:03Z",
+      "pipeline": "ps_users_ingest",
+      "severity": "medium"
+    },
+    {
+      "file": "map/assessments_2025-10-12.csv",
+      "source": "NWEA MAP",
+      "reason": "duplicate_headers",
+      "rows": 1,
+      "detected": "2025-10-12 04:12Z",
+      "pipeline": "map_assessment_ingest",
+      "severity": "low"
+    },
+    {
+      "file": "clever/enrollments_2025-10-11.csv",
+      "source": "Clever Roster",
+      "reason": "missing_columns",
+      "rows": 20,
+      "detected": "2025-10-11 03:10Z",
+      "pipeline": "clever_enrollments_ingest",
+      "severity": "medium"
+    },
+    {
+      "file": "state/attendance_oct_week2.zip",
+      "source": "State Feed",
+      "reason": "checksum_mismatch",
+      "rows": 0,
+      "detected": "2025-10-15 07:50Z",
+      "pipeline": "state_attendance_ingest",
+      "severity": "high"
+    }
+  ],
+
+  "rows": [
+    {
+      "dataset": "staging.powerschool.users_raw",
+      "key": "student_number=100343",
+      "error": "missing required: last_name",
+      "detected": "2025-10-13 05:00Z",
+      "connector": "PowerSchool",
+      "classification": "PII_STRICT",
+      "owner": "Ivy Engineer"
+    },
+    {
+      "dataset": "staging.canvas.grades_raw",
+      "key": "course_id=ENG101, user_id=4431",
+      "error": "score not numeric",
+      "detected": "2025-10-10 02:01Z",
+      "connector": "Canvas LMS",
+      "classification": "DEIDENTIFIED",
+      "owner": "Ivy Engineer"
+    },
+    {
+      "dataset": "canonical.oneroster.enrollments",
+      "key": "org_id=HS-EAST, class_id=MATH9",
+      "error": "foreign key violation: user_id not found",
+      "detected": "2025-10-15 06:18Z",
+      "connector": "Clever",
+      "classification": "PII_DIRECTORY",
+      "owner": "Jordan Engineer"
+    },
+    {
+      "dataset": "canonical.assessments.map",
+      "key": "test_id=MAP_FALL25, student_id=100291",
+      "error": "null percentile_rank",
+      "detected": "2025-10-12 04:10Z",
+      "connector": "NWEA MAP",
+      "classification": "DEIDENTIFIED",
+      "owner": "Jordan Engineer"
+    },
+    {
+      "dataset": "canonical.attendance.daily",
+      "key": "student_id=100201, date=2025-10-14",
+      "error": "negative absence_count",
+      "detected": "2025-10-14 07:20Z",
+      "connector": "State Feed",
+      "classification": "PII_STRICT",
+      "owner": "Ivy Engineer"
+    }
+  ]
+}

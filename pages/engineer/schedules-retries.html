@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EDX — Schedules & Retries</title>
+
+  <!-- Vendor CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!-- App CSS -->
+  <link href="../../assets/css/edx-global.css" rel="stylesheet">
+  <link href="schedules-retries.css" rel="stylesheet">
+</head>
+<body data-edx-sidebar="engineer">
+  <a class="visually-hidden-focusable" href="#app-main">Skip to main</a>
+  <div id="app-header"></div>
+
+  <div class="container-fluid my-3">
+    <div class="row g-3">
+      <aside class="col-12 col-md-3 col-lg-2" aria-label="Engineer navigation">
+        <div id="app-sidebar"></div>
+      </aside>
+
+      <main class="col-12 col-md-9 col-lg-10" id="app-main" role="main" tabindex="-1" aria-live="polite">
+        <!-- schedules-retries.js will render the full page -->
+        <div class="placeholder-wave">
+          <div class="placeholder col-7"></div>
+          <div class="placeholder col-4"></div>
+          <div class="placeholder col-6"></div>
+          <div class="placeholder col-8"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="app-footer" class="mt-4"></div>
+
+  <!-- Vendor JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+  <!-- Load partials loader as a global (no ESM export), then page logic -->
+  <script src="../../assets/js/partials-loader.js" defer></script>
+  <script type="module" src="./schedules-retries.js" defer></script>
+
+  <!-- Schedule Detail Modal -->
+  <div class="modal fade" id="schedModal" tabindex="-1" aria-labelledby="schedModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-6" id="schedModalLabel">Schedule</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="schedModalBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+          <button id="schedSaveBtn" class="btn btn-primary btn-sm">Save (Demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Policy Detail Modal -->
+  <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-6" id="policyModalLabel">Retry Policy</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="policyModalBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+          <button id="policySaveBtn" class="btn btn-primary btn-sm">Save (Demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

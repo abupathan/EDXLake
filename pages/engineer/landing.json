@@ -1,0 +1,71 @@
+{
+  "meta": { "title": "Engineer Landing", "version": "1.2.0" },
+  "sections": [
+    { "title": "Sources", "area": "Ingest", "desc": "Manage connectors and datasources.", "link": "sources.html" },
+    { "title": "Pipelines", "area": "Orchestration", "desc": "Monitor and manage ETL/ELT jobs.", "link": "pipelines.html", "alt": "pipeline-detail.html" },
+
+    { "title": "Runs", "area": "Orchestration", "desc": "All pipeline executions with filters and pagination.", "link": "pipeline-runs.html" },
+
+    { "title": "Mappings", "area": "Transform", "desc": "Map raw → canonical schemas.", "link": "mappings.html" },
+    { "title": "Mapping Versions", "area": "Transform", "desc": "Timeline, side-by-side diff, and Steward approvals.", "link": "mapping-versions.html" },
+
+    { "title": "Schedules & Retries", "area": "Operate", "desc": "Cron schedules, retry policies, backfills.", "link": "schedules-retries.html" },
+
+    { "title": "Validation", "area": "Quality", "desc": "DQ rules, thresholds, sample checks, last 24h hits.", "link": "validation.html" },
+
+    { "title": "Monitoring & Alerts", "area": "Observe", "desc": "DQ hits, drift, and alerting overview.", "link": "monitoring.html" },
+    { "title": "Logs", "area": "Observe", "desc": "Run/task logs with severity filter, regex, redaction.", "link": "logs.html" }
+  ],
+  "metrics": {
+    "freshness_slo_pct": 97.2,
+    "pipelines_healthy": 28,
+    "pipelines_total": 30,
+    "dq_failures_24h": 12,
+    "exports_queued": 5,
+    "last_updated_ts": "2025-10-18T11:15:00Z"
+  },
+  "alerts": [
+    { "severity": "critical", "title": "Ingest lag on SIS: PowerSchool", "since": "2025-10-18T10:42:00Z", "href": "pipeline-detail.html?id=sis-powerschool" },
+    { "severity": "warning",  "title": "Schema drift detected: Canvas enrollments", "since": "2025-10-18T09:17:00Z", "href": "schema-discovery.html?feed=canvas-enrollments" },
+    { "severity": "info",     "title": "Export job delayed (SFTP window)", "since": "2025-10-18T08:55:00Z", "href": "../consumer/exports.html?job=exp-44719" }
+  ],
+  "quick_links": [
+    { "label": "New Connector", "href": "sources.html#new" },
+    { "label": "Run Pipeline", "href": "pipelines.html#run" },
+    { "label": "Pipeline Runs", "href": "pipeline-runs.html" },
+    { "label": "Validation", "href": "validation.html" },
+    { "label": "Logs", "href": "logs.html" },
+    { "label": "Backfill Window", "href": "schedules-retries.html#backfill" }
+  ],
+  "recent_runs": [
+    { "id": "run-1001", "pipeline": "sis-powerschool", "status": "failed", "duration_ms": 43342, "rows_in": 118234, "rows_out": 117990, "start_ts": "2025-10-18T10:35:00Z" },
+    { "id": "run-1000", "pipeline": "lms-canvas", "status": "success", "duration_ms": 19012, "rows_in": 82771, "rows_out": 82771, "start_ts": "2025-10-18T10:15:00Z" },
+    { "id": "run-0999", "pipeline": "hr-frontline", "status": "success", "duration_ms": 24110, "rows_in": 12990, "rows_out": 12990, "start_ts": "2025-10-18T09:58:00Z" },
+    { "id": "run-0998", "pipeline": "assess-nwea", "status": "success", "duration_ms": 33119, "rows_in": 442112, "rows_out": 441998, "start_ts": "2025-10-18T09:35:00Z" },
+    { "id": "run-0997", "pipeline": "sis-powerschool", "status": "success", "duration_ms": 20991, "rows_in": 118190, "rows_out": 118190, "start_ts": "2025-10-18T09:05:00Z" },
+
+    { "id": "run-0996", "pipeline": "lms-canvas", "status": "success", "duration_ms": 18777, "rows_in": 82610, "rows_out": 82610, "start_ts": "2025-10-18T08:45:00Z" },
+    { "id": "run-0995", "pipeline": "he-banner", "status": "success", "duration_ms": 40555, "rows_in": 21988, "rows_out": 21988, "start_ts": "2025-10-18T08:15:00Z" },
+    { "id": "run-0994", "pipeline": "assess-renaissance", "status": "success", "duration_ms": 30211, "rows_in": 77331, "rows_out": 77331, "start_ts": "2025-10-18T07:50:00Z" },
+    { "id": "run-0993", "pipeline": "finance-wd", "status": "success", "duration_ms": 35218, "rows_in": 18921, "rows_out": 18921, "start_ts": "2025-10-18T07:25:00Z" },
+    { "id": "run-0992", "pipeline": "sis-infinite-campus", "status": "success", "duration_ms": 28311, "rows_in": 90211, "rows_out": 90211, "start_ts": "2025-10-18T07:00:00Z" },
+
+    { "id": "run-0991", "pipeline": "he-colleague", "status": "success", "duration_ms": 41022, "rows_in": 15977, "rows_out": 15977, "start_ts": "2025-10-18T06:35:00Z" },
+    { "id": "run-0990", "pipeline": "assess-nwea", "status": "success", "duration_ms": 33201, "rows_in": 438112, "rows_out": 438112, "start_ts": "2025-10-18T06:10:00Z" },
+    { "id": "run-0989", "pipeline": "lms-d2l", "status": "success", "duration_ms": 22110, "rows_in": 55901, "rows_out": 55901, "start_ts": "2025-10-18T05:45:00Z" },
+    { "id": "run-0988", "pipeline": "sis-aeries", "status": "success", "duration_ms": 30101, "rows_in": 69411, "rows_out": 69411, "start_ts": "2025-10-18T05:20:00Z" },
+    { "id": "run-0987", "pipeline": "assess-renaissance", "status": "success", "duration_ms": 30221, "rows_in": 77123, "rows_out": 77123, "start_ts": "2025-10-18T04:55:00Z" },
+
+    { "id": "run-0986", "pipeline": "he-peoplesoft", "status": "success", "duration_ms": 48912, "rows_in": 22011, "rows_out": 22011, "start_ts": "2025-10-18T04:30:00Z" },
+    { "id": "run-0985", "pipeline": "lms-blackboard", "status": "success", "duration_ms": 26543, "rows_in": 49234, "rows_out": 49234, "start_ts": "2025-10-18T04:05:00Z" },
+    { "id": "run-0984", "pipeline": "sis-skyward", "status": "success", "duration_ms": 27411, "rows_in": 61234, "rows_out": 61234, "start_ts": "2025-10-18T03:40:00Z" },
+    { "id": "run-0983", "pipeline": "he-workday", "status": "success", "duration_ms": 51221, "rows_in": 18023, "rows_out": 18023, "start_ts": "2025-10-18T03:15:00Z" },
+    { "id": "run-0982", "pipeline": "sis-powerschool", "status": "success", "duration_ms": 20911, "rows_in": 118044, "rows_out": 118044, "start_ts": "2025-10-18T02:50:00Z" },
+
+    { "id": "run-0981", "pipeline": "lms-canvas", "status": "success", "duration_ms": 18801, "rows_in": 82110, "rows_out": 82110, "start_ts": "2025-10-18T02:25:00Z" },
+    { "id": "run-0980", "pipeline": "assess-nwea", "status": "success", "duration_ms": 34101, "rows_in": 432331, "rows_out": 432331, "start_ts": "2025-10-18T02:00:00Z" },
+    { "id": "run-0979", "pipeline": "sis-edupoint-synergy", "status": "success", "duration_ms": 29911, "rows_in": 70123, "rows_out": 70123, "start_ts": "2025-10-18T01:35:00Z" },
+    { "id": "run-0978", "pipeline": "he-banner", "status": "success", "duration_ms": 40912, "rows_in": 21901, "rows_out": 21901, "start_ts": "2025-10-18T01:10:00Z" },
+    { "id": "run-0977", "pipeline": "sis-infinite-campus", "status": "success", "duration_ms": 28111, "rows_in": 90110, "rows_out": 90110, "start_ts": "2025-10-18T00:45:00Z" }
+  ]
+}

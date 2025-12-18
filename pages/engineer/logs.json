@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "title": "Logs & Diagnostics",
+    "version": "1.0.0",
+    "generated": "2025-10-18T12:30:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset for run/task logs with severity filter, regex search, and redaction."
+  },
+  "filters": {
+    "pipelines": ["ps_roster_ingest", "canvas_grades_ingest", "map_assessment_ingest", "canonical_roster_build"],
+    "severities": ["DEBUG", "INFO", "WARN", "ERROR"],
+    "tasks": ["extract", "transform", "load", "validate", "publish"]
+  },
+  "logs": [
+    {
+      "ts": "2025-10-15 05:00:14Z",
+      "pipeline": "ps_roster_ingest",
+      "run_id": "psr_1015_0500",
+      "task": "extract",
+      "severity": "INFO",
+      "message": "Starting extract from PowerSchool API",
+      "detail": "[INFO] GET /students since=2025-10-14T00:00:00Z"
+    },
+    {
+      "ts": "2025-10-15 05:00:18Z",
+      "pipeline": "ps_roster_ingest",
+      "run_id": "psr_1015_0500",
+      "task": "extract",
+      "severity": "DEBUG",
+      "message": "OAuth token acquired",
+      "detail": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.REDACT_ME"
+    },
+    {
+      "ts": "2025-10-15 05:01:09Z",
+      "pipeline": "ps_roster_ingest",
+      "run_id": "psr_1013_0500",
+      "task": "extract",
+      "severity": "ERROR",
+      "message": "401 Unauthorized from API",
+      "detail": "[ERROR] token=abcd1234efgh scope=read:roster — check SSO client scope"
+    },
+    {
+      "ts": "2025-10-15 06:12:02Z",
+      "pipeline": "canvas_grades_ingest",
+      "run_id": "cvg_1015_0612",
+      "task": "transform",
+      "severity": "WARN",
+      "message": "Schema drift detected",
+      "detail": "[WARN] column=late_policy present in source; mapped to null"
+    },
+    {
+      "ts": "2025-10-15 06:20:39Z",
+      "pipeline": "canvas_grades_ingest",
+      "run_id": "cvg_1015_0612",
+      "task": "validate",
+      "severity": "ERROR",
+      "message": "Non-numeric score encountered",
+      "detail": "[ERROR] user_id=4431 course=ENG101 score=N/A"
+    },
+    {
+      "ts": "2025-10-10 02:00:55Z",
+      "pipeline": "map_assessment_ingest",
+      "run_id": "map_1010_0200",
+      "task": "extract",
+      "severity": "ERROR",
+      "message": "SFTP window closed",
+      "detail": "[ERROR] host=sftp.vendor.com username=edx_svc password=Super$ecret!"
+    },
+    {
+      "ts": "2025-10-14 06:55:10Z",
+      "pipeline": "canonical_roster_build",
+      "run_id": "crb_1014_0655",
+      "task": "publish",
+      "severity": "INFO",
+      "message": "Canonical roster published",
+      "detail": "[OK] rows=23123 table=canonical.oneroster.roster"
+    },
+    {
+      "ts": "2025-10-15 07:05:11Z",
+      "pipeline": "canonical_roster_build",
+      "run_id": "crb_1015_0655",
+      "task": "transform",
+      "severity": "DEBUG",
+      "message": "Join stats",
+      "detail": "left=21,344 right=21,340 matched=21,340 null_keys=4"
+    },
+    {
+      "ts": "2025-10-15 07:07:01Z",
+      "pipeline": "canonical_roster_build",
+      "run_id": "crb_1015_0655",
+      "task": "validate",
+      "severity": "INFO",
+      "message": "DQ rule hits",
+      "detail": "[DQ] dq_enrollments_fk_user violations=5"
+    },
+    {
+      "ts": "2025-10-14 05:20:45Z",
+      "pipeline": "ps_roster_ingest",
+      "run_id": "psr_1014_0500",
+      "task": "load",
+      "severity": "INFO",
+      "message": "Loaded into staging",
+      "detail": "table=staging.powerschool.users_raw rows=4821"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+/* Pipeline Runs — production-ready styles */
+
+/* Toolbar */
+.toolbar { gap:.5rem; }
+.toolbar .form-select, .toolbar .form-control { min-width: 160px; }
+
+/* Table polish */
+.table td, .table th { white-space: nowrap; }
+.table thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Pager */
+.pager { display:flex; align-items:center; gap:.4rem; }
+.pager .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+/* Log snippet */
+.log-box{
+  background:#0b0f16; color:#d7e1f2;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  padding:1rem; border-radius:.5rem; white-space:pre-wrap; max-height:360px; overflow:auto;
+}
+
+/* Accessibility */
+.visually-hidden-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }

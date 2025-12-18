@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "title": "Mapping Versions",
+    "version": "1.0.0",
+    "generated": "2025-10-18T11:30:00Z",
+    "tenant": "District-001",
+    "notes": "Demo data for versioned mappings with approvals, diffs, and status."
+  },
+
+  "filters": {
+    "standards": ["Ed-Fi", "OneRoster", "CEDS"],
+    "statuses": ["draft", "approved", "deprecated"],
+    "stewards": ["Casey Steward", "Registrar Team", "Program Office", "Curriculum Team", "District Data"]
+  },
+
+  "mappings": [
+    {
+      "id": "ps.students.student_number->oneroster.users.userId",
+      "source": "ps.students.student_number",
+      "target": "oneroster.users.userId",
+      "standard": "OneRoster",
+      "versions": [
+        {
+          "v": "1.0.0",
+          "status": "draft",
+          "steward": "Data Engineer",
+          "changed_at": "2025-09-20 08:00Z",
+          "change_note": "Initial draft mapping.",
+          "fields": {
+            "version": "1.2",
+            "sample_transform": "trim(value)",
+            "policy_tags": ["PII_DIRECTORY"]
+          },
+          "approvals": []
+        },
+        {
+          "v": "1.1.0",
+          "status": "approved",
+          "steward": "Casey Steward",
+          "changed_at": "2025-10-12 10:40Z",
+          "change_note": "Aligned to OneRoster 1.2 userId semantics; enforce toString.",
+          "fields": {
+            "version": "1.2",
+            "sample_transform": "toString(trim(value))",
+            "policy_tags": ["PII_DIRECTORY"]
+          },
+          "approvals": [
+            { "actor": "Casey Steward", "action": "approve", "ts": "2025-10-12 10:40Z", "note": "Meets OR 1.2 guidance." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "ps.attendance.events->edfi.AttendanceEvent",
+      "source": "ps.attendance.events",
+      "target": "edfi.AttendanceEvent",
+      "standard": "Ed-Fi",
+      "versions": [
+        {
+          "v": "1.0.0",
+          "status": "approved",
+          "steward": "Casey Steward",
+          "changed_at": "2025-10-08 14:22Z",
+          "change_note": "Event subtype canonicalization.",
+          "fields": {
+            "version": "3.3",
+            "sample_transform": "map(eventType, {A:'Absence',T:'Tardy'})",
+            "policy_tags": ["DEIDENTIFIED"]
+          },
+          "approvals": [
+            { "actor": "Casey Steward", "action": "approve", "ts": "2025-10-08 14:22Z", "note": "OK to publish." }
+          ]
+        },
+        {
+          "v": "1.1.0",
+          "status": "approved",
+          "steward": "Curriculum Team",
+          "changed_at": "2025-10-16 09:10Z",
+          "change_note": "Added Late code mapping.",
+          "fields": {
+            "version": "3.3",
+            "sample_transform": "map(eventType, {A:'Absence',T:'Tardy',L:'Late'})",
+            "policy_tags": ["DEIDENTIFIED"]
+          },
+          "approvals": [
+            { "actor": "Curriculum Team", "action": "approve", "ts": "2025-10-16 09:10Z", "note": "Late added." }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "banner.person.pidm->ceds.Person.PersonID",
+      "source": "banner.person.pidm",
+      "target": "ceds.Person.PersonID",
+      "standard": "CEDS",
+      "versions": [
+        {
+          "v": "0.9.0",
+          "status": "draft",
+          "steward": "Registrar Team",
+          "changed_at": "2025-10-06 09:10Z",
+          "change_note": "Initial PIDM to PersonID draft.",
+          "fields": {
+            "version": "1.0",
+            "sample_transform": "toString(value)",
+            "policy_tags": ["PII_STRICT"]
+          },
+          "approvals": []
+        },
+        {
+          "v": "1.0.0",
+          "status": "approved",
+          "steward": "Registrar Team",
+          "changed_at": "2025-10-17 13:45Z",
+          "change_note": "Ready for publish after QA.",
+          "fields": {
+            "version": "1.0",
+            "sample_transform": "toString(value)",
+            "policy_tags": ["PII_STRICT"]
+          },
+          "approvals": [
+            { "actor": "Registrar Team", "action": "approve", "ts": "2025-10-17 13:45Z", "note": "Meets data dictionary." }
+          ]
+        }
+      ]
+    }
+  ]
+}

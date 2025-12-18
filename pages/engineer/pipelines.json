@@ -1,0 +1,18 @@
+{
+  "meta": { "title": "Pipelines", "version": "2.0.0" },
+  "pipelines": [
+    { "name": "ps_roster_ingest",        "source": "PowerSchool",     "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 05:00Z" },
+    { "name": "canvas_grades_ingest",    "source": "Canvas",          "zone": "staging",   "owner": "Ivy Engineer", "status": "Warning", "last_run": "2025-10-15 06:12Z" },
+    { "name": "map_assessment_ingest",   "source": "NWEA MAP",        "zone": "staging",   "owner": "Ivy Engineer", "status": "Failed",  "last_run": "2025-10-10 02:00Z" },
+    { "name": "canonical_roster_build",  "source": "—",               "zone": "canonical", "owner": "Ivy Engineer", "status": "Running", "last_run": "2025-10-15 06:55Z" },
+
+    { "name": "ic_attendance_ingest",    "source": "Infinite Campus", "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 03:45Z" },
+    { "name": "aeries_enrollments",      "source": "Aeries",          "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 02:15Z" },
+    { "name": "d2l_submissions_ingest",  "source": "D2L Brightspace", "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 10:00Z" },
+    { "name": "blackboard_grades_sync",  "source": "Blackboard",      "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 06:00Z" },
+    { "name": "renaissance_scores",      "source": "Renaissance",     "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-13 03:25Z" },
+    { "name": "iready_scores",           "source": "i-Ready",         "zone": "staging",   "owner": "Ivy Engineer", "status": "Warning", "last_run": "2025-10-12 04:05Z" },
+    { "name": "workday_hcm_people",      "source": "Workday HCM",     "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-15 04:10Z" },
+    { "name": "peoplesoft_fin_gl",       "source": "PeopleSoft",      "zone": "staging",   "owner": "Ivy Engineer", "status": "Healthy", "last_run": "2025-10-14 23:55Z" }
+  ]
+}

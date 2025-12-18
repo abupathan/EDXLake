@@ -1,0 +1,39 @@
+/* Validation & Data Quality — production-ready styles */
+
+/* KPIs */
+.kpis { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:.75rem; margin-bottom:.75rem; }
+@media (max-width: 1200px){ .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.kpi { border:1px solid var(--bs-border-color); border-radius:.75rem; background:#fff; padding:.9rem; }
+.kpi .label { font-size:.78rem; color:var(--bs-secondary-color); }
+.kpi .value { font-size:1.25rem; font-weight:700; margin-top:.25rem; }
+.kpi .foot  { font-size:.75rem; color:var(--bs-secondary-color); margin-top:.25rem; }
+
+/* Toolbar */
+.toolbar { gap:.5rem; }
+.toolbar .form-select, .toolbar .form-control { min-width:160px; }
+
+/* Tables */
+.table td, .table th { white-space: nowrap; }
+
+/* Code cells */
+code, pre { white-space: pre-wrap; word-break: break-word; }
+
+/* Pagers */
+.pager { display:flex; align-items:center; gap:.4rem; }
+.pager .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+/* Severity badges */
+.badge-critical { background:#dc3545; }
+.badge-high     { background:#fd7e14; }
+.badge-medium   { background:#ffc107; color:#000; }
+.badge-low      { background:#0dcaf0; color:#000; }
+
+/* Log-like sample area */
+.sample-box{
+  background:#0b0f16; color:#d7e1f2;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  padding:1rem; border-radius:.5rem; white-space:pre-wrap; max-height:420px; overflow:auto;
+}
+
+/* Accessibility */
+.visually-hidden-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }

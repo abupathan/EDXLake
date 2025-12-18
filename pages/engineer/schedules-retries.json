@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "title": "Schedules & Retries",
+    "version": "2.2.0",
+    "generated": "2025-10-18T09:10:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset covering schedules, maintenance windows, blackout dates, SLAs, and retry policies."
+  },
+
+  "summary": {
+    "pipelines_total": 5,
+    "enabled": 4,
+    "disabled": 1,
+    "tz_used": ["UTC", "America/New_York"],
+    "policies_total": 3
+  },
+
+  "schedules": [
+    {
+      "pipeline": "ps_roster_ingest",
+      "source": "PowerSchool",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "cron": "0 5 * * *",
+      "tz": "UTC",
+      "enabled": true,
+      "sla_minutes": 15,
+      "retry_policy": "default_exponential",
+      "window": { "start": "04:30", "end": "06:00" },
+      "blackouts": ["2025-11-27", "2025-12-25"],
+      "last_run": "2025-10-15 05:00Z",
+      "next_run": "2025-10-16 05:00Z"
+    },
+    {
+      "pipeline": "canvas_grades_ingest",
+      "source": "Canvas",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "cron": "12 6 * * *",
+      "tz": "UTC",
+      "enabled": true,
+      "sla_minutes": 20,
+      "retry_policy": "default_exponential",
+      "window": { "start": "06:00", "end": "07:00" },
+      "blackouts": [],
+      "last_run": "2025-10-15 06:12Z",
+      "next_run": "2025-10-16 06:12Z"
+    },
+    {
+      "pipeline": "map_assessment_ingest",
+      "source": "NWEA MAP",
+      "zone": "staging",
+      "owner": "Ivy Engineer",
+      "cron": "0 2 * * 1",
+      "tz": "UTC",
+      "enabled": false,
+      "sla_minutes": 30,
+      "retry_policy": "fixed_short",
+      "window": { "start": "01:00", "end": "03:00" },
+      "blackouts": [],
+      "last_run": "2025-10-10 02:00Z",
+      "next_run": "2025-10-20 02:00Z"
+    },
+    {
+      "pipeline": "canonical_roster_build",
+      "source": "—",
+      "zone": "canonical",
+      "owner": "Ivy Engineer",
+      "cron": "55 6 * * *",
+      "tz": "UTC",
+      "enabled": true,
+      "sla_minutes": 15,
+      "retry_policy": "default_exponential",
+      "window": { "start": "06:45", "end": "07:15" },
+      "blackouts": [],
+      "last_run": "2025-10-15 06:55Z",
+      "next_run": "2025-10-16 06:55Z"
+    },
+    {
+      "pipeline": "state_attendance_ingest",
+      "source": "State Feed",
+      "zone": "staging",
+      "owner": "Jordan Engineer",
+      "cron": "30 7 * * *",
+      "tz": "America/New_York",
+      "enabled": true,
+      "sla_minutes": 30,
+      "retry_policy": "resilient_exponential_jitter",
+      "window": { "start": "07:00", "end": "08:00" },
+      "blackouts": ["2025-10-20"],
+      "last_run": "2025-10-15 07:30-0400",
+      "next_run": "2025-10-16 07:30-0400"
+    }
+  ],
+
+  "retry_policies": [
+    {
+      "name": "default_exponential",
+      "strategy": "exponential",
+      "max_attempts": 5,
+      "base_backoff": "1m",
+      "max_backoff": "16m",
+      "jitter": false,
+      "retry_on": ["network_error", "rate_limit", "transient_source_error"],
+      "non_retryable": ["auth_failure", "schema_mismatch"]
+    },
+    {
+      "name": "fixed_short",
+      "strategy": "fixed",
+      "max_attempts": 3,
+      "base_backoff": "2m",
+      "jitter": false,
+      "retry_on": ["network_error", "rate_limit"],
+      "non_retryable": ["auth_failure", "schema_mismatch"]
+    },
+    {
+      "name": "resilient_exponential_jitter",
+      "strategy": "exponential",
+      "max_attempts": 6,
+      "base_backoff": "1m",
+      "max_backoff": "20m",
+      "jitter": true,
+      "retry_on": ["network_error", "rate_limit", "transient_source_error", "sftp_window"],
+      "non_retryable": ["auth_failure", "checksum_mismatch"]
+    }
+  ]
+}

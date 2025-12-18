@@ -1,0 +1,178 @@
+{
+  "meta": {
+    "title": "Validation & Data Quality",
+    "version": "1.0.0",
+    "generated": "2025-10-18T12:00:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset for DQ rules, thresholds, sample checks, and last 24h hits."
+  },
+
+  "filters": {
+    "domains": ["Roster", "Attendance", "Grades", "Assessments", "Courses", "Enrollments"],
+    "severities": ["critical", "high", "medium", "low"],
+    "statuses": ["draft", "approved", "deprecated"],
+    "standards": ["Ed-Fi", "OneRoster", "CEDS"]
+  },
+
+  "summary": {
+    "rules_total": 9,
+    "approved": 5,
+    "draft": 3,
+    "deprecated": 1,
+    "last24h_hits": 37
+  },
+
+  "rules": [
+    {
+      "id": "dq_ps_users_last_name_not_null",
+      "name": "Users: last_name not null",
+      "domain": "Roster",
+      "dataset": "staging.powerschool.users_raw",
+      "standard": "OneRoster",
+      "severity": "high",
+      "expression": "last_name IS NOT NULL",
+      "threshold": { "type": "violation_rate", "op": "<=", "value": 0.01 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Ivy Engineer",
+      "steward": "Registrar Team",
+      "updated": "2025-10-14 05:20Z",
+      "last_run": { "ts": "2025-10-15 05:21Z", "scanned": 4821, "violations": 3 }
+    },
+    {
+      "id": "dq_canvas_grades_numeric",
+      "name": "Grades: score must be numeric",
+      "domain": "Grades",
+      "dataset": "staging.canvas.grades_raw",
+      "standard": "Ed-Fi",
+      "severity": "critical",
+      "expression": "TRY_CAST(score AS DECIMAL) IS NOT NULL",
+      "threshold": { "type": "absolute", "op": "<=", "value": 0 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Ivy Engineer",
+      "steward": "Assessment Office",
+      "updated": "2025-10-15 06:19Z",
+      "last_run": { "ts": "2025-10-15 06:20Z", "scanned": 12842, "violations": 1 }
+    },
+    {
+      "id": "dq_enrollments_fk_user",
+      "name": "Enrollments: user_id must exist",
+      "domain": "Roster",
+      "dataset": "canonical.oneroster.enrollments",
+      "standard": "OneRoster",
+      "severity": "critical",
+      "expression": "NOT EXISTS (SELECT 1 FROM canonical.oneroster.users u WHERE u.userId = enrollments.user_id)",
+      "threshold": { "type": "violation_rate", "op": "==", "value": 0 },
+      "window": "last_24h",
+      "status": "draft",
+      "owner": "Ivy Engineer",
+      "steward": "Casey Steward",
+      "updated": "2025-10-15 07:00Z",
+      "last_run": { "ts": "2025-10-15 07:05Z", "scanned": 21340, "violations": 5 }
+    },
+    {
+      "id": "dq_attendance_non_negative",
+      "name": "Attendance: absence_count non-negative",
+      "domain": "Attendance",
+      "dataset": "canonical.attendance.daily",
+      "standard": "Ed-Fi",
+      "severity": "high",
+      "expression": "absence_count >= 0",
+      "threshold": { "type": "absolute", "op": "<=", "value": 0 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Jordan Engineer",
+      "steward": "Casey Steward",
+      "updated": "2025-10-14 07:21Z",
+      "last_run": { "ts": "2025-10-15 07:22Z", "scanned": 14115, "violations": 0 }
+    },
+    {
+      "id": "dq_map_percentile_present",
+      "name": "MAP: percentile_rank present",
+      "domain": "Assessments",
+      "dataset": "canonical.assessments.map",
+      "standard": "CEDS",
+      "severity": "medium",
+      "expression": "percentile_rank IS NOT NULL",
+      "threshold": { "type": "violation_rate", "op": "<=", "value": 0.02 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Jordan Engineer",
+      "steward": "Assessment Office",
+      "updated": "2025-10-12 04:15Z",
+      "last_run": { "ts": "2025-10-12 04:20Z", "scanned": 6421, "violations": 9 }
+    },
+    {
+      "id": "dq_courses_code_format",
+      "name": "Courses: CourseCode 5 digits",
+      "domain": "Courses",
+      "dataset": "edfi.Course",
+      "standard": "Ed-Fi",
+      "severity": "low",
+      "expression": "REGEXP_LIKE(CourseCode, '^[0-9]{5}$')",
+      "threshold": { "type": "violation_rate", "op": "<=", "value": 0.05 },
+      "window": "last_7d",
+      "status": "draft",
+      "owner": "Curriculum Team",
+      "steward": "Curriculum Team",
+      "updated": "2025-10-09 11:10Z",
+      "last_run": { "ts": "2025-10-15 05:59Z", "scanned": 930, "violations": 12 }
+    },
+    {
+      "id": "dq_contacts_email_domain",
+      "name": "Contacts: email domain allowlist",
+      "domain": "Roster",
+      "dataset": "oneroster.users",
+      "standard": "OneRoster",
+      "severity": "medium",
+      "expression": "LOWER(SPLIT_PART(email,'@',2)) IN ('district.edu','hs-east.edu')",
+      "threshold": { "type": "absolute", "op": "<=", "value": 10 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Registrar Team",
+      "steward": "Registrar Team",
+      "updated": "2025-10-16 06:35Z",
+      "last_run": { "ts": "2025-10-16 06:40Z", "scanned": 4800, "violations": 7 }
+    },
+    {
+      "id": "dq_sections_id_format",
+      "name": "Sections: id format",
+      "domain": "Enrollments",
+      "dataset": "clever.sections",
+      "standard": "OneRoster",
+      "severity": "low",
+      "expression": "REGEXP_LIKE(id, '^[A-Z]{2,5}-[0-9]{3,5}$')",
+      "threshold": { "type": "violation_rate", "op": "<=", "value": 0.10 },
+      "window": "last_7d",
+      "status": "deprecated",
+      "owner": "District Data",
+      "steward": "District Data",
+      "updated": "2025-10-05 16:40Z",
+      "last_run": { "ts": "2025-10-14 03:12Z", "scanned": 3100, "violations": 160 }
+    },
+    {
+      "id": "dq_roster_student_id_not_null",
+      "name": "Roster: student_id not null",
+      "domain": "Roster",
+      "dataset": "canonical.oneroster.enrollments",
+      "standard": "OneRoster",
+      "severity": "high",
+      "expression": "student_id IS NOT NULL",
+      "threshold": { "type": "absolute", "op": "<=", "value": 0 },
+      "window": "last_24h",
+      "status": "approved",
+      "owner": "Ivy Engineer",
+      "steward": "Casey Steward",
+      "updated": "2025-10-11 10:10Z",
+      "last_run": { "ts": "2025-10-15 05:30Z", "scanned": 21340, "violations": 0 }
+    }
+  ],
+
+  "hits_last24h": [
+    { "ts": "2025-10-15 02:05Z", "rule_id": "dq_ps_users_last_name_not_null", "dataset": "staging.powerschool.users_raw", "violations": 1, "sample": { "student_number": "100343", "last_name": null } },
+    { "ts": "2025-10-15 06:20Z", "rule_id": "dq_canvas_grades_numeric", "dataset": "staging.canvas.grades_raw", "violations": 1, "sample": { "course_id": "ENG101", "user_id": "4431", "score": "N/A" } },
+    { "ts": "2025-10-15 07:05Z", "rule_id": "dq_enrollments_fk_user", "dataset": "canonical.oneroster.enrollments", "violations": 5, "sample": { "org_id": "HS-EAST", "class_id": "MATH9", "user_id": "999999" } },
+    { "ts": "2025-10-16 06:40Z", "rule_id": "dq_contacts_email_domain", "dataset": "oneroster.users", "violations": 7, "sample": { "email": "ext@example.com" } }
+  ]
+}

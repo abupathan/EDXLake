@@ -1,0 +1,29 @@
+/* Monitoring — production-ready Bootstrap-friendly styles */
+
+/* KPI grid */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: .75rem; margin-bottom: .75rem; }
+@media (max-width: 1200px) { .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+.kpi { border: 1px solid var(--bs-border-color); border-radius: .75rem; background: #fff; padding: .9rem; }
+.kpi .label { font-size: .78rem; color: var(--bs-secondary-color); }
+.kpi .value { font-size: 1.25rem; font-weight: 700; margin-top: .25rem; }
+.kpi .foot  { font-size: .75rem; color: var(--bs-secondary-color); margin-top: .25rem; }
+
+/* Policy Simulator banner */
+.sim-banner { border: 1px dashed var(--bs-border-color); border-radius: .75rem; background: #fcfcfd; padding: .9rem; }
+.sim-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: .5rem; }
+@media (max-width: 1200px) { .sim-grid { grid-template-columns: 1fr 1fr; } }
+.sim-result { border: 1px solid var(--bs-border-color); border-radius: .5rem; background: #fff; padding: .75rem; min-height: 64px; }
+
+/* Filters toolbar */
+.toolbar { gap: .5rem; }
+.toolbar .form-select, .toolbar .form-control { min-width: 160px; }
+
+/* Tables */
+.table td, .table th { white-space: nowrap; }
+.badge-mini { border:1px solid var(--bs-border-color); background:#fff; } /* compat with prior styling */
+
+/* Cards */
+.card-footer .small { color: var(--bs-secondary-color); }
+
+/* Accessibility helpers */
+.visually-hidden-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }

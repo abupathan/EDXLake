@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "New Source Wizard",
+    "version": "2.0.0",
+    "generated": "2025-10-18T10:30:00Z",
+    "tenant": "District-001",
+    "notes": "Demo dataset for adding tenant-scoped sources with least-privilege secrets, SSO, scopes, and schedules."
+  },
+
+  "connectors": [
+    { "system": "PowerSchool",       "category": "K-12 SIS", "modes": "CSV/SFTP; API/REST; OneRoster", "auth": "OAuth2 / SFTP" },
+    { "system": "Canvas",            "category": "LMS",       "modes": "CSV/SFTP; API/REST; OneRoster", "auth": "OAuth2 / SFTP" },
+    { "system": "Ellucian Banner",   "category": "HE SIS",    "modes": "CSV/SFTP; API/REST",            "auth": "OAuth2" },
+    { "system": "NWEA MAP",          "category": "Assessment","modes": "CSV/SFTP; API/REST",            "auth": "OAuth2 / SFTP" },
+    { "system": "Clever",            "category": "Rostering", "modes": "API/REST; OneRoster",           "auth": "OAuth2" }
+  ],
+
+  "domains":   ["Roster", "Attendance", "Grades", "Assessments", "Courses", "Enrollments"],
+  "cadences":  ["Hourly", "Daily", "Weekly", "Term"],
+
+  "defaults": {
+    "tz": "UTC",
+    "cadence": "Daily",
+    "window": { "start": "02:00", "end": "04:00" },
+    "retry_policy": "default_exponential"
+  },
+
+  "retry_policies": [
+    { "name": "default_exponential", "strategy": "exponential", "max_attempts": 5, "base_backoff": "1m", "max_backoff": "16m", "jitter": false },
+    { "name": "fixed_short",         "strategy": "fixed",       "max_attempts": 3, "base_backoff": "2m", "max_backoff": "2m",  "jitter": false }
+  ],
+
+  "auth_schemas": {
+    "oauth2": {
+      "fields": [
+        { "id": "client_id",     "label": "Client ID",           "type": "text",     "required": true },
+        { "id": "client_secret", "label": "Client Secret",       "type": "password", "required": true },
+        { "id": "token_url",     "label": "Token URL",           "type": "url",      "required": true },
+        { "id": "auth_url",      "label": "Authorize URL",       "type": "url",      "required": false },
+        { "id": "scope",         "label": "Scope",               "type": "text",     "required": false }
+      ]
+    },
+    "sftp": {
+      "fields": [
+        { "id": "host",     "label": "SFTP Host",     "type": "text",     "required": true },
+        { "id": "port",     "label": "Port",          "type": "number",   "required": false, "default": 22 },
+        { "id": "username", "label": "Username",      "type": "text",     "required": true },
+        { "id": "password", "label": "Password",      "type": "password", "required": false },
+        { "id": "key",      "label": "SSH Private Key","type": "textarea", "required": false }
+      ]
+    }
+  },
+
+  "policy": {
+    "classification_hints": {
+      "Roster": ["DEIDENTIFIED", "PII_DIRECTORY"],
+      "Grades": ["PII_STRICT"],
+      "Assessments": ["DEIDENTIFIED"],
+      "Attendance": ["DEIDENTIFIED"]
+    },
+    "abac_fields": ["org", "campus", "program", "term"]
+  },
+
+  "simulated_test": {
+    "success": true,
+    "latency_ms": 420,
+    "scopes_granted": ["read:roster", "read:courses"],
+    "notes": "Mock validation for demo"
+  }
+}

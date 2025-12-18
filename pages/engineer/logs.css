@@ -1,0 +1,37 @@
+/* Logs & Diagnostics — production-ready styles */
+
+/* Toolbar */
+.toolbar { gap: .5rem; }
+.toolbar .form-select, .toolbar .form-control { min-width: 160px; }
+
+/* Table */
+.table td, .table th { white-space: nowrap; }
+.table .wrap { white-space: normal; }
+
+/* Badges */
+.badge-debug  { background:#6c757d; }
+.badge-info   { background:#0dcaf0; color:#000; }
+.badge-warn   { background:#ffc107; color:#000; }
+.badge-error  { background:#dc3545; }
+
+/* Log snippet */
+.log-snippet {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: .9rem;
+  white-space: pre-wrap;
+  max-width: 640px;
+}
+
+/* Modal full log */
+.log-box{
+  background:#0b0f16; color:#d7e1f2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  padding:1rem; border-radius:.5rem; white-space:pre-wrap; max-height:540px; overflow:auto;
+}
+
+/* Pager */
+.pager { display:flex; align-items:center; gap:.4rem; }
+.pager .btn[disabled]{ opacity:.5; cursor:not-allowed; }
+
+/* Accessibility */
+.visually-hidden-focusable:focus { position: static; width: auto; height: auto; overflow: visible; clip: auto; }
