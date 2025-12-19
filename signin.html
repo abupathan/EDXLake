@@ -7,10 +7,6 @@
   <meta name="description" content="Sign in to EduData Exchange with SSO or your account." />
   <meta name="color-scheme" content="light dark" />
 
-  <!-- 
-    ✅ Local Dev CSP (Live Server Safe)
-    For Production, move CSP to HTTP headers (no unsafe-inline, add frame-ancestors 'none').
-  -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
@@ -31,13 +27,15 @@
         integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD"
         crossorigin="anonymous">
 
-  <!-- App CSS -->
-  <link rel="stylesheet" href="./assets/css/edx-global.css">
-  <link rel="stylesheet" href="./assets/css/auth.css">
+  <!-- App CSS (NO leading slash; works under /EDXLake/) -->
+  <link rel="stylesheet" href="assets/css/edx-global.css">
+  <link rel="stylesheet" href="assets/css/auth.css">
 </head>
+
 <body class="auth-shell">
   <header class="auth-header" role="banner" aria-label="EDX">
-    <a class="navbar-brand d-inline-flex align-items-center gap-2 text-decoration-none" href="/index.html">
+    <!-- Use relative link (NO leading slash) so it stays under /EDXLake/ -->
+    <a class="navbar-brand d-inline-flex align-items-center gap-2 text-decoration-none" href="index.html">
       <svg width="28" height="28" viewBox="0 0 24 24" role="img" aria-hidden="true">
         <path d="M3 6.5L12 2l9 4.5v7c0 3.866-5.373 7-9 7s-9-3.134-9-7v-7z" fill="currentColor"/>
       </svg>
@@ -54,7 +52,7 @@
           <p class="text-body-secondary mb-0">Sign in with SSO or with your account.</p>
         </div>
 
-        <!-- SSO (instant demo sign-in using selected role) -->
+        <!-- SSO -->
         <div class="mb-3">
           <button class="btn btn-dark w-100 d-flex align-items-center justify-content-center gap-2"
                   type="button" data-auth-provider="institution">
@@ -78,13 +76,14 @@
 
         <div class="auth-sep" role="separator" aria-label="or">or</div>
 
-        <!-- Email + Password + Role -->
+        <!-- IMPORTANT: remove ../../ so targets stay inside repo -->
         <form id="signinForm"
-              data-role-home-admin="../pages/admin/landing.html"
-              data-role-home-engineer="../pages/engineer/landing.html"
-              data-role-home-steward="../pages/steward/landing.html"
-              data-role-home-consumer="../pages/consumer/landing.html"
+              data-role-home-admin="pages/admin/landing.html"
+              data-role-home-engineer="pages/engineer/landing.html"
+              data-role-home-steward="pages/steward/landing.html"
+              data-role-home-consumer="pages/consumer/landing.html"
               novalidate>
+
           <div class="mb-3">
             <label for="siEmail" class="form-label">Email</label>
             <input id="siEmail" name="email" type="email" class="form-control"
@@ -129,7 +128,7 @@
               <input class="form-check-input" type="checkbox" id="siRemember">
               <label class="form-check-label" for="siRemember">Remember me</label>
             </div>
-            <a href="/index.html" class="small link-secondary">Cancel</a>
+            <a href="index.html" class="small link-secondary">Cancel</a>
           </div>
 
           <button type="submit" class="btn btn-primary w-100">Sign in</button>
@@ -153,14 +152,16 @@
           </div>
         </details>
       </div>
+
       <div class="card-footer text-center small text-body-secondary">© 2025 EduData Exchange</div>
     </div>
   </main>
 
+  <!-- Footer links must be relative (NO leading slash) for /EDXLake/ -->
   <footer class="auth-footer" role="contentinfo">
-    <a class="link-secondary text-decoration-none" href="/legal/privacy.html">Privacy</a>
+    <a class="link-secondary text-decoration-none" href="legal/privacy.html">Privacy</a>
     <span class="mx-2">•</span>
-    <a class="link-secondary text-decoration-none" href="/legal/data-sharing.html">Data Sharing</a>
+    <a class="link-secondary text-decoration-none" href="legal/data-sharing.html">Data Sharing</a>
   </footer>
 
   <!-- Vendor JS -->
@@ -168,10 +169,8 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
 
-  <!-- App JS -->
-  <script src="./assets/js/index.js "></script>
-  <script src="./assets/js/auth.js"></script>
+  <!-- App JS (removed trailing space in src) -->
+  <script src="assets/js/index.js"></script>
+  <script src="assets/js/auth.js"></script>
 </body>
 </html>
-
-
