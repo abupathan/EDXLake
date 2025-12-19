@@ -1,6 +1,12 @@
 /* assets/js/auth.js
- * Robust demo auth + GitHub Pages (project site) safe redirects.
- * Fix: do NOT resolve redirects from location.origin; resolve within repo base (e.g., /EDXLake).
+ * Base-aware redirects for:
+ * - Local subfolder dev:   http://127.0.0.1:5500/EDX/...
+ * - GitHub project pages:  https://abupathan.github.io/EDXLake/...
+ * - Root deploy:           https://example.com/...
+ *
+ * Key fix:
+ * - Determine app base from this script's own URL (…/<base>/assets/js/auth.js),
+ *   so redirects stay under <base>.
  */
 
 (function () {
@@ -16,7 +22,7 @@
     consumer: { email: "consumer@edx.demo", password: "Consumer#2025!" }
   };
 
-  // Use root-style paths; we will safely prefix base (repo name) when needed.
+  // App-root style (we will prefix <base> automatically when needed)
   const ROLE_HOME_FALLBACK = {
     admin:    "/pages/admin/landing.html",
     engineer: "/pages/engineer/landing.html",
@@ -30,63 +36,91 @@
   }
 
   function isValidEmail(v) { return /^\S+@\S+\.\S+$/.test(v); }
-
   function stripTrailingSlash(s) { return String(s || "").replace(/\/+$/, ""); }
-
   function isAbsoluteUrl(s) { return /^(https?:)?\/\//i.test(String(s || "").trim()); }
 
   /**
-   * Compute the base path for:
-   * - GitHub Project Pages: https://<user>.github.io/<repo>/...
-   * - User/Org Pages:       https://<user>.github.io/...
-   * - Custom domain:        https://example.com/...
+   * Deterministically infer base from script src:
+   *   https://host/<base>/assets/js/auth.js  -> base "/<base>"
+   *   https://host/assets/js/auth.js         -> base ""
    */
-  function computeBasePath() {
+  function baseFromThisScript() {
+    const candidates = [];
+
+    // 1) currentScript is best when available
+    if (document.currentScript && document.currentScript.src) candidates.push(document.currentScript.src);
+
+    // 2) fallback: search script tags
+    document.querySelectorAll("script[src]").forEach((s) => candidates.push(s.src));
+
+    for (const src of candidates) {
+      try {
+        const u = new URL(src, location.href);
+        const p = u.pathname || "";
+        // Look for "/assets/" anchor in the script path
+        const idx = p.indexOf("/assets/");
+        if (idx > -1) return stripTrailingSlash(p.slice(0, idx)); // "/EDX" or "/EDXLake" or ""
+      } catch {
+        // ignore
+      }
+    }
+    return "";
+  }
+
+  /**
+   * Fallback base detection from current URL path (kept as backup).
+   * Your previous computeBasePath relied on this and failed on /EDX/signin.html :contentReference[oaicite:2]{index=2}
+   */
+  function baseFromLocationPath() {
     const p = String(location.pathname || "/");
 
-    // Prefer known folder anchors if present
     const anchors = ["/pages/", "/support/", "/legal/", "/assets/", "/partials/", "/auth/"];
     for (const a of anchors) {
       const idx = p.indexOf(a);
       if (idx > -1) return stripTrailingSlash(p.slice(0, idx));
     }
 
-    // GitHub Pages heuristic: if first segment is a repo name (no dot), treat it as base.
-    // Example: /EDXLake/signin.html -> base = /EDXLake
+    // GitHub pages heuristic (backup)
     if (String(location.hostname || "").toLowerCase().endsWith("github.io")) {
       const parts = p.split("/").filter(Boolean);
-      if (parts.length >= 2) { // "/<repo>/<file>"
+      if (parts.length >= 2) {
         const first = parts[0];
         if (first && !first.includes(".")) return "/" + first;
       }
     }
 
-    // Otherwise, assume site is served at root
     return "";
   }
 
+  function computeBasePath() {
+    // Prefer script-derived base (works for /EDX/ local + /EDXLake/ GitHub)
+    const byScript = baseFromThisScript();
+    if (byScript !== "") return byScript;
+
+    // If script is at root /assets/... then base is root ""
+    // (still safe to return "")
+    return baseFromLocationPath();
+  }
+
   /**
-   * Resolve a path/url into a full absolute URL, safely within basePath.
-   * - External URLs pass through unchanged.
-   * - "/x" becomes "<origin><base>/x"
+   * Resolve a path/url into an absolute URL under the app base.
+   * - External URLs pass through.
+   * - "/pages/x" becomes "<origin><base>/pages/x"
    * - "pages/x" becomes "<origin><base>/pages/x"
-   * - "../pages/x" will NOT escape "<base>" (we clamp to base).
+   * - "../pages/x" is clamped and cannot escape <base>.
    */
   function resolveAppUrl(input) {
     let raw = String(input || "").trim();
     if (!raw) raw = "/";
 
-    if (isAbsoluteUrl(raw)) {
-      // Keep same-origin protocol-relative too (//example.com)
-      return new URL(raw, location.href).toString();
-    }
+    if (isAbsoluteUrl(raw)) return new URL(raw, location.href).toString();
 
     const origin = location.origin;
-    const base = computeBasePath();      // "" or "/EDXLake"
+    const base = computeBasePath(); // "", "/EDX", "/EDXLake"
     const baseSegs = base.split("/").filter(Boolean);
     const baseMin = baseSegs.length;
 
-    // Split off query/hash so we normalize only the path
+    // Split query/hash (keep them)
     let pathPart = raw;
     let suffix = "";
     const qh = raw.search(/[?#]/);
@@ -95,17 +129,16 @@
       suffix = raw.slice(qh);
     }
 
-    // If it starts with "/", treat as root-relative (to the site), then prefix base.
-    // If it does not start with "/", treat as relative-within-base.
+    // Root-ish paths: "/x" should be treated as app-root-relative, not domain-root-relative
+    // So we remove leading slash and rebuild under base.
     const rel = pathPart.startsWith("/") ? pathPart.slice(1) : pathPart;
-
     const segs = rel.split("/");
 
-    const stack = baseSegs.slice(); // start inside base
+    const stack = baseSegs.slice();
     for (const s of segs) {
       if (!s || s === ".") continue;
       if (s === "..") {
-        if (stack.length > baseMin) stack.pop(); // clamp: don't escape base
+        if (stack.length > baseMin) stack.pop();
         continue;
       }
       stack.push(s);
@@ -222,7 +255,6 @@
       localStorage.clear();
       if (theme) localStorage.setItem("edx:theme", theme);
 
-      // Prefer /signin.html; if you keep sign-in under /auth/, change this to "/auth/signin.html"
       doRedirect(resolveAppUrl("/signin.html"));
     });
   }
@@ -231,6 +263,6 @@
     attachForm();
     attachSSO();
     attachSignOutIfAny();
-    console.info("[EDX] auth.js ready (base-aware redirects)");
+    console.info("[EDX] auth.js ready — base:", computeBasePath());
   });
 })();
